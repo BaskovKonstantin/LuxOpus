@@ -347,248 +347,248 @@ class drawingTemplate:
                 font_size=14)
         # ГОСТ Клетки из шаблона главно страницыг
 
-        # for i in range(0,5):
-        #     cur_text = self.Zona_text[i]
-        #
-        #     self.cell_dict['Zona' + str(i)] = cell(
-        #     name='Zona' + str(i),
-        #         screen=self.screen,
-        #         colors=self.colors,
-        #         cell_size=(5 + self.border_size/self.scale, 25 + self.border_size/self.scale),
-        #         cell_start_point=(
-        #             self.x - self.margin / 2 - 210 * self.scale - self.margin_side,
-        #             self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
-        #         ),
-        #         scale=self.scale,
-        #         margin=self.margin,
-        #         border_size=self.border_size,
-        #         text=cur_text,
-        #         font = self.font,
-        #         font_size=14)
+        for i in range(0,5):
+            cur_text = self.Zona_text[i]
 
-        # self.cell_dict['inv N podl title'] = cell(
-        #     name='inv N podl title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25 + self.border_size/self.scale, 5 + self.border_size/self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12*self.scale ,
-        #         self.y - self.margin / 2 - 25*self.scale - 2*self.border_size / self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Инв N подл',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate = 90)
-        #
-        # self.cell_dict['inv N podl'] = cell(
-        #     name='inv N podl',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25 + self.border_size/self.scale, 7 + self.border_size/self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7*self.scale ,
-        #         self.y - self.margin / 2 - 25*self.scale - 2*self.border_size / self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.inv_N_podl_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+            self.cell_dict['Zona' + str(i)] = cell(
+            name='Zona' + str(i),
+                screen=self.screen,
+                colors=self.colors,
+                cell_size=(5 + self.border_size/self.scale, 25 + self.border_size/self.scale),
+                cell_start_point=(
+                    self.x - self.margin / 2 - 210 * self.scale - self.margin_side,
+                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                ),
+                scale=self.scale,
+                margin=self.margin,
+                border_size=self.border_size,
+                text=cur_text,
+                font = self.font,
+                font_size=14)
 
-        # self.cell_dict['Podl and date title'] = cell(
-        #     name='Podl and date title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(35 + self.border_size / self.scale, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.y - self.margin / 2 - 60 * self.scale - 2*self.border_size / self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Подл и дата',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['Podl and date'] = cell(
-        #     name='Podl and date',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(35 + self.border_size / self.scale, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.y - self.margin / 2 - 60 * self.scale - 2*self.border_size / self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.Podl_and_date_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['inv N podl title'] = cell(
+            name='inv N podl title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25 + self.border_size/self.scale, 5 + self.border_size/self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12*self.scale ,
+                self.y - self.margin / 2 - 25*self.scale - 2*self.border_size / self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Инв N подл',
+            font = self.font,
+            font_size=14,
+            text_rotate = 90)
 
-        # self.cell_dict['Vzam inv title'] = cell(
-        #     name='Vzam inv title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.y - self.margin / 2 - 85 * self.scale ),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Взам инв',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['Vzam inv'] = cell(
-        #     name='Vzam inv',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.y - self.margin / 2 - 85 * self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.Vzam_inv_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['inv N podl'] = cell(
+            name='inv N podl',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25 + self.border_size/self.scale, 7 + self.border_size/self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7*self.scale ,
+                self.y - self.margin / 2 - 25*self.scale - 2*self.border_size / self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.inv_N_podl_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
 
-        # self.cell_dict['inv dubble title'] = cell(
-        #     name='inv dubble title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25 + self.border_size / self.scale, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.y - self.margin / 2 - 110 * self.scale ),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Инв N дубл',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['inv dubble podl'] = cell(
-        #     name='inv dubble podl',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(25 + self.border_size / self.scale, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.y - self.margin / 2 - 110 * self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.inv_dubble_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['Podl and date title'] = cell(
+            name='Podl and date title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(35 + self.border_size / self.scale, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.y - self.margin / 2 - 60 * self.scale - 2*self.border_size / self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Подл и дата',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
 
-        # self.cell_dict['podl and date 2 title'] = cell(
-        #     name='podl and date 2 title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(35 + self.border_size / self.scale, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.y - self.margin / 2 - 145 * self.scale ),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Подл и дата',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['podl and date 2'] = cell(
-        #     name='podl and date 2',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(35 + self.border_size / self.scale, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.y - self.margin / 2 - 145 * self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.podl_and_date_2,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['Podl and date'] = cell(
+            name='Podl and date',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(35 + self.border_size / self.scale, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.y - self.margin / 2 - 60 * self.scale - 2*self.border_size / self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.Podl_and_date_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
 
-        # self.cell_dict['First use title'] = cell(
-        #     name='First use title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(60 + self.border_size / self.scale, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.margin / 2 ),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Перв прим',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['First use'] = cell(
-        #     name='First use',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(60 + self.border_size / self.scale, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.margin / 2 ),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.First_use_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['Vzam inv title'] = cell(
+            name='Vzam inv title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.y - self.margin / 2 - 85 * self.scale ),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Взам инв',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
 
-        # self.cell_dict['Help N title'] = cell(
-        #     name='Help N title',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(60 + self.border_size / self.scale, 5 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 12 * self.scale,
-        #         self.margin / 2 + 60 * self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text='Справ N',
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
-        #
-        # self.cell_dict['Help N'] = cell(
-        #     name='Help N',
-        #     screen=self.screen,
-        #     colors=self.colors,
-        #     cell_size=(60 + self.border_size / self.scale, 7 + self.border_size / self.scale),
-        #     cell_start_point=(
-        #         self.margin / 2 - 7 * self.scale,
-        #         self.margin / 2 + 60 * self.scale),
-        #     scale=self.scale,
-        #     margin=self.margin,
-        #     border_size=self.border_size,
-        #     text=self.Help_N_text,
-        #     font = self.font,
-        #     font_size=14,
-        #     text_rotate=90)
+        self.cell_dict['Vzam inv'] = cell(
+            name='Vzam inv',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.y - self.margin / 2 - 85 * self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.Vzam_inv_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['inv dubble title'] = cell(
+            name='inv dubble title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25 + self.border_size / self.scale, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.y - self.margin / 2 - 110 * self.scale ),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Инв N дубл',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['inv dubble podl'] = cell(
+            name='inv dubble podl',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(25 + self.border_size / self.scale, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.y - self.margin / 2 - 110 * self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.inv_dubble_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['podl and date 2 title'] = cell(
+            name='podl and date 2 title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(35 + self.border_size / self.scale, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.y - self.margin / 2 - 145 * self.scale ),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Подл и дата',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['podl and date 2'] = cell(
+            name='podl and date 2',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(35 + self.border_size / self.scale, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.y - self.margin / 2 - 145 * self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.podl_and_date_2,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['First use title'] = cell(
+            name='First use title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(60 + self.border_size / self.scale, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.margin / 2 ),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Перв прим',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['First use'] = cell(
+            name='First use',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(60 + self.border_size / self.scale, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.margin / 2 ),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.First_use_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['Help N title'] = cell(
+            name='Help N title',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(60 + self.border_size / self.scale, 5 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 12 * self.scale,
+                self.margin / 2 + 60 * self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text='Справ N',
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
+
+        self.cell_dict['Help N'] = cell(
+            name='Help N',
+            screen=self.screen,
+            colors=self.colors,
+            cell_size=(60 + self.border_size / self.scale, 7 + self.border_size / self.scale),
+            cell_start_point=(
+                self.margin / 2 - 7 * self.scale,
+                self.margin / 2 + 60 * self.scale),
+            scale=self.scale,
+            margin=self.margin,
+            border_size=self.border_size,
+            text=self.Help_N_text,
+            font = self.font,
+            font_size=14,
+            text_rotate=90)
     def set_base_text(self):
         # Обозначение документа
         self.document_designation_text = 'Обозначение документа'
