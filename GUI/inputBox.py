@@ -2,7 +2,10 @@ import pygame
 
 class inputBox:
 
-    def __init__(self, surface, pos, size,colors,  text='', font = None, font_size=18, border_size = 3, onChangeAction = lambda : ..., action = lambda : ...):
+    def __init__(self, surface, pos, size,colors,  text='',
+                 font = None, font_size=14, border_size = 3,
+                 onChangeAction = lambda : ..., action = lambda : ...,
+                 sign = ''):
 
         self.pos = pos
         self.size = size
@@ -16,6 +19,7 @@ class inputBox:
         self.rect = pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
         self.text = text
+        self.sign = sign
         self.prevText = text
         self.active = False
         self.action = action
@@ -26,11 +30,8 @@ class inputBox:
     def clear(self):
         self.text = ''
 
-
-
     def onChange(self):
         self.onChangeAction(self.text)
-
 
     def redraw(self):
         if self.text != self.prevText:
@@ -42,4 +43,9 @@ class inputBox:
         # Нарисовать текст в поле ввода
         text_surface = self.font.render(self.text, True, self.colors['text'])
         self.surface.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
+
+        sign_surface = self.font.render(self.sign, True, self.colors['text'])
+        self.surface.blit(sign_surface, (self.rect.x - sign_surface.get_width() - 15, self.rect.y + sign_surface.get_height()/2))
+
+
 
