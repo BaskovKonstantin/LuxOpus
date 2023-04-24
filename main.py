@@ -46,7 +46,7 @@ pygame.init()
 
 # Создание основного экрана экрана
 margin = 120
-margin_side_right = 800
+margin_side_right = 700
 margin_side_left = 200
 margin_side_top = 0
 screen_size = [x * coef + margin for x in size]
@@ -75,18 +75,7 @@ leftControlPanel.inputBoxDict, leftControlPanel.buttonDict = \
                           border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=3  )
 ControlPanels.append(leftControlPanel)
 
-interfacePosX = 10
-interfacePosY = 5
 
-topControlPanel = controlPanel(dt, screen,
-                          interfacePosX,
-                          interfacePosY, screen_size[0] - margin/2 - interfacePosX, 50, colors, interfaceBorderSize,
-                          font= 'fonts-GOST\\GOST_AU.TTF')
-topControlPanel.inputBoxDict, topControlPanel.buttonDict = \
-    initBtn.initTopPanel(dt,
-                         topControlPanel.surface, colors, border_size=interfaceBorderSize,
-                         font = 'fonts-GOST\\GOST_AU.TTF', scale=3  )
-ControlPanels.append(topControlPanel)
 #Конец создания основного экрана
 
 
@@ -140,7 +129,6 @@ controlPanelDict['Document Info'].inputBoxDict, controlPanelDict['Document Info'
 
 commonControlPanelGroup.controlPanelsDict = controlPanelDict
 
-
 typeControlPanelGroup_blit_point = (screen_size[0] - margin_side_right, margin/2 )
 typeControlPanelGroup_size =  (margin_side_right - margin/2, (screen_size[1] - margin)/2)
 typeControlPanelGroup = controlPanelGroup(screen, colors,
@@ -153,13 +141,12 @@ controlPanelDict['parametr lens'] = controlPanel(dt,
                                              typeControlPanelGroup_size[0]*0.55, typeControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
 
-
 controlPanelDict['parametr lens'].inputBoxDict, controlPanelDict['parametr lens'].buttonDict = \
                         initBtn.initLensParamBtn(dt,
                         controlPanelDict['parametr lens'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
-    controlPanelDict['parametr lens'].surface, colors, (0,0),
+    controlPanelDict['parametr lens'].surface, colors, (-100,-100),
     type = 1, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-120,-100)]
 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
 
@@ -192,17 +179,81 @@ controlPanelDict['facet_type'].inputBoxDict, controlPanelDict['facet_type'].butt
                         controlPanelDict['facet_type'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 
-
 typeControlPanelGroup.controlPanelsDict = controlPanelDict
 
+flatFacetControlPanelGroup_blit_point = (screen_size[0] - margin_side_right, margin )
+flatFacetControlPanelGroup_size =  (margin_side_right - margin/2, (screen_size[1] - 2*margin)/2)
+flatFacetControlPanelGroup = controlPanelGroup(screen, colors,
+                                          flatFacetControlPanelGroup_blit_point,
+                                          flatFacetControlPanelGroup_size,
+                                        is_visible=False)
+
+
+controlFacetPanelDicr = {}
+imgFacetSurfaceDict = {}
+controlFacetPanelDicr['parametr flat facet'] = controlPanel(dt,
+                                             flatFacetControlPanelGroup.surface, margin/4, margin/8,
+                                             flatFacetControlPanelGroup_size[0]*0.6, flatFacetControlPanelGroup_size[1]*0.7,
+                                             colors, interfaceBorderSize)
+controlFacetPanelDicr['parametr flat facet'].inputBoxDict, controlFacetPanelDicr['parametr flat facet'].buttonDict = \
+                        initBtn.initFlatFacetParamTypeBtn(dt,
+                        controlFacetPanelDicr['parametr flat facet'].surface, colors,
+                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+imgFacetSurfaceDict['lens_image FACET'] = [initLensTypeImageSurface(
+    controlFacetPanelDicr['parametr flat facet'].surface, colors, (0,0),
+    type = 3, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-100,-100)]
+
+controlFacetPanelDicr['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
+
+
+controlFacetPanelDicr['allowance']= controlPanel(dt,
+                                             flatFacetControlPanelGroup.surface, margin/2 + flatFacetControlPanelGroup_size[0]*0.6, margin/8,
+                                             flatFacetControlPanelGroup_size[0]*0.25, flatFacetControlPanelGroup_size[1]*0.7,
+                                             colors, interfaceBorderSize)
+controlFacetPanelDicr['allowance'].inputBoxDict, controlFacetPanelDicr['allowance'].buttonDict = \
+                        initBtn.initAllowanceBtn(dt,
+                        controlFacetPanelDicr['allowance'].surface, colors,
+                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+
+
+
+controlFacetPanelDicr['measure type']= controlPanel(dt,
+                                             flatFacetControlPanelGroup.surface, margin/4, margin/5 + flatFacetControlPanelGroup_size[1]*0.7,
+                                             flatFacetControlPanelGroup_size[0]*0.9, flatFacetControlPanelGroup_size[1]*0.18,
+                                             colors, interfaceBorderSize)
+controlFacetPanelDicr['measure type'].inputBoxDict, controlFacetPanelDicr['measure type'].buttonDict = \
+                        initBtn.initFlatFacetMeasureTypeBtn(dt,
+                        controlFacetPanelDicr['measure type'].surface, colors,
+                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+
+flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDicr
+
+
+interfacePosX = 10
+interfacePosY = 5
+
+topControlPanel = controlPanel(dt, screen,
+                          interfacePosX,
+                          interfacePosY, screen_size[0] - margin/2 - interfacePosX, 50, colors, interfaceBorderSize,
+                          font= 'fonts-GOST\\GOST_AU.TTF')
+topControlPanel.inputBoxDict, topControlPanel.buttonDict = \
+    initBtn.initTopPanel(dt,
+                         topControlPanel.surface, colors, border_size=interfaceBorderSize,
+                         font = 'fonts-GOST\\GOST_AU.TTF', FlatFacetPanelControlGroup= flatFacetControlPanelGroup, scale=3  )
+ControlPanels.append(topControlPanel)
 
 def handleControlPanelevent(event):
     for ControlPanel in ControlPanels:
         inpBox = ControlPanel.handle_event(event)
         if inpBox: return inpBox
-    inpBox = commonControlPanelGroup.handle_event(event) if commonControlPanelGroup.handle_event(event) else typeControlPanelGroup.handle_event(event)
-    if inpBox:
-        return inpBox
+    if commonControlPanelGroup.handle_event(event):
+        inpBox = commonControlPanelGroup.handle_event(event)
+    elif typeControlPanelGroup.handle_event(event):
+        inpBox = typeControlPanelGroup.handle_event(event)
+    else :
+        inpBox = flatFacetControlPanelGroup.handle_event(event)
+
+    if inpBox: return inpBox
 
 # Ожидание выхода из приложения
 running = True
@@ -210,15 +261,13 @@ is_mouse_down = False
 current_input = 0
 
 while running:
-
-
-
     screen.fill(BLACK)
     dt.total_redraw(scale=scale_screen)
     for ControlPanel in ControlPanels:
         ControlPanel.redraw()
     commonControlPanelGroup.draw()
     typeControlPanelGroup.draw()
+    flatFacetControlPanelGroup.draw()
 
 
     pygame.image.save(screen, "screenshot.png")
@@ -354,11 +403,19 @@ while running:
         keys = pygame.key.get_pressed()
         try:
             if (isinstance(dt.current_figure, lens)):
+                imgFacetSurfaceDict['lens_image FACET'] =  [initLensTypeImageSurface(
+                    controlPanelDict['parametr lens'].surface, colors, (0, 0),
+                    type=2, font='fonts-GOST\\GOST_AU.TTF', scale=0.5,  right_facet_type=1), (-120, -100)]
                 imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
                     controlPanelDict['parametr lens'].surface, colors, (0, 0),
                     type= dt.current_figure.type, font='fonts-GOST\\GOST_AU.TTF', scale=0.5), (-120, -100)]
+
                 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
                 typeControlPanelGroup.controlPanelsDict = controlPanelDict
+
+                controlFacetPanelDicr['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
+                flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDicr
+
         except:
             pass
 
@@ -404,6 +461,7 @@ while running:
                     'type': current_input.type
                 }
                 pyperclip.copy(json.dumps(dict_to_copy))
+    # print(dt.current_figure.right_facet_measure_type)
 
 
 

@@ -584,6 +584,9 @@ class lens:
                              angle_rotate=-90)
             self.measureDict['side_measure'].measure_shift = 250
         else:
+            self.measureDict['side_measure'].start_point = (self.key_point_1[0], self.key_point_1[1] - 20 + self.diametr/2)
+            self.measureDict['side_measure'].end_point = (self.key_point_1[0] , self.key_point_1[1] - self.diametr/2)
+            self.measureDict['side_measure'].width = self.diametr + self.border_size*2
             self.measureDict['side_measure'].text = '' + str(self.diametr)
             self.measureDict['side_measure'].draw()
             self.surface.blit(self.measureDict['side_measure'].measure_surface, self.measureDict['side_measure'].blit_point)
@@ -870,10 +873,10 @@ class lens:
 
         self.lens_type = {
             1: (3, 1),
-            2: (1, 3),
-            3: (2, 3),
-            4: (3, 2),
-            5: (1, 1),
+            2: (3, 2),
+            3: (1, 1),
+            4: (2, 2),
+            5: (1, 2),
             6: (2, 2),
             7: (1, 2),
             8: (3, 3),

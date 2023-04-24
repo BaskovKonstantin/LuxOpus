@@ -89,15 +89,17 @@ class controlPanel:
 
 class controlPanelGroup:
 
-    def __init__(self, screen, colors, blitPoint, size, controlPanelsDict = {}, imageSurfaceDict = {}):
+    def __init__(self, screen, colors, blitPoint, size, controlPanelsDict = {}, imageSurfaceDict = {}, is_visible = True):
         self.screen = screen
         self.colors = colors
         self.controlPanelsDict = controlPanelsDict
         self.imageSurfaceDict = imageSurfaceDict
         self.blitPoint = blitPoint
         self.size = size
+        self.is_visible = is_visible
 
         self.surface = pygame.Surface(self.size, pygame.SRCALPHA)
+        self.surface.fill(self.colors['background'])
 
     def handle_event(self, event):
 
@@ -113,15 +115,16 @@ class controlPanelGroup:
 
 
     def draw(self):
-        pygame.draw.rect(self.surface, self.colors['border'], (0, 0,
-                                                         self.size[0], self.size[1]), 3)
-        for key in self.controlPanelsDict.keys():
-            self.controlPanelsDict[key].redraw()
-        for key in self.imageSurfaceDict.keys():
-            self.surface.blit(self.imageSurfaceDict[key][0], self.imageSurfaceDict[key][0])
+        if (self.is_visible):
+            pygame.draw.rect(self.surface, self.colors['border'], (0, 0,
+                                                             self.size[0], self.size[1]), 3)
+            for key in self.controlPanelsDict.keys():
+                self.controlPanelsDict[key].redraw()
+            for key in self.imageSurfaceDict.keys():
+                self.surface.blit(self.imageSurfaceDict[key][0], self.imageSurfaceDict[key][1])
 
 
-        self.screen.blit(self.surface, self.blitPoint)
+            self.screen.blit(self.surface, self.blitPoint)
 
 
 

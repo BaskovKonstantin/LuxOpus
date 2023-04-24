@@ -127,7 +127,6 @@ class line_measure:
             self.arrow.blit_point = (0 - int(self.width - self.arrow_height/2), abs(self.measure_shift) - self.arrow_height*2)
             self.arrow.draw()
 
-            print('MEASURE FONT', self.font)
             font = pygame.font.Font(self.font, self.font_size)
             self.text_surface = font.render(str(self.text), True, self.colors['border'])
             self.text_point =  (self.width / 2 -  self.text_surface.get_width() / 2,
