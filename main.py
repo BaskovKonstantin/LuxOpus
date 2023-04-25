@@ -294,15 +294,11 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Mouse Down')
             is_mouse_down = True
-            # if (screen.get_at(  pygame.mouse.get_pos()) == colors['border']):
-            #     is_mouse_down = True
-            # else:
-            #     is_mouse_down = True
+
             start_pos = pygame.mouse.get_pos()
             prev_pos = start_pos
             current_input =  dt.handle_event(event) if dt.handle_event(event) else handleControlPanelevent(event)
-                # else \
-            # Interface.handle_event(event)
+
 
             if (isinstance(current_input, lens)) and current_input.select_measure:
                 print('CURREN INPUT', current_input.selected_measure)
@@ -340,6 +336,20 @@ while running:
                 elif event.key == pygame.K_BACKSPACE:
                     current_input.text = current_input.text[:-1]
                     pass
+            if event.key == pygame.K_UP:
+                dt.current_scale += 1
+                dt.current_figure.scale = dt.scale_list[dt.current_scale]
+                dt.cell_dict['scale'].text = dt.scale_text_list[dt.current_scale]
+                print("UP")
+            elif event.key == pygame.K_DOWN:
+                dt.current_scale += -1
+                dt.current_figure.scale = dt.scale_list[dt.current_scale]
+                dt.cell_dict['scale'].text = dt.scale_text_list[dt.current_scale]
+                print("DOWN")
+            elif event.key == pygame.K_LEFT:
+                print("LEFT")
+            elif event.key == pygame.K_RIGHT:
+                print("RIGHT")
 
         if (is_mouse_down):
 
@@ -390,7 +400,6 @@ while running:
                     prev_pos = cur_pos
                     prev_pos = cur_pos
 
-
             elif( isinstance(current_input, signature)):
                     current_input.point_x += -x_diff
                     current_input.point_y += -y_diff
@@ -418,11 +427,6 @@ while running:
 
         except:
             pass
-
-
-
-
-
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_p]:
             dt.add_signature()

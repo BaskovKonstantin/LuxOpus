@@ -230,7 +230,7 @@ class drawingTemplate:
             border_size=self.border_size,
             text=self.scale_text,
             font = self.font,
-            font_size= int( self.scale*4))
+            font_size= int(self.scale*8))
         for i in range(0,11):
             cur_text = self.date_text[i]
 
@@ -622,7 +622,7 @@ class drawingTemplate:
         # Масса
         self.mass_text = ''
         # Масштаб
-        self.scale_text = ''
+        self.scale_text = self.scale_text_list[self.current_scale]
         # Дата
         self.date_text = [''] * 4
         self.date_text.append('Дата')
@@ -982,6 +982,9 @@ class drawingTemplate:
         #     10:'meniscus',
         #     11:'window prism'
         # }
+        self.scale_text_list = ['10:1', '5:1', '4:1', '2.5:1', '2:1', '1:1', '1:2', '1:2.5', '1:4', '1:5', '1:10']
+        self.scale_list = [10, 5, 4, 2.5, 2, 1, 0.5, 0.4, 0.2, 0.1 ]
+        self.current_scale = 5
 
         self.qr_code = (200, 200)
         self.qr_place = (450, 550)
