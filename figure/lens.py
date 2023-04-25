@@ -401,6 +401,7 @@ class lens:
                         self.measureDict['facet_right_side_measure'].start_point = self.facet_point_4
                         self.measureDict['facet_right_side_measure'].end_point = self.facet_point_2
                         self.measureDict['facet_right_side_measure'].width = int(self.facet_point_4[1] - self.facet_point_2[1] + 4*self.border_size)
+                        # self.measureDict['facet_right_side_measure'].text = str(self.measureDict['facet_right_side_measure'].width)
 
                         self.measureDict['facet_right_side_measure'].draw()
                         self.surface.blit(self.measureDict['facet_right_side_measure'].measure_surface,
@@ -422,28 +423,28 @@ class lens:
                     self.measureDict['facet_right_up_big_measure'].start_point = (self.key_point_1[0],self.key_point_1[1] - self.diametr/2)
                     self.measureDict['facet_right_up_big_measure'].end_point = (self.key_point_1[0], self.key_point_1[1] - self.diametr)
                     self.measureDict['facet_right_up_big_measure'].width = width
-                    # self.measureDict['facet_right_up_measure'].text = str(self.width)
+                    # self.measureDict['facet_right_up_big_measure'].text = str(self.measureDict['facet_right_up_big_measure'].width)
 
                     self.measureDict['facet_right_up_big_measure'].draw()
                     self.surface.blit(self.measureDict['facet_right_up_big_measure'].measure_surface,
                                       self.measureDict['facet_right_up_big_measure'].blit_point)
 
             if (self.right_facet_measure_type == 3):
-                width = self.facet_point_2[0] - ( self.key_point_1[0] + self.width) + self.border_size*2
+                width = self.facet_point_2[0] - ( self.key_point_1[0] + self.width + 2*self.border_size)
                 if not ('facet_right_up_small_measure' in self.measureDict.keys()):
 
                     self.measureDict['facet_right_up_small_measure'] = \
                         line_measure(self.surface,
-                                     (self.key_point_1[0] + self.width,self.key_point_1[1] - self.diametr/2),
-                                     (self.key_point_1[0]  + self.width,self.key_point_1[1], self.key_point_1[1] - self.diametr),
+                                     (self.key_point_1[0] + self.width ,self.key_point_1[1] - self.diametr/2),
+                                     (self.key_point_1[0]  + self.width - width,self.key_point_1[1], self.key_point_1[1] - self.diametr),
                                      self.colors, width, arrow_height= 4, text=str(2), font_size= 15, font=self.font)
 
                     self.measureDict['facet_right_up_small_measure'].measure_shift = 50
                 else:
                     try:
-                        self.measureDict['facet_right_up_small_measure'].start_point =(self.key_point_1[0] + self.width,self.key_point_1[1] - self.diametr/2)
-                        self.measureDict['facet_right_up_small_measure'].end_point = (self.key_point_1[0] + self.width, self.key_point_1[1] - self.diametr)
-                        self.measureDict['facet_right_up_small_measure'].width = width
+                        self.measureDict['facet_right_up_small_measure'].start_point =(self.key_point_1[0] + self.width ,self.key_point_1[1] - self.diametr/2)
+                        self.measureDict['facet_right_up_small_measure'].end_point = (self.key_point_1[0] + self.width - width , self.key_point_1[1] - self.diametr)
+                        self.measureDict['facet_right_up_small_measure'].width = 2*width
                         # self.measureDict['facet_right_up_measure'].text = str(self.width)
 
                         self.measureDict['facet_right_up_small_measure'].draw()
@@ -451,7 +452,6 @@ class lens:
                                           self.measureDict['facet_right_up_small_measure'].blit_point)
                     except:
                         pass
-
         if (self.left_facet_type == 1):
 
             if (self.left_facet_measure_type == 1):
@@ -557,7 +557,6 @@ class lens:
                     pass
     def draw_base_measure(self):
 
-
         measure_width = self.key_point_2[0] - self.key_point_1[0] + 5
 
         if not ('up_measure' in self.measureDict.keys()):
@@ -598,7 +597,7 @@ class lens:
                     (int(self.surface_width/2 - radius_width - radius_width),
                      self.axis_center_point ), self.surface,
                                         self.colors, size = (radius_width, 10), font = self.font,
-                                        text = f'R{self.R1}', angle_rotate=0)
+                                        text = f'R{self.R1}', angle_rotate=8)
             else:
 
                 # self.measureDict['R1_measure'].angle_rotate += 1
@@ -614,7 +613,7 @@ class lens:
                 self.measureDict['R2_measure'] = arrow((int(self.surface_width/2 + self.width - radius_width),
                                                         self.axis_center_point ), self.surface,
                                         self.colors, size = (radius_width, 10), font = self.font,
-                                        text = f'R{self.R1}', opposite=True)
+                                        text = f'R{self.R1}', opposite=True, angle_rotate=8)
             else:
 
                 self.measureDict['R2_measure'].draw()

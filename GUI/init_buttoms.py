@@ -14,19 +14,19 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
     inputBoxDict = {}
     button_size = (int(25*scale), int(15*scale))
 
-    def facet_type_1():  # передача i в качестве аргумента по умолчанию
-        print('dddddd')
+    def facet_measure_type_1():  # передача i в качестве аргумента по умолчанию
+        print('KAAAAAAAAAK 111')
         drawingTemplate.current_figure.right_facet_measure_type = 1
 
 
     buttonDict['facet_type_1'] = \
         button(interfceSurfce,
                 (int(10*scale), int(5*scale)),
-                button_size, colors, action=lambda text: facet_type_1(), text='type_1',
+                button_size, colors, action=lambda text: facet_measure_type_1(), text='type_1',
                font=font, font_size= int(4*scale), sign = '')
 
-    def facet_type_2():  # передача i в качестве аргумента по умолчанию
-
+    def facet_measure_type_2():  # передача i в качестве аргумента по умолчанию
+        print('KAAAAAAAAAK 222')
         drawingTemplate.current_figure.right_facet_measure_type = 2
 
 
@@ -34,11 +34,12 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
         button(interfceSurfce,
                 (int(10*scale) + 1*button_size[0] + 10, int(5*scale)),
                 button_size, colors, text='type_2', font=font,
-                action=lambda text: facet_type_2(),
+                action=lambda text: facet_measure_type_2(),
                 sign = '',
                 font_size= int(4*scale))
-    def facet_type_3():  # передача i в качестве аргумента по умолчанию
 
+    def facet_measure_type_3():  # передача i в качестве аргумента по умолчанию
+        print('KAAAAAAAAAK 333')
         drawingTemplate.current_figure.right_facet_measure_type = 3
 
 
@@ -46,7 +47,7 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
         button(interfceSurfce,
                 (int(10*scale) + 2*button_size[0] + int(scale*9), int(5*scale)),
                 button_size, colors, text='type_3', font=font,
-                action=lambda text: facet_type_3(),
+                action=lambda text: facet_measure_type_3(),
                 sign = '',
                 font_size= int(4*scale))
 
@@ -60,11 +61,11 @@ def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_si
         drawingTemplate.current_figure.right_facet_type = 1
         drawingTemplate.current_figure.right_facet_measure_type = 1
         try:
-            drawingTemplate.current_figure.right_facet_size = int(text)
+            drawingTemplate.current_figure.right_facet_size = drawingTemplate.current_figure.diametr - int(text)
+            drawingTemplate.current_figure.measureDict['facet_right_side_measure'].text = text
 
         except:
             print()
-
 
     inputBoxDict['light_diametr'] = \
         inputBox(interfceSurfce,
@@ -75,26 +76,21 @@ def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_si
                 font_size= int(4*scale))
 
     def deflection_arrow(text):
+        print('kkkkkdfskdfjlsdkf')
         drawingTemplate.current_figure.right_facet_type = 1
+        drawingTemplate.current_figure.right_facet_measure_type = 3
         try:
             res = drawingTemplate.current_figure.width / 10 + \
                 (drawingTemplate.current_figure.R2 - math.sqrt(
                     (drawingTemplate.current_figure.R2) ** 2 - (
                             (drawingTemplate.current_figure.R2 - int(text)) / 2) ** 2))
-
-            drawingTemplate.current_figure.measureDict['facet_right_side_measure'].text = text
-
-        except Exception as e:
-            # res = 10
-            print(e)
-            pass
-
-        try:
             drawingTemplate.current_figure.right_facet_size = res
+
         except Exception as e:
             print(e)
-            drawingTemplate.current_figure.right_facet_size = 0
+            # drawingTemplate.current_figure.right_facet_size = 0
             print('Some kind of shit rfc')
+
 
 
 
@@ -107,10 +103,12 @@ def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_si
                 font_size= int(4*scale))
 
     def overall_thickness(text):
+        drawingTemplate.current_figure.right_facet_type = 1
+        drawingTemplate.current_figure.right_facet_measure_type = 2
         try:
-            drawingTemplate.current_figure.right_facet_type = 1
             drawingTemplate.current_figure.right_facet_size = drawingTemplate.current_figure.R1 - int(text)
             drawingTemplate.current_figure.measureDict['facet_right_big_measure'].text = text
+
         except:
             print('Some kind of shit lfc')
 
@@ -129,7 +127,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     button_size = (int(25*scale), int(15*scale))
 
     def facet_type_1(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT', text)
+        print('INPUT BOX TEXT 555555', text)
     buttonDict['facet_type_1'] = \
         button(interfceSurfce,
                 (int(10*scale), int(5*scale)),
@@ -138,7 +136,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 sign = '',
                 font_size= int(4*scale))
     def facet_type_2(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT', text)
+        print('INPUT BOX TEXT 9999999', text)
     buttonDict['facet_type_2'] = \
         button(interfceSurfce,
                 (int(10*scale) + 1*button_size[0] + 10, int(5*scale)),
@@ -147,7 +145,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 sign = '',
                 font_size= int(4*scale))
     def facet_type_3(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT', text)
+        print('INPUT BOX TEXT 11111111', text)
     buttonDict['facet_type_3'] = \
         button(interfceSurfce,
                 (int(10*scale) + 2*button_size[0] + int(scale*9), int(5*scale)),
@@ -156,7 +154,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 sign = '',
                 font_size= int(4*scale))
     def facet_type_4(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT', text)
+        print('INPUT BOX TEXT 77777777', text)
     buttonDict['facet_type_4'] = \
         button(interfceSurfce,
                 (int(10*scale) + 3*button_size[0] + 30,int(5*scale)),
@@ -560,8 +558,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
 
 
     return inputBoxDict, buttonDict
-
-def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, FlatFacetPanelControlGroup, scale = 1):
+def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, FlatFacetPanelControlGroup,typeFacetPanelGroup, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
     button_size = (int(scale*13), int(scale*20))
@@ -591,19 +588,20 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
     def swith_measure():  # передача i в качестве аргумента по умолчанию
         drawingTemplate.current_figure.show_measure = not drawingTemplate.current_figure.show_measure
 
+
     buttonDict[f'Measure'] = button(interfceSurfce, (2*int(scale*15), 0), button_size_big,
                                          colors, lambda : swith_measure(), 'Measure', font,
                                          border_size=border_size)
 
     def swith_FlatFacetControlPanelGroup():  # передача i в качестве аргумента по умолчанию
         FlatFacetPanelControlGroup.is_visible = not FlatFacetPanelControlGroup.is_visible
+        typeFacetPanelGroup.is_visible = not typeFacetPanelGroup.is_visible
 
     buttonDict[f'FlatFacetControlPanelGroup'] = button(interfceSurfce, (3*int(scale*20), 0), button_size_big,
                                          colors, lambda : swith_FlatFacetControlPanelGroup(), 'FlatFacet', font,
                                          border_size=border_size)
 
     return inputBoxDict, buttonDict
-
 def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
     buttonDict = {}
     inputBoxDict = {}

@@ -239,7 +239,7 @@ topControlPanel = controlPanel(dt, screen,
 topControlPanel.inputBoxDict, topControlPanel.buttonDict = \
     initBtn.initTopPanel(dt,
                          topControlPanel.surface, colors, border_size=interfaceBorderSize,
-                         font = 'fonts-GOST\\GOST_AU.TTF', FlatFacetPanelControlGroup= flatFacetControlPanelGroup, scale=3  )
+                         font = 'fonts-GOST\\GOST_AU.TTF', FlatFacetPanelControlGroup= flatFacetControlPanelGroup, typeFacetPanelGroup = typeControlPanelGroup, scale=3  )
 ControlPanels.append(topControlPanel)
 
 def handleControlPanelevent(event):

@@ -84,8 +84,6 @@ class line_measure:
 
 
         if (self.measure_shift > 0):
-
-
             pygame.draw.line(self.measure_surface, self.colors['border'],
                              (self.width - 5, 0 + self.font_size),
                              (self.width - 5, self.measure_shift),
@@ -139,9 +137,4 @@ class line_measure:
                 self.blit_point = (self.end_point[0], self.start_point[1])
             if (self.angle_rotate == -90 or self.angle_rotate ==-90):
                 self.blit_point = (self.end_point[0] + ( self.measure_shift), self.start_point[1] - self.width + 2*self.border_size + 2*self.arrow_height)
-            # self.surface.blit(self.measure_surface, self.blit_point)
-        # return self.measure_surface, self.blit_point
-        # font = pygame.font.SysFont(self.font, self.font_size)
-        # text_surface = font.render(str(12456541235987987), True, self.colors['border'])
-        # text_point = (0, 0 )
-        # self.measure_surface.blit(text_surface, text_point)
+
