@@ -57,7 +57,7 @@ class arrow:
                          self.border_size)
 
 
-        font = pygame.font.SysFont(self.font, self.font_size)
+        font = pygame.font.Font(self.font, self.font_size)
         self.text_surface = font.render(str(self.text), True, self.colors['border'])
         self.text_point = (self.width/2 * 1.5 - self.text_surface.get_width()/2, 0 )
 
@@ -66,7 +66,7 @@ class arrow:
 
         # self.blit_point = ( int(self.start_point[0]  - self.arrow_surface.get_width()/2),
         #                int(self.start_point[1]  - self.arrow_surface.get_height()/2))
-
+        #
         # pygame.draw.circle(self.surface, (255, 0, 0), self.blit_point,10)
 
         self.surface.blit(self.arrow_surface, self.blit_point)

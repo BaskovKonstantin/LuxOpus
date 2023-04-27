@@ -35,11 +35,12 @@ class line_measure:
         self.surface = surface
 
     def check_click(self, click_pos):
-
+        inaccuracy = 20
         if (self.angle_rotate == 0):
 
+
             if (self.measure_shift > 0):
-                if (click_pos[1] < self.arrow.blit_point[1] and click_pos[1] > self.text_point[1]):
+                if (click_pos[1] < self.arrow.blit_point[1] + inaccuracy and click_pos[1] > self.text_point[1] - inaccuracy):
 
                     print('click measure Horizontal')
                     return True
@@ -47,7 +48,7 @@ class line_measure:
                     return False
             else:
 
-                if (click_pos[1] < self.arrow.blit_point[1] and click_pos[1] > self.text_point[1]):
+                if (click_pos[1] < self.arrow.blit_point[1] + inaccuracy and click_pos[1] > self.text_point[1] - inaccuracy):
 
                     print('click measure Horizontal')
                     return True
@@ -57,16 +58,16 @@ class line_measure:
         if (self.angle_rotate == -90):
 
             if (self.measure_shift > 0):
-                if (click_pos[0] < self.measure_shift -10 - self.arrow.start_point[0] + self.arrow_height
-                        and click_pos[0] > self.measure_shift - 10 - self.arrow.start_point[0] - self.arrow_height):
+                if (click_pos[0] < self.measure_shift - inaccuracy - self.arrow.start_point[0] + self.arrow_height
+                        and click_pos[0] > self.measure_shift - inaccuracy - self.arrow.start_point[0] - self.arrow_height):
 
                     print('click measure Vertical')
                     return True
                 else:
                     return False
             else:
-                if (click_pos[0] < -self.measure_shift + 10 + self.arrow.start_point[0] - self.arrow_height
-                        and click_pos[0] > self.measure_shift + 10 + self.arrow.start_point[0] + self.arrow_height):
+                if (click_pos[0] < -self.measure_shift + inaccuracy + self.arrow.start_point[0] - self.arrow_height
+                        and click_pos[0] > self.measure_shift + inaccuracy + self.arrow.start_point[0] + self.arrow_height):
 
                     print('click measure Vertical')
                     return True

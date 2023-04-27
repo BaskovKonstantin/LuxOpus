@@ -54,7 +54,7 @@ class lens:
             (3 * self.R1 if self.R1 > self.R2 else 3 * self.R2, 3 * self.R1 if self.R1 >self. R2 else 3 * self.R2), pygame.SRCALPHA)
 
         self.surface_width = self.surface.get_width()
-        dash_length = 10
+
         dash_gap = 5
 
 
@@ -358,18 +358,14 @@ class lens:
 
         # #Отображение размеров
         if (self.show_measure):
-            ...
+            dash_length = 10
             dashed_line(self.surface, self.colors['border'],
                         (int(self.surface.get_width() * 0.4), self.axis_center_point),
-                        (int(self.surface.get_width() * 0.9), self.axis_center_point), width=self.border_size,
-                        dash_length=dash_length)
+                        (int(self.surface.get_width() * 0.85), self.axis_center_point), width=self.border_size-1,
+                        dash_length=dash_length, dotted=True)
 
             self.draw_faset_measure()
             self.draw_base_measure()
-
-
-
-        # print('self.axis_center_point', self.axis_center_point)
 
 
         self.screen.blit(
@@ -579,13 +575,13 @@ class lens:
                 line_measure(self.surface,
                              (self.key_point_1[0], self.key_point_1[1] - 20 + self.diametr/2),
                                         (self.key_point_1[0] , self.key_point_1[1] - self.diametr/2),
-                                          self.colors, self.diametr + self.border_size*2, text=str(self.diametr), font=self.font,
+                                          self.colors, self.diametr + self.border_size*3, text=str(self.diametr), font=self.font,
                              angle_rotate=-90)
             self.measureDict['side_measure'].measure_shift = 250
         else:
             self.measureDict['side_measure'].start_point = (self.key_point_1[0], self.key_point_1[1] - 20 + self.diametr/2)
             self.measureDict['side_measure'].end_point = (self.key_point_1[0] , self.key_point_1[1] - self.diametr/2)
-            self.measureDict['side_measure'].width = self.diametr + self.border_size*2
+            self.measureDict['side_measure'].width = self.diametr + self.border_size*3
             self.measureDict['side_measure'].text = '' + str(self.diametr)
             self.measureDict['side_measure'].draw()
             self.surface.blit(self.measureDict['side_measure'].measure_surface, self.measureDict['side_measure'].blit_point)
@@ -601,8 +597,8 @@ class lens:
                                         text = f'R{self.R1}', angle_rotate=8)
             else:
 
-                # self.measureDict['R1_measure'].angle_rotate += 2
-                self.measureDict['R2_measure'].start_point = (int(self.surface_width/2 - 2*radius_width),
+                self.measureDict['R1_measure'].text = f'R{self.R1}'
+                self.measureDict['R2_measure'].blit_point = (int(self.surface_width/2 - 2*radius_width),
                      self.axis_center_point )
 
                 self.measureDict['R1_measure'].draw()
@@ -617,7 +613,8 @@ class lens:
                                         self.colors, size = (radius_width, 10), font = self.font,
                                         text = f'R{self.R1}', opposite=True, angle_rotate=8)
             else:
-                self.measureDict['R2_measure'].start_point = (int(self.surface_width/2 + self.width - radius_width),
+                self.measureDict['R2_measure'].text = f'R{self.R2}'
+                self.measureDict['R2_measure'].blit_point = (int(self.surface_width/2 + self.width - radius_width),
                                                         self.axis_center_point )
 
                 self.measureDict['R2_measure'].draw()
@@ -902,8 +899,8 @@ class lens:
             3: (1, 1),
             4: (2, 2),
             5: (1, 2),
-            6: (2, 2),
-            7: (1, 2),
+            6: (3, 3),
+            7: (3, 3),
             8: (3, 3),
             9: (3, 3),
             10: (3, 3),

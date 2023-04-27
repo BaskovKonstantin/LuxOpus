@@ -337,7 +337,6 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     buttonDict = {}
     inputBoxDict = {}
     button_size = (int(scale*20), int(scale*10))
-    # button_size_small = (70, int(scale*10))
 
     def diametr(text):  # передача i в качестве аргумента по умолчанию
         if (text.isnumeric()): drawingTemplate.current_figure.diametr = int(text)
@@ -609,9 +608,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
 
     for i in range(1, 6):
         def buff(i=i):  # передача i в качестве аргумента по умолчанию
-
             drawingTemplate.current_figure.type = int(i)
-
 
         buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
                                              colors, lambda i=i: buff(i), f'type {i}', font,

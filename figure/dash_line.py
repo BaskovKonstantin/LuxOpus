@@ -2,7 +2,7 @@ import pygame
 import math
 import numpy
 
-def dashed_line(surf, color, start_pos, end_pos, width=1, dash_length=10):
+def dashed_line(surf, color, start_pos, end_pos, width=1, dash_length=10, dotted = False):
     x1, y1 = start_pos
     x2, y2 = end_pos
     dl = dash_length
@@ -28,4 +28,6 @@ def dashed_line(surf, color, start_pos, end_pos, width=1, dash_length=10):
     for (x1, y1), (x2, y2) in zip(next_coords, last_coords):
         start = (round(x1), round(y1))
         end = (round(x2), round(y2))
+        if dotted:
+            pygame.draw.line(surf, color, (end[0] + 15,end[1]), (end[0] + 16,end[1]), width)
         pygame.draw.line(surf, color, start, end, width)

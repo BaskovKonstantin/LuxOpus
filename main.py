@@ -266,6 +266,13 @@ while running:
     for ControlPanel in ControlPanels:
         ControlPanel.redraw()
     commonControlPanelGroup.draw()
+    if dt.current_figure.type > 5:
+        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1', 'Радиус 2']
+    elif dt.current_figure.type == 2 or dt.current_figure.type == 1:
+        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1']
+    else:
+        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = []
+
     typeControlPanelGroup.draw()
     flatFacetControlPanelGroup.draw()
 
@@ -342,7 +349,8 @@ while running:
                 dt.cell_dict['scale'].text = dt.scale_text_list[dt.current_scale]
                 print("UP")
             elif event.key == pygame.K_DOWN:
-                dt.current_scale += -1
+                dt\
+                    .current_scale += -1
                 dt.current_figure.scale = dt.scale_list[dt.current_scale]
                 dt.cell_dict['scale'].text = dt.scale_text_list[dt.current_scale]
                 print("DOWN")

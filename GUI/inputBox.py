@@ -28,7 +28,8 @@ class inputBox:
         self.redraw()
 
     def clear(self):
-        self.text = ''
+        # self.text = ''
+        self.text = self.text
 
     def onChange(self):
         self.onChangeAction(self.text)
