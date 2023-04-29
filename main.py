@@ -1,5 +1,6 @@
 import pygame
 import pyperclip
+from reportlab.pdfgen import canvas
 import math
 import json
 from GUI.inputBox import inputBox
@@ -17,6 +18,7 @@ from GUI.image import image
 from GUI.signature import signature
 from Template.cellTemplate import cell
 from figure.roughness_measure import roughness_measure
+
 
 global_x = 'SOS'
 
@@ -276,11 +278,6 @@ while running:
     typeControlPanelGroup.draw()
     flatFacetControlPanelGroup.draw()
 
-
-    pygame.image.save(screen, "screenshot.png")
-
-
-
     pygame.display.update()
 
 
@@ -296,7 +293,7 @@ while running:
                 running = False
             elif event.key == pygame.K_RETURN:  # если нажали Enter
                 # сохраняем верхнюю половину экрана как изображение
-                pygame.image.save(screen.subsurface(pygame.Rect(0, 0, screen_size[0], screen_size[1])),
+                pygame.image.save(screen.subsurface(pygame.Rect(margin_side_left + margin/2 - interfaceBorderSize/2, margin_side_top + margin/2 - interfaceBorderSize, size[0]*coef + 2*interfaceBorderSize, size[1]*coef + 2*interfaceBorderSize )),
                                   "screenshot.png")
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Mouse Down')
@@ -473,9 +470,6 @@ while running:
                     'type': current_input.type
                 }
                 pyperclip.copy(json.dumps(dict_to_copy))
-    # print(dt.current_figure.right_facet_measure_type)
-
-
 
 # Завершение работы Pygame
 pygame.quit()
