@@ -262,6 +262,8 @@ running = True
 is_mouse_down = False
 current_input = 0
 
+right_button_down = False
+
 while running:
     screen.fill(BLACK)
     dt.total_redraw(scale=scale_screen)
@@ -284,6 +286,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4:  # колесо мыши вверх
+                print("Колесо мыши вверх")
+            elif event.button == 5:  # колесо мыши вниз
+                print("Колесо мыши вниз")
         elif event.type == pygame.VIDEORESIZE:
             size = (event.w, event.h)
             screen = pygame.display.set_mode(size, pygame.RESIZABLE)
@@ -298,6 +305,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Mouse Down')
             is_mouse_down = True
+            if (event.button == 3):
+                right_button_down = True
+                prev_point_x = dt.reference_point[0]
+                prev_point_y = dt.reference_point[1]
 
             start_pos = pygame.mouse.get_pos()
             prev_pos = start_pos
@@ -313,8 +324,6 @@ while running:
                             isinstance(current_input.selected_measure, roughness_measure)
                     or isinstance(current_input.selected_measure, arrow)):
                         prev_blit_point = current_input.selected_measure.blit_point
-
-
             if (isinstance(current_input, image)) and current_input.resize_mode:
                 prev_point_x = current_input.point_x
                 prev_point_y = current_input.point_y
@@ -323,8 +332,10 @@ while running:
 
 
 
+
         if event.type == pygame.MOUSEBUTTONUP:
             print('Mouse UP')
+            right_button_down = False
             is_mouse_down = False
             end_pos = pygame.mouse.get_pos()
 
@@ -353,8 +364,18 @@ while running:
                 print("DOWN")
             elif event.key == pygame.K_LEFT:
                 print("LEFT")
+                dt.scale += -0.1
+                dt.current_figure.scale += -0.1
+                dt.init_draw_cell()
+                dt.draw_param_table()
+                # dt.rescale_cell()
             elif event.key == pygame.K_RIGHT:
                 print("RIGHT")
+                dt.scale += 0.1
+                dt.current_figure.scale += 0.1
+                dt.init_draw_cell()
+                dt.draw_param_table()
+                # dt.rescale_cell()
 
         if (is_mouse_down):
 
@@ -362,7 +383,10 @@ while running:
             x_diff = prev_pos[0] - cur_pos[0]
             y_diff = prev_pos[1] - cur_pos[1]
 
-            if ( isinstance(current_input,image)):
+            if (right_button_down):
+                dt.reference_point = (prev_point_x - x_diff, prev_point_y - y_diff)
+                dt.change_reference_point()
+            elif ( isinstance(current_input,image)):
                 if (isinstance(current_input, image)) and current_input.resize_mode:
                     if (current_input.resize_mode == 1):
                         current_input.point_x = prev_point_x - x_diff
@@ -400,19 +424,16 @@ while running:
 
 
                 else:
-                    current_input.point_x += -x_diff
-                    current_input.point_y += -y_diff
+                    current_input.blit_point = (current_input.blit_point[0] -x_diff, current_input.blit_point[1]-y_diff)
+                    current_input.original_blit_point = current_input.blit_point
                     prev_pos = cur_pos
                     prev_pos = cur_pos
-
             elif( isinstance(current_input, signature)):
                     current_input.point_x += -x_diff
                     current_input.point_y += -y_diff
 
                     prev_pos = cur_pos
                     prev_pos = cur_pos
-
-
         # # Считываем нажатия клавиш
         keys = pygame.key.get_pressed()
         try:
@@ -435,6 +456,13 @@ while running:
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_p]:
             dt.add_signature()
+        if keys[pygame.K_LCTRL] and keys[pygame.K_m]:
+                dt.reference_point = (0,0)
+                dt.scale = coef
+                dt.current_figure.scale = 1
+                dt.init_draw_cell()
+                dt.draw_param_table()
+                dt.change_reference_point()
         if keys[pygame.K_LCTRL] and keys[pygame.K_o]:
             dt.delete_signature()
         if keys[pygame.K_LCTRL] and keys[pygame.K_DELETE]:

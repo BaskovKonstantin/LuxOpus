@@ -13,21 +13,20 @@ class drawingTemplate:
 
     def init_draw_cell(self):
 
-        self.mainRect = pygame.Rect(
-                        self.margin + self.margin_left,
-                           self.margin + self.margin_up,
+        self.mainRect = pygame.Rect(self.reference_point[0],
+                                    self.reference_point[1],
                            self.list_size[0],
                            self.list_size[1])
-        pygame.draw.rect(self.screen, self.colors['border'], self.mainRect, self.border_size)
+        pygame.draw.rect(self.surface, self.colors['border'], self.mainRect, self.border_size)
 
         self.cell_dict['document_designation down'] = cell(
             name='document_designation down',
-            screen = self.screen,
+            screen = self.surface,
             colors = self.colors,
             size= (15 + self.border_size/self.scale,120),
             start_point= (
-                    self.x - self.margin / 2 - self.margin_right - 120 * self.scale ,
-                    self.y - self.margin / 2 - 55 * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 120 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale - 55 * self.scale - self.border_size
             ),
             scale = self.scale,
             margin = self.margin,
@@ -38,13 +37,10 @@ class drawingTemplate:
 
         self.cell_dict['document_designation up'] = cell(
             name='document_designation up',
-            screen = self.screen,
+            screen = self.surface,
             colors = self.colors,
             size= (14+self.border_size/self.scale ,120),
-            start_point= (
-                    self.margin / 2 + self.margin_left,
-                    self.margin / 2
-            ),
+            start_point= (self.reference_point[0],self.reference_point[1]),
             scale = self.scale,
             margin = self.margin,
             border_size=self.border_size,
@@ -55,12 +51,12 @@ class drawingTemplate:
 
         self.cell_dict['name'] = cell(
             name='name',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(25 + self.border_size / self.scale, 70),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 120 * self.scale ,
-                self.y - self.margin / 2 - 40 * self.scale - self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale - 120 * self.scale ,
+                self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -69,16 +65,14 @@ class drawingTemplate:
             font=self.font,
             font_size= int( self.scale*12))
 
-        # self.margin / 2 - 12 * self.scale + self.margin_left
-
         self.cell_dict['material'] = cell(
             name='material',
-            screen = self.screen,
+            screen = self.surface,
             colors = self.colors,
             size= (15 + self.border_size/self.scale,70),
             start_point= (
-                    self.x - self.margin / 2 - self.margin_right - 120* self.scale ,
-                    self.y - self.margin / 2 - 15 * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale- 120* self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- 15 * self.scale - self.border_size
             ),
             scale = self.scale,
             margin = self.margin,
@@ -89,12 +83,12 @@ class drawingTemplate:
 
         self.cell_dict['author'] = cell(
             name='author',
-            screen = self.screen,
+            screen = self.surface,
             colors = self.colors,
             size= (15 + self.border_size/self.scale ,50+ self.border_size/self.scale),
             start_point= (
-                    self.x - self.margin / 2 - self.margin_right - 50* self.scale - self.border_size ,
-                    self.y - self.margin / 2 - 15 * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale- 50* self.scale - self.border_size ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- 15 * self.scale - self.border_size
             ),
             scale = self.scale,
             margin = self.margin,
@@ -105,12 +99,12 @@ class drawingTemplate:
 
         self.cell_dict['list number'] = cell(
             name='list number',
-            screen = self.screen,
+            screen = self.surface,
             colors = self.colors,
             size= (5 ,20 + 2*self.border_size/self.scale),
             start_point= (
-                    self.x - self.margin / 2 - self.margin_right - 50* self.scale - self.border_size ,
-                    self.y - self.margin / 2 - 20 * self.scale
+                    self.reference_point[0] + self.list_size[0]*self.scale- 50* self.scale - self.border_size ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- 20 * self.scale
             ),
             scale = self.scale,
             margin = self.margin,
@@ -121,12 +115,12 @@ class drawingTemplate:
 
         self.cell_dict['list count'] = cell(
             name='list count',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(5 , 30),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 30 * self.scale ,
-                self.y - self.margin / 2 - 20 * self.scale
+                self.reference_point[0] + self.list_size[0]*self.scale- 30 * self.scale ,
+                self.reference_point[1] + self.list_size[1]*self.scale- 20 * self.scale
             ),
             scale=self.scale,
             margin=self.margin,
@@ -138,12 +132,12 @@ class drawingTemplate:
 
         self.cell_dict['Literature title'] = cell(
             name='Literature title',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(5, 15 + self.border_size/self.scale),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 50 * self.scale - self.border_size ,
-                self.y - self.margin / 2 - 40 * self.scale - self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale- 50 * self.scale - self.border_size ,
+                self.reference_point[1] + self.list_size[1]*self.scale- 40 * self.scale - self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -156,12 +150,12 @@ class drawingTemplate:
 
             self.cell_dict['Literature' + str(i)] = cell(
             name='Literature' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(15 + 3*self.border_size/self.scale, 5+ self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - (50 - (i-1)*5)  * self.scale - self.border_size ,
-                    self.y - self.margin / 2 - 35 * self.scale - 2*self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale - (50 - (i-1)*5)  * self.scale - self.border_size ,
+                    self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2*self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -172,12 +166,12 @@ class drawingTemplate:
 
         self.cell_dict['mass title'] = cell(
             name='mass title',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(5, 17 + self.border_size / self.scale),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 35 * self.scale - self.border_size ,
-                self.y - self.margin / 2 - 40 * self.scale - self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale - 35 * self.scale - self.border_size ,
+                self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -188,12 +182,12 @@ class drawingTemplate:
 
         self.cell_dict['mass'] = cell(
             name='mass',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(15 + 3 * self.border_size / self.scale, 17 + self.border_size / self.scale),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 35 * self.scale - self.border_size ,
-                self.y - self.margin / 2 - 35 * self.scale - 2 * self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale - 35 * self.scale - self.border_size ,
+                self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2 * self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -203,12 +197,12 @@ class drawingTemplate:
             font_size= int( self.scale*4))
         self.cell_dict['scale title'] = cell(
             name='scale title',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(5, 18 + self.border_size/self.scale),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 18 * self.scale - self.border_size ,
-                self.y - self.margin / 2 - 40 * self.scale - self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale - 18 * self.scale - self.border_size ,
+                self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -218,12 +212,12 @@ class drawingTemplate:
             font_size= int( self.scale*4))
         self.cell_dict['scale'] = cell(
             name='scale',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(15 + 3*self.border_size/self.scale , 18 + self.border_size/self.scale),
             start_point=(
-                self.x - self.margin / 2 - self.margin_right - 18 * self.scale - self.border_size ,
-                self.y - self.margin / 2 - 35 * self.scale - 2*self.border_size
+                self.reference_point[0] + self.list_size[0]*self.scale- 18 * self.scale - self.border_size ,
+                self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2*self.border_size
             ),
             scale=self.scale,
             margin=self.margin,
@@ -236,50 +230,48 @@ class drawingTemplate:
 
             self.cell_dict['date' + str(i)] = cell(
             name='date' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 15 + self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 135 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 135 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
                 border_size=self.border_size,
                 text=cur_text,
                 font = self.font,
-                font_size= int( self.scale*2))
+                font_size= int( self.scale*4))
         for i in range(0,11):
             cur_text = self.podl_text[i]
 
             self.cell_dict['podl' + str(i)] = cell(
             name='podl' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 20 + self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 155 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 155 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
                 border_size=self.border_size,
                 text=cur_text,
                 font = self.font,
-                font_size= int( self.scale*2))
+                font_size= int( self.scale*4))
 
         for i in range(0,11):
             cur_text = self.N_doc_text[i]
 
             self.cell_dict['N doc' + str(i)] = cell(
             name='N doc' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 29 + self.border_size/self.scale),
-                start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 184 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
-                ),
+                start_point=(self.reference_point[0] + self.list_size[0]*self.scale  - 184 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size),
                 scale=self.scale,
                 margin=self.margin,
                 border_size=self.border_size,
@@ -292,12 +284,12 @@ class drawingTemplate:
 
             self.cell_dict['Change' + str(i)] = cell(
             name='Change' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 13 + self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 197 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 197 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -311,12 +303,12 @@ class drawingTemplate:
 
             self.cell_dict['List' + str(i)] = cell(
             name='List' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 13 + self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 210 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 210 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -341,12 +333,12 @@ class drawingTemplate:
 
             self.cell_dict['info' + str(i)] = cell(
             name='info' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(5 + self.border_size/self.scale, 26 + self.border_size/self.scale),
                 start_point=(
-                    self.x - self.margin / 2 - self.margin_right - 210 * self.scale ,
-                    self.y - self.margin / 2 - (55 - 5*(i)) * self.scale - self.border_size
+                    self.reference_point[0] + self.list_size[0]*self.scale  - 210 * self.scale ,
+                    self.reference_point[1] + self.list_size[1]*self.scale - (55 - 5*(i)) * self.scale - self.border_size
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -599,7 +591,321 @@ class drawingTemplate:
         #     font = self.font,
         #     font_size= int( self.scale*4),
         #     text_rotate=90)
-
+    # def rescale_cell(self):
+    #     print(self.list_size[0])
+    #     self.cell_dict['document_designation down'].scale = self.scale
+    #     self.cell_dict['document_designation down'].font_size = int(self.scale * 10)
+    #     self.cell_dict['document_designation down'].height ,\
+    #     self.cell_dict['document_designation down'].width = \
+    #         (6*self.scale + self.border_size/self.scale, 48*self.scale)
+    #     self.cell_dict['document_designation down'].point_x, \
+    #     self.cell_dict['document_designation down'].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 48 * self.scale**2 ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale - 55 * self.scale - self.border_size)
+    #     self.cell_dict['document_designation down'].original_point_x, \
+    #     self.cell_dict['document_designation down'].original_point_y = \
+    #     self.cell_dict['document_designation down'].point_x, self.cell_dict['document_designation down'].point_y
+    #     self.cell_dict['document_designation down'].redraw()
+    #     # #---------------------------------------------------
+    #     self.cell_dict['document_designation up'].scale = self.scale
+    #     self.cell_dict['document_designation up'].font_size = int(self.scale * 10)
+    #     self.cell_dict['document_designation up'].height ,\
+    #     self.cell_dict['document_designation up'].width= \
+    #         (5.6*2.5 + self.border_size/self.scale, 48*self.scale)
+    #     self.cell_dict['document_designation up'].point_x, \
+    #     self.cell_dict['document_designation up'].point_y = (self.reference_point[0],self.reference_point[1])
+    #     self.cell_dict['document_designation up'].original_point_x, \
+    #     self.cell_dict['document_designation up'].original_point_y = \
+    #     self.cell_dict['document_designation up'].point_x, \
+    #     self.cell_dict['document_designation up'].point_y
+    #     self.cell_dict['document_designation up'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['name'].scale = self.scale
+    #     self.cell_dict['name'].font_size = int(self.scale * 12)
+    #     self.cell_dict['name'].height ,\
+    #     self.cell_dict['name'].width= \
+    #         (25 + self.border_size / self.scale, 28*self.scale)
+    #     self.cell_dict['name'].point_x, \
+    #     self.cell_dict['name'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale - 120 * self.scale ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['name'].original_point_x, \
+    #     self.cell_dict['name'].original_point_y = \
+    #     self.cell_dict['name'].point_x, \
+    #     self.cell_dict['name'].point_y
+    #     self.cell_dict['name'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['material'].scale = self.scale
+    #     self.cell_dict['material'].font_size = int(self.scale * 6)
+    #     self.cell_dict['material'].height ,\
+    #     self.cell_dict['material'].width= \
+    #         (15 + self.border_size/self.scale, 28*self.scale)
+    #     self.cell_dict['material'].point_x, \
+    #     self.cell_dict['material'].point_y =(
+    #                 self.reference_point[0] + self.list_size[0]*self.scale- 120* self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- 15 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['material'].original_point_x, \
+    #     self.cell_dict['material'].original_point_y = \
+    #     self.cell_dict['material'].point_x, \
+    #     self.cell_dict['material'].point_y
+    #     self.cell_dict['material'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['author'].scale = self.scale
+    #     self.cell_dict['author'].font_size = int(self.scale * 12)
+    #     self.cell_dict['author'].height ,\
+    #     self.cell_dict['author'].width= \
+    #         (15 + self.border_size/self.scale ,20*self.scale + self.border_size/self.scale)
+    #     self.cell_dict['author'].point_x, \
+    #     self.cell_dict['author'].point_y =(
+    #                 self.reference_point[0] + self.list_size[0]*self.scale- 50* self.scale - self.border_size ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- 15 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['author'].original_point_x, \
+    #     self.cell_dict['author'].original_point_y = \
+    #     self.cell_dict['author'].point_x, \
+    #     self.cell_dict['author'].point_y
+    #     self.cell_dict['author'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['list number'].scale = self.scale
+    #     self.cell_dict['list number'].font_size = int(self.scale * 5)
+    #     self.cell_dict['list number'].height ,\
+    #     self.cell_dict['list number'].width= \
+    #         (5 ,8*self.scale + 2*self.border_size/self.scale)
+    #     self.cell_dict['list number'].point_x, \
+    #     self.cell_dict['list number'].point_y =(
+    #                 self.reference_point[0] + self.list_size[0]*self.scale- 50* self.scale - self.border_size ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- 20 * self.scale
+    #         )
+    #     self.cell_dict['list number'].original_point_x, \
+    #     self.cell_dict['list number'].original_point_y = \
+    #     self.cell_dict['list number'].point_x, \
+    #     self.cell_dict['list number'].point_y
+    #     self.cell_dict['list number'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['list count'].scale = self.scale
+    #     self.cell_dict['list count'].font_size = int(self.scale * 5)
+    #     self.cell_dict['list count'].height ,\
+    #     self.cell_dict['list count'].width= \
+    #         (5 , 12*self.scale)
+    #     self.cell_dict['list count'].point_x, \
+    #     self.cell_dict['list count'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale- 30 * self.scale ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale- 20 * self.scale
+    #         )
+    #     self.cell_dict['list count'].original_point_x, \
+    #     self.cell_dict['list count'].original_point_y = \
+    #     self.cell_dict['list count'].point_x, \
+    #     self.cell_dict['list count'].point_y
+    #     self.cell_dict['list count'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['Literature title'].scale = self.scale
+    #     self.cell_dict['Literature title'].font_size = int(self.scale * 4)
+    #     self.cell_dict['Literature title'].height ,\
+    #     self.cell_dict['Literature title'].width= \
+    #         (5, 6*self.scale + self.border_size/self.scale)
+    #     self.cell_dict['Literature title'].point_x, \
+    #     self.cell_dict['Literature title'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale- 50 * self.scale - self.border_size ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale- 40 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['Literature title'].original_point_x, \
+    #     self.cell_dict['Literature title'].original_point_y = \
+    #     self.cell_dict['Literature title'].point_x, \
+    #     self.cell_dict['Literature title'].point_y
+    #     self.cell_dict['Literature title'].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(1, 4):
+    #         self.cell_dict['Literature' + str(i)].scale = self.scale
+    #         self.cell_dict['Literature' + str(i)].font_size = int(self.scale * 4)
+    #         self.cell_dict['Literature' + str(i)].height, \
+    #         self.cell_dict['Literature' + str(i)].width = \
+    #             (6*self.scale + 3*self.border_size/self.scale, 2*self.scale + self.border_size/self.scale)
+    #         self.cell_dict['Literature' + str(i)].point_x, \
+    #         self.cell_dict['Literature' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale - (50 - (i-1)*5)  * self.scale - self.border_size ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2*self.border_size
+    #             )
+    #         self.cell_dict['Literature' + str(i)].original_point_x, \
+    #         self.cell_dict['Literature' + str(i)].original_point_y = \
+    #             self.cell_dict['Literature' + str(i)].point_x, \
+    #             self.cell_dict['Literature' + str(i)].point_y
+    #         self.cell_dict['Literature' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['mass title'].scale = self.scale
+    #     self.cell_dict['mass title'].font_size = int(self.scale * 4)
+    #     self.cell_dict['mass title'].height ,\
+    #     self.cell_dict['mass title'].width= \
+    #         (2*self.scale, int(6.8*self.scale) + self.border_size / self.scale)
+    #     self.cell_dict['mass title'].point_x, \
+    #     self.cell_dict['mass title'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale - 35 * self.scale - self.border_size ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['mass title'].original_point_x, \
+    #     self.cell_dict['mass title'].original_point_y = \
+    #     self.cell_dict['mass title'].point_x, \
+    #     self.cell_dict['mass title'].point_y
+    #     self.cell_dict['mass title'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['mass'].scale = self.scale
+    #     self.cell_dict['mass'].font_size = int(self.scale * 4)
+    #     self.cell_dict['mass'].height ,\
+    #     self.cell_dict['mass'].width= \
+    #         (6*self.scale + 3 * self.border_size / self.scale, int(6.8*self.scale) + self.border_size / self.scale)
+    #     self.cell_dict['mass'].point_x, \
+    #     self.cell_dict['mass'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale - 35 * self.scale - self.border_size ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2 * self.border_size
+    #         )
+    #     self.cell_dict['mass'].original_point_x, \
+    #     self.cell_dict['mass'].original_point_y = \
+    #     self.cell_dict['mass'].point_x, \
+    #     self.cell_dict['mass'].point_y
+    #     self.cell_dict['mass'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['scale title'].scale = self.scale
+    #     self.cell_dict['scale title'].font_size = int(self.scale * 4)
+    #     self.cell_dict['scale title'].height ,\
+    #     self.cell_dict['scale title'].width= \
+    #         (2*self.scale, int(7.2*self.scale) + self.border_size/self.scale)
+    #     self.cell_dict['scale title'].point_x, \
+    #     self.cell_dict['scale title'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale - 18 * self.scale - self.border_size ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale - 40 * self.scale - self.border_size
+    #         )
+    #     self.cell_dict['scale title'].original_point_x, \
+    #     self.cell_dict['scale title'].original_point_y = \
+    #     self.cell_dict['scale title'].point_x, \
+    #     self.cell_dict['scale title'].point_y
+    #     self.cell_dict['scale title'].redraw()
+    #     # ---------------------------------------------------
+    #     self.cell_dict['scale'].scale = self.scale
+    #     self.cell_dict['scale'].font_size = int(self.scale * 8)
+    #     self.cell_dict['scale'].height ,\
+    #     self.cell_dict['scale'].width= \
+    #         (6*self.scale + 3*self.border_size/self.scale , int(7.2*self.scale) + self.border_size/self.scale)
+    #     self.cell_dict['scale'].point_x, \
+    #     self.cell_dict['scale'].point_y =(
+    #             self.reference_point[0] + self.list_size[0]*self.scale- 18 * self.scale - self.border_size ,
+    #             self.reference_point[1] + self.list_size[1]*self.scale - 35 * self.scale - 2*self.border_size
+    #         )
+    #     self.cell_dict['scale'].original_point_x, \
+    #     self.cell_dict['scale'].original_point_y = \
+    #     self.cell_dict['scale'].point_x, \
+    #     self.cell_dict['scale'].point_y
+    #     self.cell_dict['scale'].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(0, 11):
+    #         self.cell_dict['date' + str(i)].scale = self.scale
+    #         self.cell_dict['date' + str(i)].font_size = int(self.scale * 2)
+    #         self.cell_dict['date' + str(i)].height, \
+    #         self.cell_dict['date' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, 6*self.scale + self.border_size/self.scale)
+    #         self.cell_dict['date' + str(i)].point_x, \
+    #         self.cell_dict['date' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 135 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['date' + str(i)].original_point_x, \
+    #         self.cell_dict['date' + str(i)].original_point_y = \
+    #             self.cell_dict['date' + str(i)].point_x, \
+    #             self.cell_dict['date' + str(i)].point_y
+    #         self.cell_dict['date' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(0, 11):
+    #         self.cell_dict['podl' + str(i)].scale = self.scale
+    #         self.cell_dict['podl' + str(i)].font_size = int(self.scale * 2)
+    #         self.cell_dict['podl' + str(i)].height, \
+    #         self.cell_dict['podl' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, 8*self.scale + self.border_size/self.scale)
+    #         self.cell_dict['podl' + str(i)].point_x, \
+    #         self.cell_dict['podl' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 155 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['podl' + str(i)].original_point_x, \
+    #         self.cell_dict['podl' + str(i)].original_point_y = \
+    #             self.cell_dict['podl' + str(i)].point_x, \
+    #             self.cell_dict['podl' + str(i)].point_y
+    #         self.cell_dict['podl' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(0, 11):
+    #         self.cell_dict['N doc' + str(i)].font_size = int(self.scale * 4)
+    #         self.cell_dict['N doc' + str(i)].height, \
+    #         self.cell_dict['N doc' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, int(11.6*self.scale) + self.border_size/self.scale)
+    #         self.cell_dict['N doc' + str(i)].point_x, \
+    #         self.cell_dict['N doc' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 184 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['N doc' + str(i)].original_point_x, \
+    #         self.cell_dict['N doc' + str(i)].original_point_y = \
+    #             self.cell_dict['N doc' + str(i)].point_x, \
+    #             self.cell_dict['N doc' + str(i)].point_y
+    #         self.cell_dict['N doc' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(0, 5):
+    #         self.cell_dict['Change' + str(i)].font_size = int(self.scale * 4)
+    #         self.cell_dict['Change' + str(i)].height, \
+    #         self.cell_dict['Change' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, int(5.2*self.scale) + self.border_size/self.scale)
+    #         self.cell_dict['Change' + str(i)].point_x, \
+    #         self.cell_dict['Change' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 197 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['Change' + str(i)].original_point_x, \
+    #         self.cell_dict['Change' + str(i)].original_point_y = \
+    #             self.cell_dict['Change' + str(i)].point_x, \
+    #             self.cell_dict['Change' + str(i)].point_y
+    #         self.cell_dict['Change' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(0, 5):
+    #         self.cell_dict['List' + str(i)].font_size = int(self.scale * 4)
+    #         self.cell_dict['List' + str(i)].height, \
+    #         self.cell_dict['List' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, int(5.2*self.scale) + self.border_size/self.scale)
+    #         self.cell_dict['List' + str(i)].point_x, \
+    #         self.cell_dict['List' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 210 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale- (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['List' + str(i)].original_point_x, \
+    #         self.cell_dict['List' + str(i)].original_point_y = \
+    #             self.cell_dict['List' + str(i)].point_x, \
+    #             self.cell_dict['List' + str(i)].point_y
+    #         self.cell_dict['List' + str(i)].redraw()
+    #     # ---------------------------------------------------
+    #     for i in range(5,11):
+    #         cur_text = ' '
+    #         if (i == 5):
+    #             cur_text = 'Разраб'
+    #         if (i == 6):
+    #             cur_text = 'Пров'
+    #         if (i == 7):
+    #             cur_text = 'Т.контр'
+    #         if (i == 9):
+    #             cur_text = 'Н.контр'
+    #         if (i == 10):
+    #             cur_text = 'Утв'
+    #
+    #         self.cell_dict['info' + str(i)].font_size = int(self.scale * 5)
+    #         self.cell_dict['info' + str(i)].height, \
+    #         self.cell_dict['info' + str(i)].width = \
+    #             (2*self.scale + self.border_size/self.scale, int(10.4*self.scale) + self.border_size/self.scale)
+    #         self.cell_dict['info' + str(i)].point_x, \
+    #         self.cell_dict['info' + str(i)].point_y = (
+    #                 self.reference_point[0] + self.list_size[0]*self.scale  - 210 * self.scale ,
+    #                 self.reference_point[1] + self.list_size[1]*self.scale - (55 - 5*(i)) * self.scale - self.border_size
+    #             )
+    #         self.cell_dict['info' + str(i)].original_point_x, \
+    #         self.cell_dict['info' + str(i)].original_point_y = \
+    #             self.cell_dict['info' + str(i)].point_x, \
+    #             self.cell_dict['info' + str(i)].point_y
+    #         self.cell_dict['info' + str(i)].redraw()
     def set_base_text(self):
 
         # Открываем файл с данными
@@ -705,17 +1011,22 @@ class drawingTemplate:
                       'S\'_F\'',
                       'св.',
                       ]
-        self.figure_dict['common_roughness'] = roughness_measure(self.screen, self.colors, (700,40), size = (60,60),
-                                                                 font=self.font, text_designation = 'R20()')
+        common_roughness_size = (24*self.scale,24*self.scale)
+        self.figure_dict['common_roughness'] = \
+            roughness_measure(self.surface, self.colors,
+            (self.reference_point[0] + self.list_size[0]*self.scale - common_roughness_size[0] - self.border_size*2,
+            self.reference_point[1] + common_roughness_size[1] - common_roughness_size[1]*1.5), size = common_roughness_size,
+            font=self.font, text_designation = 'R20()')
+
         for i in range(0,12):
             self.cell_dict['param ' + str(i)] = cell(
                 name='param ' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=(param_height + self.border_size / self.scale,param_wight  ),
                 start_point=(
-                    self.x - self.margin_right - self.margin  / 2 - param_wight  * self.scale   ,
-                    self.margin / 2 + 20 * self.scale - self.border_size + (param_height*self.scale + self.border_size)*i
+                    self.reference_point[0] + self.list_size[0]*self.scale - param_wight  * self.scale,
+                    self.reference_point[1] + 8*self.scale * self.scale - self.border_size + (param_height*self.scale + self.border_size)*i
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -726,12 +1037,12 @@ class drawingTemplate:
 
             self.cell_dict['param title ' + str(i)] = cell(
                 name='param title ' + str(i),
-                screen=self.screen,
+                screen=self.surface,
                 colors=self.colors,
                 size=( param_height + self.border_size / self.scale, param_wight_title),
                 start_point=(
-                    self.x - self.margin_right - self.margin / 2 - param_wight_title  * self.scale - param_wight*self.scale + self.border_size ,
-                    self.margin / 2 + 20 * self.scale - self.border_size + (param_height*self.scale + self.border_size)*i
+                    self.reference_point[0] + self.list_size[0]*self.scale - param_wight_title  * self.scale - param_wight*self.scale + self.border_size ,
+                    self.reference_point[1] +8*self.scale * self.scale - self.border_size + (param_height*self.scale + self.border_size)*i
                 ),
                 scale=self.scale,
                 margin=self.margin,
@@ -742,12 +1053,12 @@ class drawingTemplate:
             for i in range(12, 15):
                 self.cell_dict['param ' + str(i)] = cell(
                     name='param ' + str(i),
-                    screen=self.screen,
+                    screen=self.surface,
                     colors=self.colors,
                     size=(param_height + self.border_size / self.scale, param_wight_title),
                     start_point=(
-                        self.x - self.margin_right - self.margin / 2 - param_wight_title * self.scale,
-                        self.margin / 2 + 20 * self.scale - self.border_size + (param_height *self.scale + self.border_size) * i
+                        self.reference_point[0] + self.list_size[0]*self.scale - param_wight_title * self.scale,
+                        self.reference_point[1] + 8*self.scale * self.scale - self.border_size + (param_height *self.scale + self.border_size) * i
                     ),
                     scale=self.scale,
                     margin=self.margin,
@@ -758,12 +1069,12 @@ class drawingTemplate:
 
                 self.cell_dict['param title ' + str(i)] = cell(
                     name='param title ' + str(i),
-                    screen=self.screen,
+                    screen=self.surface,
                     colors=self.colors,
                     size=(param_height + self.border_size / self.scale, param_wight),
                     start_point=(
-                        self.x - self.margin_right - self.margin / 2 - param_wight_title * self.scale - param_wight * self.scale + self.border_size,
-                        self.margin / 2 + 20 * self.scale - self.border_size + (param_height *self.scale + self.border_size) * i
+                        self.reference_point[0] + self.list_size[0]*self.scale - param_wight_title * self.scale - param_wight * self.scale + self.border_size,
+                        self.reference_point[1] +8*self.scale * self.scale - self.border_size + (param_height *self.scale + self.border_size) * i
                     ),
                     scale=self.scale,
                     margin=self.margin,
@@ -771,7 +1082,6 @@ class drawingTemplate:
                     text=param_list[i],
                     font=self.font,
                     font_size= int( self.scale*5))
-
     def qr_genrate(self):
         img = qrcode.make(f'lens_width:{self.lens_width}'
                           f'lens_diametr:{self.lens_diametr}'
@@ -781,38 +1091,71 @@ class drawingTemplate:
         img.save('QR.png')
         image = pygame.image.load('QR.png')
         image = pygame.transform.scale(image, self.qr_code)
-        self.screen.blit(image, self.qr_place)
+        self.surface.blit(image, self.qr_place)
+    def change_reference_point(self):
+        try:
+            for l in self.lens:
+                l.blit_point = \
+                (l.original_blit_point[0] + self.reference_point[0],
+                 l.original_blit_point[1] + self.reference_point[1])
+            self.init_draw_cell()
+            self.draw_param_table()
+            # for key in self.cell_dict.keys():
+            #     if key == 'mass':
+            #         print('point_x', self.cell_dict[key].point_x)
+            #         print('original_point_x', self.cell_dict[key].original_point_x)
+            #         print('reference_point',self.reference_point[0])
+            #
+            #     self.cell_dict[key].point_x = self.cell_dict[key].original_point_x + self.reference_point[0]
+            #     self.cell_dict[key].point_y = self.cell_dict[key].original_point_y + self.reference_point[1]
+            #
+            #     if key == 'mass': print('POST point_x', self.cell_dict[key].point_x)
+
+            for key in self.figure_dict.keys():
+                self.figure_dict[key].blit_point = \
+                    (self.figure_dict[key].original_blit_point[0] + self.reference_point[0],
+                     self.figure_dict[key].original_blit_point[1] + self.reference_point[1])
+        except Exception as e:
+            print(e)
+            print('Что-то пошло не так во время отрисовки линзы, если одна из клеток пуста, то все ок')
     def total_redraw(self, scale = 1):
+
+
         try:
             for l in self.lens:
                 l.drawLens(scale)
         except Exception as e:
             print(e)
             print('Что-то пошло не так во время отрисовки линзы, если одна из клеток пуста, то все ок')
-        # for l in self.lens:
-        #     l.drawLens()
 
-        rect = pygame.Rect(self.margin / 2 + self.margin_left,
-                           self.margin / 2 ,
+        rect = pygame.Rect(self.reference_point[0],
+                           self.reference_point[1] ,
                            self.list_size[0]*self.scale,
                            self.list_size[1]*self.scale)
-        pygame.draw.rect(self.screen, self.colors['border'], rect, self.border_size)
+        pygame.draw.rect(self.surface, self.colors['border'], rect, self.border_size)
         self.cell_dict['document_designation up'].text = self.cell_dict['document_designation down'].text
-        # self.qr_genrate()
 
         for key in self.cell_dict.keys():
+
+            # self.cell_dict[key].point_x = self.cell_dict[key].original_point_x + self.reference_point[0]
+            # self.cell_dict[key].point_y = self.cell_dict[key].original_point_y + self.reference_point[1]
             self.cell_dict[key].redraw()
         for key in self.figure_dict.keys():
+            # self.figure_dict[key].blit_point = \
+            #     (self.figure_dict[key].original_blit_point[0] + self.reference_point[0],
+            #      self.figure_dict[key].original_blit_point[1] + self.reference_point[1])
+
             self.figure_dict[key].draw()
-            self.screen.blit(self.figure_dict[key].surface, self.figure_dict[key].blit_point)
+            self.surface.blit(self.figure_dict[key].surface, self.figure_dict[key].blit_point)
         for i in self.imgList:
             i.draw()
 
-
+        self.screen.blit(self.surface, self.blit_point)
+        self.surface.fill(self.colors['transparent'])
     def checkSelectFigure(self, click_pos):
 
         for l in self.lens:
-            surface_offset = (l.point_x,l.point_y)
+            surface_offset = (l.blit_point[0],l.blit_point[1])
             # Получаем координаты нажатия мыши относительно главного окна
             click_pos_absolute = (click_pos[0] - surface_offset[0], click_pos[1] - surface_offset[1])
             # Выводим координаты нажатия мыши относительно главного окна
@@ -831,6 +1174,7 @@ class drawingTemplate:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Получение координат клика
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            mouse_x, mouse_y = mouse_x - self.blit_point[0], mouse_y - self.blit_point[1]
             if (self.checkSelectFigure((mouse_x, mouse_y))):
                 return self.checkSelectFigure((mouse_x, mouse_y))
             print('Ищем изображение')
@@ -842,14 +1186,9 @@ class drawingTemplate:
                 return self.selected_cell
 
         return None
-
-    def add_lens(self, start_point = False,
-                        width = False,
-                        diametr = False,
-                        R1 = False,
-                        R2 = False,
-                        border_size = False,
-                        type = False ):
+    def add_lens(self, start_point = False, width = False,
+                diametr = False, R1 = False, R2 = False,
+                border_size = False, type = False ):
         if not (start_point): start_point = (0, 0)
         if not (width): width = self.lens_width
         if not (diametr): diametr = self.lens_diametr
@@ -860,7 +1199,7 @@ class drawingTemplate:
 
         print('NEW LENS')
 
-        self.lens.append(lens(self.screen, self.colors, start_point,
+        self.lens.append(lens(self.surface, self.colors, start_point,
                          width, diametr, R1, R2,
                               border_size, type,
                          font = self.font ))
@@ -871,11 +1210,9 @@ class drawingTemplate:
         if element in self.imgList:
             self.imgList.remove(element)
         self.current_figure = None
-
     def add_img(self):
         new_img = image((50, 50), self.screen)
         self.imgList.append(new_img)
-
     def delete_signature(self):
 
         try:
@@ -957,16 +1294,23 @@ class drawingTemplate:
         self.margin_up = margin_up
         self.margin_right = margin_right
 
-        self.lens_width = 150
-        self.lens_diametr = 250
-        self.lens_R1 = 240
-        self.lens_R2 = 200
-        self.current_type = 10
+        self.surface = pygame.Surface((self.list_size[0]*self.scale,self.list_size[1]*self.scale ),  pygame.SRCALPHA)
 
-        self.left_facet_type = 0
-        self.right_facet_type = 0
-        self.left_facet_size = 40
-        self.right_facet_size = 40
+        self.blit_point = (self.margin/2 + self.margin_left,
+                           self.margin/2 + self.margin_up)
+        self.original_blit_point = self.blit_point
+        self.reference_point = (0,0)
+
+        self.lens_width = int(60*self.scale)
+        self.lens_diametr = int(100*self.scale)
+        self.lens_R1 = int(96*self.scale)
+        self.lens_R2 = int(80*self.scale)
+        self.current_type = int(4*self.scale)
+
+        self.left_facet_type = int(0)
+        self.right_facet_type = int(0)
+        self.left_facet_size = int(16*self.scale)
+        self.right_facet_size = int(16*self.scale)
 
         self.save_file = save_file
 
@@ -977,8 +1321,8 @@ class drawingTemplate:
         self.qr_code = (200, 200)
         self.qr_place = (450, 550)
         self.lens = []
-        self.start_point = (0, 0)
-        self.lens.append(lens(self.screen, self.colors, self.start_point,
+        self.start_point = (-250, -100)
+        self.lens.append(lens(self.surface, self.colors, self.start_point,
                          self.lens_width, self.lens_diametr, self.lens_R1,
                          self.lens_R2, self.border_size, self.current_type,
                          font = self.font))

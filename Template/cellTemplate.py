@@ -14,11 +14,8 @@ class cell:
     def set_base_border_color(self):
 
         self.current_border_color = self.base_border_color
-
     def set_selected_border_color(self):
         self.current_border_color = self.selected_color
-
-
     def redraw(self):
         self.font = pygame.font.Font(self.font_patch, self.font_size)
         self.text_render = self.font.render(
@@ -80,6 +77,8 @@ class cell:
         self.point_x = start_point[0]
         self.point_y = start_point[1]
 
+        self.original_point_x = start_point[0]
+        self.original_point_y = start_point[1]
 
         self.base_text_color = colors['text']
         self.base_border_color = colors['border']

@@ -12,6 +12,7 @@ class arrow:
 
         self.start_point = start_point
         self.blit_point = start_point
+        self.original_blit_point = self.blit_point
         self.surface = surface
         self.colors = colors
 

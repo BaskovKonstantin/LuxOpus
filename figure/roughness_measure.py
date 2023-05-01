@@ -12,6 +12,7 @@ class roughness_measure:
         self.screen = screen
         self.colors = colors
         self.blit_point = blit_point
+        self.original_blit_point = self.blit_point
         self.angle_rotate = angle_rotate
         self.width, self.height = size
 
