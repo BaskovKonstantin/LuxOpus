@@ -1011,7 +1011,7 @@ class drawingTemplate:
                       'S\'_F\'',
                       'св.',
                       ]
-        common_roughness_size = (24*self.scale,24*self.scale)
+        common_roughness_size = (30*self.scale,30*self.scale)
         self.figure_dict['common_roughness'] = \
             roughness_measure(self.surface, self.colors,
             (self.reference_point[0] + self.list_size[0]*self.scale - common_roughness_size[0] - self.border_size*2,

@@ -75,7 +75,6 @@ class line_measure:
                 else:
                     return False
 
-
     def draw(self):
         self.measure_surface = pygame.Surface((self.width, abs(self.measure_shift*self.scale )), pygame.SRCALPHA)
 

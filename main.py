@@ -105,7 +105,7 @@ controlPanelDict['Surface B'] = controlPanel(dt,
                                              colors, interfaceBorderSize)
 
 controlPanelDict['Surface B'].inputBoxDict, controlPanelDict['Surface B'].buttonDict = \
-    initBtn.initSurfaceA(dt, controlPanelDict['Surface B'].surface, colors,
+    initBtn.initSurfaceB(dt, controlPanelDict['Surface B'].surface, colors,
                          border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef  )
 
 controlPanelDict['Focus'] = controlPanel(dt,

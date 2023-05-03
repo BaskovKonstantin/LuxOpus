@@ -1,8 +1,11 @@
+import json
+
 from GUI.button import button
 from GUI.inputBox import inputBox
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
+from tkinter import filedialog
 import pygame
 import math
 import sys
@@ -487,6 +490,87 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     button_size_small = (int(scale*10), int(scale*10))
 
     def roughness(text):  # передача i в качестве аргумента по умолчанию
+        drawingTemplate.current_figure.measureDict['roughness_measure_1'].text_base_len = str(text)
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['roughness'] = \
+        inputBox(interfceSurfce,
+                (int(scale*57),int(scale*3)),
+                button_size, colors, text='12', font=font,
+                onChangeAction=lambda text: roughness(text),
+                sign = 'Шероховатость')
+
+    def general_error(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['general error'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57), int(scale*15)),
+                 button_size, colors, text='???', font=font,
+                 onChangeAction=lambda text: general_error(text),
+                 sign='Общая ошибка')
+
+    def general_error_2(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['general error 2'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57) + button_size[0]  + 5, int(scale*15)),
+                 button_size_small, colors, text='???', font=font,
+                 onChangeAction=lambda text: general_error_2(text),
+                 sign='')
+
+    def Local_error(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['Local error'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57), int(scale*27)),
+                 button_size, colors, text='???', font=font,
+                 onChangeAction=lambda text: Local_error(text),
+                 sign='Местная ошибка')
+
+    def Purity(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['Purity'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57), int(scale*39)),
+                 button_size, colors, text='???', font=font,
+                 onChangeAction=lambda text: Purity(text),
+                 sign='Чистота')
+
+    def Light_diameter(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['Light diameter'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57), int(scale*51)),
+                 button_size, colors, text='???', font=font,
+                 onChangeAction=lambda text: Light_diameter(text),
+                 sign='Световой диаметр')
+
+    def light_diameter_2(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['light diameter 2'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57) + button_size[0]  + 5, int(scale*51)),
+                 button_size_small, colors, text='???', font=font,
+                 onChangeAction=lambda text: light_diameter_2(text),
+                 sign='')
+
+    def customer_radius(text):  # передача i в качестве аргумента по умолчанию
+        print('INPUT BOX TEXT', text)
+    inputBoxDict['customer radius'] = \
+        inputBox(interfceSurfce,
+                 (int(scale*57), int(scale*63)),
+                 button_size, colors, text='???', font=font,
+                 onChangeAction=lambda text: customer_radius(text),
+                 sign='Радиус заказчика')
+
+
+    return inputBoxDict, buttonDict
+def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
+    buttonDict = {}
+    inputBoxDict = {}
+    button_size = (int(scale*40), int(scale*10))
+    button_size_small = (int(scale*10), int(scale*10))
+
+    def roughness(text):  # передача i в качестве аргумента по умолчанию
         print('INPUT BOX TEXT', text)
     inputBoxDict['roughness'] = \
         inputBox(interfceSurfce,
@@ -605,17 +689,23 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
 
 
     def PDF():  # передача i в качестве аргумента по умолчанию
-        original_size = (drawingTemplate.surface.get_width(), drawingTemplate.surface.get_height())
+        save_file = 'config.json'
+        with open(save_file, encoding='utf-8') as f:
+            # Читаем данные из файла
+            data = json.load(f)
         scale = 5
         drawingTemplate.scale = scale
         drawingTemplate.current_figure.scale = scale/2.5
+        drawingTemplate.reference_point = (0,0)
         drawingTemplate.init_draw_cell()
         drawingTemplate.draw_param_table()
         drawingTemplate.total_redraw()
 
-        # Имя файла изображения
-        image_filename = "screenshot"
-        pygame.image.save(drawingTemplate.surface,image_filename+".png")
+
+        image_filename = filedialog.asksaveasfilename(defaultextension='.pdf')
+
+        # Создание PDF-документа
+        pygame.image.save(drawingTemplate.surface,image_filename[:-4]+".jpg")
 
 
         # Создание PDF-документа
@@ -623,7 +713,7 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
         pdf_canvas = canvas.Canvas(pdf_filename, pagesize= (int(drawingTemplate.surface.get_width()), int(drawingTemplate.surface.get_height())))
 
         # Рисование изображения на PDF-документе
-        with open(image_filename+".png", "rb") as f:
+        with open(image_filename[:-4]+".jpg", "rb") as f:
             image_reader = ImageReader(f)
             pdf_canvas.drawImage(image_reader, 0, 0, width=int(drawingTemplate.surface.get_width()), height=int(drawingTemplate.surface.get_height()))
 
@@ -631,6 +721,13 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
         pdf_canvas.showPage()
         pdf_canvas.save()
         print('MAKE image')
+        scale = float(data['Coef'])
+        drawingTemplate.scale = scale
+        drawingTemplate.current_figure.scale = scale/2.5
+        drawingTemplate.reference_point = (0,0)
+        drawingTemplate.init_draw_cell()
+        drawingTemplate.draw_param_table()
+        drawingTemplate.total_redraw()
 
     buttonDict[f'PDF'] = button(interfceSurfce, (5*int(scale*20), 0), button_size_big,
                                          colors, lambda : PDF(), 'PDF', font,
@@ -645,6 +742,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
     for i in range(1, 6):
         def buff(i=i):  # передача i в качестве аргумента по умолчанию
             drawingTemplate.current_figure.type = int(i)
+            print('TYPE ',i)
 
         buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
                                              colors, lambda i=i: buff(i), f'type {i}', font,
