@@ -1,5 +1,8 @@
 from GUI.button import button
 from GUI.inputBox import inputBox
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.utils import ImageReader
+from reportlab.pdfgen import canvas
 import pygame
 import math
 import sys
@@ -598,6 +601,39 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
 
     buttonDict[f'FlatFacetControlPanelGroup'] = button(interfceSurfce, (3*int(scale*20), 0), button_size_big,
                                          colors, lambda : swith_FlatFacetControlPanelGroup(), 'FlatFacet', font,
+                                         border_size=border_size)
+
+
+    def PDF():  # передача i в качестве аргумента по умолчанию
+        original_size = (drawingTemplate.surface.get_width(), drawingTemplate.surface.get_height())
+        scale = 5
+        drawingTemplate.scale = scale
+        drawingTemplate.current_figure.scale = scale/2.5
+        drawingTemplate.init_draw_cell()
+        drawingTemplate.draw_param_table()
+        drawingTemplate.total_redraw()
+
+        # Имя файла изображения
+        image_filename = "screenshot"
+        pygame.image.save(drawingTemplate.surface,image_filename+".png")
+
+
+        # Создание PDF-документа
+        pdf_filename = image_filename + ".pdf"
+        pdf_canvas = canvas.Canvas(pdf_filename, pagesize= (int(drawingTemplate.surface.get_width()), int(drawingTemplate.surface.get_height())))
+
+        # Рисование изображения на PDF-документе
+        with open(image_filename+".png", "rb") as f:
+            image_reader = ImageReader(f)
+            pdf_canvas.drawImage(image_reader, 0, 0, width=int(drawingTemplate.surface.get_width()), height=int(drawingTemplate.surface.get_height()))
+
+        # Завершение PDF-документа
+        pdf_canvas.showPage()
+        pdf_canvas.save()
+        print('MAKE image')
+
+    buttonDict[f'PDF'] = button(interfceSurfce, (5*int(scale*20), 0), button_size_big,
+                                         colors, lambda : PDF(), 'PDF', font,
                                          border_size=border_size)
 
     return inputBoxDict, buttonDict

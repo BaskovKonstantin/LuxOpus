@@ -148,8 +148,8 @@ controlPanelDict['parametr lens'].inputBoxDict, controlPanelDict['parametr lens'
                         controlPanelDict['parametr lens'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
-    controlPanelDict['parametr lens'].surface, colors, (-100,-100),
-    type = 1, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-120,-100)]
+    controlPanelDict['parametr lens'].surface, colors, (-10,-10),
+    type = 1, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-10,-10)]
 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
 
 
@@ -289,8 +289,16 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4:  # колесо мыши вверх
                 print("Колесо мыши вверх")
+                dt.scale += 0.1
+                dt.current_figure.scale += 0.1
+                dt.init_draw_cell()
+                dt.draw_param_table()
             elif event.button == 5:  # колесо мыши вниз
                 print("Колесо мыши вниз")
+                dt.scale += -0.1
+                dt.current_figure.scale += -0.1
+                dt.init_draw_cell()
+                dt.draw_param_table()
         elif event.type == pygame.VIDEORESIZE:
             size = (event.w, event.h)
             screen = pygame.display.set_mode(size, pygame.RESIZABLE)
@@ -365,14 +373,14 @@ while running:
             elif event.key == pygame.K_LEFT:
                 print("LEFT")
                 dt.scale += -0.1
-                dt.current_figure.scale += -0.1
+                dt.current_figure.scale += -0.04
                 dt.init_draw_cell()
                 dt.draw_param_table()
                 # dt.rescale_cell()
             elif event.key == pygame.K_RIGHT:
                 print("RIGHT")
                 dt.scale += 0.1
-                dt.current_figure.scale += 0.1
+                dt.current_figure.scale += 0.04
                 dt.init_draw_cell()
                 dt.draw_param_table()
                 # dt.rescale_cell()
@@ -422,7 +430,6 @@ while running:
 
                         current_input.selected_measure.blit_point = (prev_blit_point[0] - x_diff ,prev_blit_point[1] - y_diff)
 
-
                 else:
                     current_input.blit_point = (current_input.blit_point[0] -x_diff, current_input.blit_point[1]-y_diff)
                     current_input.original_blit_point = current_input.blit_point
@@ -443,7 +450,7 @@ while running:
                     type=2, font='fonts-GOST\\GOST_AU.TTF', scale=0.5,  right_facet_type=1), (-120, -100)]
                 imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
                     controlPanelDict['parametr lens'].surface, colors, (0, 0),
-                    type= dt.current_figure.type, font='fonts-GOST\\GOST_AU.TTF', scale=0.5), (-120, -100)]
+                    type= dt.current_figure.type, font='fonts-GOST\\GOST_AU.TTF', scale=0.5), (-10, -10)]
 
                 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
                 typeControlPanelGroup.controlPanelsDict = controlPanelDict

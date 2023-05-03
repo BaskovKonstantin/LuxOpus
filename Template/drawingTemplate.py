@@ -15,8 +15,8 @@ class drawingTemplate:
 
         self.mainRect = pygame.Rect(self.reference_point[0],
                                     self.reference_point[1],
-                           self.list_size[0],
-                           self.list_size[1])
+                           self.list_size[0]*self.scale,
+                           self.list_size[1]*self.scale)
         pygame.draw.rect(self.surface, self.colors['border'], self.mainRect, self.border_size)
 
         self.cell_dict['document_designation down'] = cell(
@@ -1119,10 +1119,14 @@ class drawingTemplate:
             print(e)
             print('Что-то пошло не так во время отрисовки линзы, если одна из клеток пуста, то все ок')
     def total_redraw(self, scale = 1):
-
+        self.surface = pygame.Surface((self.list_size[0] * self.scale, self.list_size[1] * self.scale), pygame.SRCALPHA)
+        self.init_draw_cell()
+        self.draw_param_table()
+        self.surface.fill(self.colors['background'])
 
         try:
             for l in self.lens:
+                l.screen = self.surface
                 l.drawLens(scale)
         except Exception as e:
             print(e)
@@ -1137,21 +1141,15 @@ class drawingTemplate:
 
         for key in self.cell_dict.keys():
 
-            # self.cell_dict[key].point_x = self.cell_dict[key].original_point_x + self.reference_point[0]
-            # self.cell_dict[key].point_y = self.cell_dict[key].original_point_y + self.reference_point[1]
             self.cell_dict[key].redraw()
         for key in self.figure_dict.keys():
-            # self.figure_dict[key].blit_point = \
-            #     (self.figure_dict[key].original_blit_point[0] + self.reference_point[0],
-            #      self.figure_dict[key].original_blit_point[1] + self.reference_point[1])
-
             self.figure_dict[key].draw()
             self.surface.blit(self.figure_dict[key].surface, self.figure_dict[key].blit_point)
         for i in self.imgList:
             i.draw()
 
         self.screen.blit(self.surface, self.blit_point)
-        self.surface.fill(self.colors['transparent'])
+
     def checkSelectFigure(self, click_pos):
 
         for l in self.lens:
@@ -1211,7 +1209,7 @@ class drawingTemplate:
             self.imgList.remove(element)
         self.current_figure = None
     def add_img(self):
-        new_img = image((50, 50), self.screen)
+        new_img = image((50, 50), self.surface)
         self.imgList.append(new_img)
     def delete_signature(self):
 
@@ -1232,7 +1230,7 @@ class drawingTemplate:
 
         self.cell_dict['sign ' + str(self.number_signature)] = signature(
             name='sign ' + str(self.number_signature),
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(15 + self.border_size / self.scale, 120),
             start_point=(
@@ -1253,7 +1251,7 @@ class drawingTemplate:
 
         self.cell_dict['sign 1'] = signature(
             name='sign 1',
-            screen=self.screen,
+            screen=self.surface,
             colors=self.colors,
             size=(15 + self.border_size / self.scale, 120),
             start_point=(
@@ -1321,7 +1319,7 @@ class drawingTemplate:
         self.qr_code = (200, 200)
         self.qr_place = (450, 550)
         self.lens = []
-        self.start_point = (-250, -100)
+        self.start_point = (-self.lens_width/4, self.lens_diametr/4)
         self.lens.append(lens(self.surface, self.colors, self.start_point,
                          self.lens_width, self.lens_diametr, self.lens_R1,
                          self.lens_R2, self.border_size, self.current_type,
