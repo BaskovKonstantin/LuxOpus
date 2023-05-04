@@ -8,17 +8,17 @@ class button:
         self.surface.blit(self.btnSurface, self.pos)
 
     def click(self):
-        self.action()
-        # try:
-        #
-        #     self.action()
-        # except Exception as e:
-        #     try:
-        #         self.action( self.text)
-        #     except:
-        #         print(e)
-        #         print(self.text)
-        #         print('ОШшибка при нажатии на кнопку')
+        # self.action()
+        try:
+
+            self.action()
+        except Exception as e:
+            try:
+                self.action( self.text)
+            except:
+                print(e)
+                print(self.text)
+                print('ОШшибка при нажатии на кнопку')
 
     def __init__(self, surface, pos, size,colors, action,
                  text = 'TEST', font = None, font_size=18,

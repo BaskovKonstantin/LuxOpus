@@ -381,6 +381,7 @@ class lens:
 
 
     def draw_faset_measure(self):
+        width = self.width*self.scale
 
         diametr = self.diametr*self.scale
         if (self.right_facet_type == 1):

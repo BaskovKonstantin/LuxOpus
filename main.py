@@ -191,44 +191,42 @@ flatFacetControlPanelGroup = controlPanelGroup(screen, colors,
                                         is_visible=False)
 
 
-controlFacetPanelDicr = {}
+controlFacetPanelDict = {}
 imgFacetSurfaceDict = {}
-controlFacetPanelDicr['parametr flat facet'] = controlPanel(dt,
+controlFacetPanelDict['parametr flat facet'] = controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/4, margin/8,
                                              flatFacetControlPanelGroup_size[0]*0.6, flatFacetControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
-controlFacetPanelDicr['parametr flat facet'].inputBoxDict, controlFacetPanelDicr['parametr flat facet'].buttonDict = \
+controlFacetPanelDict['parametr flat facet'].inputBoxDict, controlFacetPanelDict['parametr flat facet'].buttonDict = \
                         initBtn.initFlatFacetParamTypeBtn(dt,
-                        controlFacetPanelDicr['parametr flat facet'].surface, colors,
+                        controlFacetPanelDict['parametr flat facet'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 imgFacetSurfaceDict['lens_image FACET'] = [initLensTypeImageSurface(
-    controlFacetPanelDicr['parametr flat facet'].surface, colors, (0,0),
-    type = 3, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-100,-100)]
+    controlFacetPanelDict['parametr flat facet'].surface, colors, (0,0),
+    type = 3, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef ), (-10,-10)]
 
-controlFacetPanelDicr['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
+controlFacetPanelDict['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
 
-
-controlFacetPanelDicr['allowance']= controlPanel(dt,
+controlFacetPanelDict['allowance']= controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/2 + flatFacetControlPanelGroup_size[0]*0.6, margin/8,
                                              flatFacetControlPanelGroup_size[0]*0.25, flatFacetControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
-controlFacetPanelDicr['allowance'].inputBoxDict, controlFacetPanelDicr['allowance'].buttonDict = \
+controlFacetPanelDict['allowance'].inputBoxDict, controlFacetPanelDict['allowance'].buttonDict = \
                         initBtn.initAllowanceBtn(dt,
-                        controlFacetPanelDicr['allowance'].surface, colors,
+                        controlFacetPanelDict['allowance'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 
 
-
-controlFacetPanelDicr['measure type']= controlPanel(dt,
+controlFacetPanelDict['measure type']= controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/4, margin/5 + flatFacetControlPanelGroup_size[1]*0.7,
                                              flatFacetControlPanelGroup_size[0]*0.9, flatFacetControlPanelGroup_size[1]*0.18,
                                              colors, interfaceBorderSize)
-controlFacetPanelDicr['measure type'].inputBoxDict, controlFacetPanelDicr['measure type'].buttonDict = \
+controlFacetPanelDict['measure type'].inputBoxDict, controlFacetPanelDict['measure type'].buttonDict = \
                         initBtn.initFlatFacetMeasureTypeBtn(dt,
-                        controlFacetPanelDicr['measure type'].surface, colors,
+                        controlFacetPanelDict['measure type'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 
-flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDicr
+flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDict
 
 
 interfacePosX = 10
@@ -447,7 +445,7 @@ while running:
             if (isinstance(dt.current_figure, lens)):
                 imgFacetSurfaceDict['lens_image FACET'] =  [initLensTypeImageSurface(
                     controlPanelDict['parametr lens'].surface, colors, (0, 0),
-                    type=2, font='fonts-GOST\\GOST_AU.TTF', scale=0.5,  right_facet_type=1), (-120, -100)]
+                    type=2, font='fonts-GOST\\GOST_AU.TTF', scale=0.5,  right_facet_type=1), (-10, -10)]
                 imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
                     controlPanelDict['parametr lens'].surface, colors, (0, 0),
                     type= dt.current_figure.type, font='fonts-GOST\\GOST_AU.TTF', scale=0.5), (-10, -10)]
@@ -455,8 +453,8 @@ while running:
                 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
                 typeControlPanelGroup.controlPanelsDict = controlPanelDict
 
-                controlFacetPanelDicr['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
-                flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDicr
+                controlFacetPanelDict['parametr flat facet'].imageSurfaceDict = imgFacetSurfaceDict
+                flatFacetControlPanelGroup.controlPanelsDict = controlFacetPanelDict
 
         except:
             pass

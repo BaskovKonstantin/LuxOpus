@@ -963,18 +963,15 @@ class drawingTemplate:
 
         # Vzam inv
         self.Vzam_inv_text = ''
-
         # inv dubble
         self.inv_dubble_text = ''
-
         # podl and date 2
         self.podl_and_date_2 = ''
-
         # First use
         self.First_use_text = ''
-
         # Help N
         self.Help_N_text = ''
+
     def check_curren_cell(self, x, y):
         current_cell = 'None'
         for cellName in self.cell_dict.keys():
@@ -1131,6 +1128,9 @@ class drawingTemplate:
         except Exception as e:
             print(e)
             print('Что-то пошло не так во время отрисовки линзы, если одна из клеток пуста, то все ок')
+        # for l in self.lens:
+        #     l.screen = self.surface
+        #     l.drawLens(scale)
 
         rect = pygame.Rect(self.reference_point[0],
                            self.reference_point[1] ,
