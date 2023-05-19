@@ -42,7 +42,7 @@ class line_measure:
 
             if (self.measure_shift*self.scale > 0):
                 if (click_pos[1] < self.arrow.blit_point[1] + inaccuracy and click_pos[1] > self.text_point[1] - inaccuracy  and
-                        click_pos[0] >  self.arrow.blit_point[0]  and  click_pos[0] >  self.arrow.blit_point[0] + self.width):
+                        click_pos[0] >  self.arrow.blit_point[0]  and  click_pos[0] <  self.arrow.blit_point[0] + self.width):
 
                     print('click measure Horizontal')
                     return True

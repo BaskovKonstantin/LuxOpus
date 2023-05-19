@@ -31,10 +31,11 @@ transparent = (0,0,0,0)
 colors = {
     'border':WHITE,
     'text':WHITE,
-    'selected': WHITE,
+    'selected': RED,
     'background': BLACK,
     'test': RED,
-    'transparent': transparent
+    'transparent': transparent,
+    'active': RED
 }
 save_file = 'config.json'
 with open(save_file, encoding='utf-8') as f:
@@ -319,6 +320,7 @@ while running:
             start_pos = pygame.mouse.get_pos()
             prev_pos = start_pos
             current_input =  dt.handle_event(event) if dt.handle_event(event) else handleControlPanelevent(event)
+            print('current_input_1',current_input)
 
 
             if (isinstance(current_input, lens)) and current_input.select_measure:
@@ -347,11 +349,11 @@ while running:
 
 
         if event.type == pygame.KEYDOWN:
-
+            print('curren_input_2', current_input)
             if (isinstance(current_input, cell) ) or (isinstance(current_input, signature) )or (isinstance(current_input, inputBox)) :
 
                 if event.unicode.isalpha() or event.unicode.isspace() or event.unicode.isdigit():
-
+                    print('current_input.text', current_input.text)
                     current_input.text = current_input.text + event.unicode
                     # Удаление последнего символа из текста
                 elif event.key == pygame.K_BACKSPACE:

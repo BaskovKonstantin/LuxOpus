@@ -2,10 +2,11 @@ import pygame
 
 class cell:
 
-    def change_text(self, text):
-        self.text = text
+    # def change_text(self, text):
+    #     self.text = text
         # self.redraw()
     def check_coord(self, x,y):
+
         if (x > self.point_x and x < ( self.point_x + self.width*self.scale)) \
                 and (y > self.point_y and y < ( self.point_y + self.height*self.scale) ):
             return True

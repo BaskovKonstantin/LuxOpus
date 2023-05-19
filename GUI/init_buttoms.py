@@ -183,7 +183,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_1_1'] = \
         inputBox(interfceSurfce,
                 (int(3*scale),int(3*scale)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: Allowance_1_1(text),
                 sign = '',
                  font_size=int(scale*4))
@@ -192,7 +192,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_1_2'] = \
         inputBox(interfceSurfce,
                 (int(28*scale),int(3*scale)),
-                button_size_small, colors, text='???', font=font,
+                button_size_small, colors, text='', font=font,
                 onChangeAction=lambda text: Allowance_1_2(text),
                 sign = '',
                  font_size=int(scale*4))
@@ -201,7 +201,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_1_3'] = \
         inputBox(interfceSurfce,
                 (int(41*scale),int(3*scale)),
-                button_size_small, colors, text='???', font=font,
+                button_size_small, colors, text='', font=font,
                 onChangeAction=lambda text: Allowance_1_3(text),
                 sign = '',
                  font_size=int(scale*4))
@@ -211,7 +211,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_1_4'] = \
         inputBox(interfceSurfce,
                 (int(27*scale),int(13*scale)),
-                button_size_small, colors, text='???', font=font,
+                button_size_small, colors, text='', font=font,
                 onChangeAction=lambda text: Allowance_1_4(text),
                 sign = '',
                  font_size=int(scale*4))
@@ -220,7 +220,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_1_5'] = \
         inputBox(interfceSurfce,
                 (int(41*scale),int(13*scale)),
-                button_size_small, colors, text='???', font=font,
+                button_size_small, colors, text='', font=font,
                 onChangeAction=lambda text: Allowance_1_5(text),
                 sign = '',
                  font_size=int(scale*4))
@@ -232,7 +232,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_2_1'] = \
         inputBox(interfceSurfce,
                  (int(3*scale), int(27*scale)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_2_1(text),
                  sign='',
                  font_size=int(scale*4))
@@ -243,7 +243,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_2_2'] = \
         inputBox(interfceSurfce,
                  (int(scale*28), int(scale*28)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_2_2(text),
                  sign='',
                  font_size=int(scale*4))
@@ -254,7 +254,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_2_3'] = \
         inputBox(interfceSurfce,
                  (int(scale*41), int(scale*28)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_2_3(text),
                  sign='',
                  font_size=int(scale*4))
@@ -265,7 +265,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_2_4'] = \
         inputBox(interfceSurfce,
                  (int(scale*28), int(scale*37)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_2_4(text),
                  sign='',
                  font_size=int(scale*4))
@@ -276,7 +276,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_2_5'] = \
         inputBox(interfceSurfce,
                  (int(scale*41), int(scale*37)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_2_5(text),
                  sign='',
                  font_size=int(scale*4))
@@ -288,7 +288,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_3_1'] = \
         inputBox(interfceSurfce,
                  (int(scale*3), int(scale*51)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_3_1(text),
                  sign='',
                  font_size=int(scale*4))
@@ -299,7 +299,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_3_2'] = \
         inputBox(interfceSurfce,
                  (int(scale*28), int(scale*51)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_3_2(text),
                  sign='',
                  font_size=int(scale*4))
@@ -310,7 +310,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_3_3'] = \
         inputBox(interfceSurfce,
                  (int(scale*41), int(scale*51)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_3_3(text),
                  sign='',
                  font_size=int(scale*4))
@@ -321,7 +321,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_3_4'] = \
         inputBox(interfceSurfce,
                  (int(scale*28), int(scale*61)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_3_4(text),
                  sign='',
                  font_size=int(scale*4))
@@ -332,7 +332,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Allowance_3_5'] = \
         inputBox(interfceSurfce,
                  (int(scale*41), int(scale*61)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: Allowance_3_5(text),
                  sign='',
                  font_size=int(scale*4))
@@ -354,11 +354,11 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 sign = 'Диаметр',
                  font_size=int(scale*5))
     def diametr_2(text):  # передача i в качестве аргумента по умолчанию
-        print('??????', text)
+        print('', text)
     inputBoxDict['Диаметр 2'] = \
         inputBox(interfceSurfce,
                 (int(scale*90) + button_size[0] + 5, int(scale*3)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: diametr_2(text),
                 sign = '',
                  font_size=int(scale*5))
@@ -378,7 +378,7 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Фаска'] = \
         inputBox(interfceSurfce,
                 (int(scale*90), int(scale*30)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: facet(text),
                 sign = 'Фаска',
                  font_size=int(scale*5))
@@ -387,7 +387,7 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict['Фаска 2'] = \
         inputBox(interfceSurfce,
                 (int(scale*90) + button_size[0] + 5,int(scale*30)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: facet_2(text),
                 sign = '',
                  font_size=int(scale*5))
@@ -427,7 +427,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
     inputBoxDict['order number'] = \
         inputBox(interfceSurfce,
                 (int(scale*57),int(int(scale*2))),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: order_number(text),
                 sign = 'Номер заказа')
 
@@ -436,7 +436,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
     inputBoxDict['Focus lenses for the visible spectrum'] = \
         inputBox(interfceSurfce,
                 (int(scale*57), int(scale*10)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: catalog_number(text),
                 sign = 'Каталожный номер')
 
@@ -445,7 +445,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
     inputBoxDict['material detail'] = \
         inputBox(interfceSurfce,
                 (int(scale*50) + button_size[0] + int(scale*50),int(int(scale*2))),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: material_detail(text),
                 sign = 'Номер заказа')
 
@@ -454,7 +454,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
     inputBoxDict['PN number'] = \
         inputBox(interfceSurfce,
                 (int(scale*50) + button_size[0] + int(scale*50), int(scale*10)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: catalog_number(text),
                 sign = 'PN номер')
 
@@ -469,7 +469,7 @@ def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['focus_lens'] = \
         inputBox(interfceSurfce,
                 (int(scale*50),5),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: focus_lens(text),
                 sign = 'Фокус линзы')
 
@@ -478,7 +478,7 @@ def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Focus lenses for the visible spectrum'] = \
         inputBox(interfceSurfce,
                 (int(scale*57) + button_size[0] + 260, 5),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: focus_lenses_for_the_visible_spectrum(text),
                 sign = 'Фокус линзы для видимого спектра')
 
@@ -504,7 +504,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['general error'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*15)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: general_error(text),
                  sign='Общая ошибка')
 
@@ -513,7 +513,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['general error 2'] = \
         inputBox(interfceSurfce,
                  (int(scale*57) + button_size[0]  + 5, int(scale*15)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: general_error_2(text),
                  sign='')
 
@@ -522,7 +522,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Local error'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*27)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Local_error(text),
                  sign='Местная ошибка')
 
@@ -531,7 +531,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Purity'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*39)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Purity(text),
                  sign='Чистота')
 
@@ -540,7 +540,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Light diameter'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*51)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Light_diameter(text),
                  sign='Световой диаметр')
 
@@ -549,7 +549,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['light diameter 2'] = \
         inputBox(interfceSurfce,
                  (int(scale*57) + button_size[0]  + 5, int(scale*51)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: light_diameter_2(text),
                  sign='')
 
@@ -558,7 +558,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['customer radius'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*63)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: customer_radius(text),
                  sign='Радиус заказчика')
 
@@ -575,7 +575,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['roughness'] = \
         inputBox(interfceSurfce,
                 (int(scale*57),int(scale*3)),
-                button_size, colors, text='???', font=font,
+                button_size, colors, text='', font=font,
                 onChangeAction=lambda text: roughness(text),
                 sign = 'Шероховатость')
 
@@ -584,7 +584,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['general error'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*15)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: general_error(text),
                  sign='Общая ошибка')
 
@@ -593,7 +593,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['general error 2'] = \
         inputBox(interfceSurfce,
                  (int(scale*57) + button_size[0]  + 5, int(scale*15)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: general_error_2(text),
                  sign='')
 
@@ -602,7 +602,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Local error'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*27)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Local_error(text),
                  sign='Местная ошибка')
 
@@ -611,7 +611,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Purity'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*39)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Purity(text),
                  sign='Чистота')
 
@@ -620,7 +620,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['Light diameter'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*51)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: Light_diameter(text),
                  sign='Световой диаметр')
 
@@ -629,7 +629,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['light diameter 2'] = \
         inputBox(interfceSurfce,
                  (int(scale*57) + button_size[0]  + 5, int(scale*51)),
-                 button_size_small, colors, text='???', font=font,
+                 button_size_small, colors, text='', font=font,
                  onChangeAction=lambda text: light_diameter_2(text),
                  sign='')
 
@@ -638,7 +638,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
     inputBoxDict['customer radius'] = \
         inputBox(interfceSurfce,
                  (int(scale*57), int(scale*63)),
-                 button_size, colors, text='???', font=font,
+                 button_size, colors, text='', font=font,
                  onChangeAction=lambda text: customer_radius(text),
                  sign='Радиус заказчика')
 

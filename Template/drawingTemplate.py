@@ -975,9 +975,13 @@ class drawingTemplate:
     def check_curren_cell(self, x, y):
         current_cell = 'None'
         for cellName in self.cell_dict.keys():
+
             if (self.cell_dict[cellName].check_coord(x,y)):
+
+
                 self.cell_dict[cellName].set_selected_border_color()
                 current_cell = cellName
+
             else:
                 self.cell_dict[cellName].set_base_border_color()
         return current_cell
@@ -1097,16 +1101,6 @@ class drawingTemplate:
                  l.original_blit_point[1] + self.reference_point[1])
             self.init_draw_cell()
             self.draw_param_table()
-            # for key in self.cell_dict.keys():
-            #     if key == 'mass':
-            #         print('point_x', self.cell_dict[key].point_x)
-            #         print('original_point_x', self.cell_dict[key].original_point_x)
-            #         print('reference_point',self.reference_point[0])
-            #
-            #     self.cell_dict[key].point_x = self.cell_dict[key].original_point_x + self.reference_point[0]
-            #     self.cell_dict[key].point_y = self.cell_dict[key].original_point_y + self.reference_point[1]
-            #
-            #     if key == 'mass': print('POST point_x', self.cell_dict[key].point_x)
 
             for key in self.figure_dict.keys():
                 self.figure_dict[key].blit_point = \
@@ -1117,9 +1111,10 @@ class drawingTemplate:
             print('Что-то пошло не так во время отрисовки линзы, если одна из клеток пуста, то все ок')
     def total_redraw(self, scale = 1):
         self.surface = pygame.Surface((self.list_size[0] * self.scale, self.list_size[1] * self.scale), pygame.SRCALPHA)
-        self.init_draw_cell()
-        self.draw_param_table()
+        # self.init_draw_cell()
+        # self.draw_param_table()
         self.surface.fill(self.colors['background'])
+        # print(self.cell_dict)
 
         try:
             for l in self.lens:
@@ -1140,14 +1135,16 @@ class drawingTemplate:
         self.cell_dict['document_designation up'].text = self.cell_dict['document_designation down'].text
 
         for key in self.cell_dict.keys():
-
+            self.cell_dict[key].screen = self.surface
             self.cell_dict[key].redraw()
+
         for key in self.figure_dict.keys():
             self.figure_dict[key].draw()
             self.surface.blit(self.figure_dict[key].surface, self.figure_dict[key].blit_point)
         for i in self.imgList:
             i.draw()
-
+        if self.selected_cell:
+            self.selected_cell.redraw()
         self.screen.blit(self.surface, self.blit_point)
 
     def checkSelectFigure(self, click_pos):
@@ -1173,14 +1170,20 @@ class drawingTemplate:
             # Получение координат клика
             mouse_x, mouse_y = pygame.mouse.get_pos()
             mouse_x, mouse_y = mouse_x - self.blit_point[0], mouse_y - self.blit_point[1]
-            if (self.checkSelectFigure((mouse_x, mouse_y))):
-                return self.checkSelectFigure((mouse_x, mouse_y))
-            print('Ищем изображение')
-            if (self.checkSelectImg((mouse_x, mouse_y))):
-                return self.checkSelectImg((mouse_x, mouse_y))
 
-            if (self.check_curren_cell(mouse_x, mouse_y)):
-                self.set_selected_cell(self.check_curren_cell(mouse_x, mouse_y))
+            checkRes =  self.checkSelectFigure((mouse_x, mouse_y))
+            if (checkRes):
+                return checkRes
+
+            checkRes = self.checkSelectImg((mouse_x, mouse_y))
+            if (checkRes):
+                return checkRes
+
+            checkRes = self.check_curren_cell(mouse_x, mouse_y)
+
+            if (checkRes):
+                print('CellRes', checkRes)
+                self.set_selected_cell(checkRes)
                 return self.selected_cell
 
         return None
@@ -1303,7 +1306,7 @@ class drawingTemplate:
         self.lens_diametr = int(100*self.scale)
         self.lens_R1 = int(96*self.scale)
         self.lens_R2 = int(80*self.scale)
-        self.current_type = int(4*self.scale)
+        self.current_type = 3
 
         self.left_facet_type = int(0)
         self.right_facet_type = int(0)

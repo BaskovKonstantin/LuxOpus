@@ -7,7 +7,6 @@ class controlPanel:
 
     def redraw(self):
         self.surface.fill(self.colors['background'])
-
         for key in self.inputBoxDict.keys():
             if key not in self.DisabledInputBox:
                 self.inputBoxDict[key].redraw()

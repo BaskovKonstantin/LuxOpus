@@ -2,6 +2,12 @@ import pygame
 
 class inputBox:
 
+    def set_base_border_color(self):
+
+        self.current_border_color = self.base_border_color
+    def set_selected_border_color(self):
+        self.current_border_color = self.selected_color
+
     def __init__(self, surface, pos, size,colors,  text='',
                  font = None, font_size=14, border_size = 3,
                  onChangeAction = lambda : ..., action = lambda : ...,
@@ -24,6 +30,9 @@ class inputBox:
         self.active = False
         self.action = action
         self.onChangeAction = onChangeAction
+        self.base_border_color = self.colors['border']
+        self.selected_color = self.colors['selected']
+        self.current_border_color = self.base_border_color
 
         self.redraw()
 
@@ -40,7 +49,11 @@ class inputBox:
             self.onChange()
 
         # Нарисовать поле ввода на экране
-        pygame.draw.rect(self.surface, self.colors['border'], self.rect, 2)
+        if (self.active):
+            self.current_border_color = self.selected_color
+        else:
+            self.current_border_color = self.base_border_color
+        pygame.draw.rect(self.surface, self.current_border_color, self.rect, 2)
         # Нарисовать текст в поле ввода
         text_surface = self.font.render(self.text, True, self.colors['text'])
         self.surface.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
