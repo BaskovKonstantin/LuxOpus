@@ -747,7 +747,6 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
         buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
                                              colors, lambda i=i: buff(i), f'type {i}', font,
                                              border_size=border_size)
-
     def add_lens():  # передача i в качестве аргумента по умолчанию
         drawingTemplate.add_lens()
 

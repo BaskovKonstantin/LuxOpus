@@ -38,11 +38,9 @@ class line_measure:
     def check_click(self, click_pos):
         inaccuracy = 20
         if (self.angle_rotate == 0):
-
-
             if (self.measure_shift*self.scale > 0):
                 if (click_pos[1] < self.arrow.blit_point[1] + inaccuracy and click_pos[1] > self.text_point[1] - inaccuracy  and
-                        click_pos[0] >  self.arrow.blit_point[0]  and  click_pos[0] <  self.arrow.blit_point[0] + self.width):
+                        click_pos[0] >  self.blit_point[0] + self.arrow.blit_point[0]  and  click_pos[0] <  self.blit_point[0] + self.arrow.blit_point[0] + self.width):
 
                     print('click measure Horizontal')
                     return True
@@ -58,10 +56,15 @@ class line_measure:
                     return False
 
         if (self.angle_rotate == -90):
+            print('click_pos[1] - ', click_pos[1])
+            print('self.blit_point[0] - ', self.arrow.blit_point[1]  + inaccuracy)
+            print('self.blit_point[0] + self.width - ', self.arrow.blit_point[1]  + self.width - inaccuracy)
 
             if (self.measure_shift*self.scale > 0):
                 if (click_pos[0] < self.measure_shift*self.scale - inaccuracy - self.arrow.start_point[0] + self.arrow_height
-                        and click_pos[0] > self.measure_shift*self.scale - inaccuracy - self.arrow.start_point[0] - self.arrow_height):
+                        and click_pos[0] > self.measure_shift*self.scale - inaccuracy - self.arrow.start_point[0] - self.arrow_height
+                and click_pos[1] > self.arrow.blit_point[1] + inaccuracy
+                        and click_pos[1]  < self.arrow.blit_point[1] + self.width - inaccuracy):
 
                     print('click measure Vertical')
                     return True
@@ -139,5 +142,5 @@ class line_measure:
             if (self.angle_rotate == 0):
                 self.blit_point = (self.end_point[0], self.start_point[1])
             if (self.angle_rotate == -90 or self.angle_rotate ==-90):
-                self.blit_point = (self.end_point[0] + ( self.measure_shift*self.scale), self.start_point[1] - self.width + 2*self.border_size + 2*self.arrow_height)
+                self.blit_point = (self.end_point[0] + (self.measure_shift*self.scale), self.start_point[1] - self.width + 2*self.border_size + 2*self.arrow_height)
 

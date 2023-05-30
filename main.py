@@ -5,7 +5,7 @@ import math
 import json
 from GUI.inputBox import inputBox
 from figure.lens import lens
-from figure.measure import line_measure
+from figure.line_measure import line_measure
 from figure.cover_measure import cover_measure
 from figure.roughness_measure import roughness_measure
 from figure.arrow import arrow
