@@ -21,7 +21,6 @@ class inputBox:
         self.btnSurface = pygame.Surface(self.size, pygame.SRCALPHA)
 
         self.font = pygame.font.Font(font, font_size)
-
         self.rect = pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
 
         self.text = text
@@ -34,7 +33,7 @@ class inputBox:
         self.selected_color = self.colors['selected']
         self.current_border_color = self.base_border_color
 
-        self.redraw()
+        self.draw()
 
     def clear(self):
         # self.text = ''
@@ -43,11 +42,10 @@ class inputBox:
     def onChange(self):
         self.onChangeAction(self.text)
 
-    def redraw(self):
+    def draw(self):
         if self.text != self.prevText:
             self.prevText = self.text
             self.onChange()
-
         # Нарисовать поле ввода на экране
         if (self.active):
             self.current_border_color = self.selected_color

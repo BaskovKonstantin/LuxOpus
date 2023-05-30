@@ -5,14 +5,14 @@ from GUI.inputBox import inputBox
 
 class controlPanel:
 
-    def redraw(self):
+    def draw(self):
         self.surface.fill(self.colors['background'])
         for key in self.inputBoxDict.keys():
             if key not in self.DisabledInputBox:
-                self.inputBoxDict[key].redraw()
+                self.inputBoxDict[key].draw()
         for key in self.buttonDict.keys():
             if key not in self.DisabledButtons:
-                self.buttonDict[key].redraw()
+                self.buttonDict[key].draw()
         for key in self.imageSurfaceDict.keys():
             self.surface.blit(self.imageSurfaceDict[key][0], self.imageSurfaceDict[key][1])
 
@@ -26,9 +26,17 @@ class controlPanel:
         self.mainRect = pygame.Rect(0,0,self.size[0], self.size[1])
 
         pygame.draw.rect(self.surface, self.colors['border'],self.mainRect ,self.border_size)
-    def checkBtn(self, mouseX, mouseY):
-        for key in self.buttonDict.keys():
+    def checkBtn(self, event, mouseX, mouseY):
 
+        for key in self.buttonDict.keys():
+            # if (mouseX > (self.posX + self.buttonDict[key].pos[0]) and mouseX < (
+            #         self.posX + self.buttonDict[key].pos[0] + self.buttonDict[key].size[0])
+            #         and (mouseY > (self.posY + self.buttonDict[key].pos[1]) and mouseY < (
+            #                 self.posY + self.buttonDict[key].pos[1] + self.buttonDict[key].size[1]))):
+                self.dropDownDict[key].handle_event()
+
+
+        for key in self.buttonDict.keys():
             if (mouseX > (self.posX + self.buttonDict[key].pos[0]) and mouseX < (
                     self.posX + self.buttonDict[key].pos[0] + self.buttonDict[key].size[0])
                     and (mouseY > (self.posY + self.buttonDict[key].pos[1]) and mouseY < (
@@ -49,7 +57,7 @@ class controlPanel:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Получение координат клика
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            self.checkBtn(mouse_x - offsetX, mouse_y - offsetY)
+            self.checkBtn(event ,mouse_x - offsetX, mouse_y - offsetY)
             if self.seletedInputBox:
                 ...
             return self.seletedInputBox
@@ -82,7 +90,7 @@ class controlPanel:
 
         self.initDraw()
 
-        # self.redraw()
+        # self.draw()
         self.seletedInputBox = None
         self.DisabledInputBox = []
         self.DisabledButtons = []
@@ -120,7 +128,7 @@ class controlPanelGroup:
             pygame.draw.rect(self.surface, self.colors['border'], (0, 0,
                                                              self.size[0], self.size[1]), 3)
             for key in self.controlPanelsDict.keys():
-                self.controlPanelsDict[key].redraw()
+                self.controlPanelsDict[key].draw()
             for key in self.imageSurfaceDict.keys():
                 self.surface.blit(self.imageSurfaceDict[key][0], self.imageSurfaceDict[key][1])
 

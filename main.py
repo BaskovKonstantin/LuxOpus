@@ -265,9 +265,9 @@ right_button_down = False
 
 while running:
     screen.fill(BLACK)
-    dt.total_redraw(scale=scale_screen)
+    dt.total_draw(scale=scale_screen)
     for ControlPanel in ControlPanels:
-        ControlPanel.redraw()
+        ControlPanel.draw()
     commonControlPanelGroup.draw()
     if dt.current_figure.type > 5:
         typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1', 'Радиус 2']

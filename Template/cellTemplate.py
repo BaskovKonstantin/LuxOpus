@@ -4,7 +4,7 @@ class cell:
 
     # def change_text(self, text):
     #     self.text = text
-        # self.redraw()
+        # self.draw()
     def check_coord(self, x,y):
 
         if (x > self.point_x and x < ( self.point_x + self.width*self.scale)) \
@@ -17,7 +17,7 @@ class cell:
         self.current_border_color = self.base_border_color
     def set_selected_border_color(self):
         self.current_border_color = self.selected_color
-    def redraw(self):
+    def draw(self):
         self.font = pygame.font.Font(self.font_patch, self.font_size)
         self.text_render = self.font.render(
             self.text, True, self.base_text_color)

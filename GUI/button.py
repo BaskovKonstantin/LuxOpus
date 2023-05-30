@@ -2,7 +2,7 @@ import pygame
 
 class button:
 
-    def redraw(self):
+    def draw(self):
         self.surface.blit(self.font.render(self.text, True, self.colors['text']), self.text_rect)
 
         self.surface.blit(self.btnSurface, self.pos)

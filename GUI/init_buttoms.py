@@ -1,5 +1,4 @@
 import json
-
 from GUI.button import button
 from GUI.inputBox import inputBox
 from reportlab.lib.pagesizes import letter
@@ -9,7 +8,7 @@ from tkinter import filedialog
 import pygame
 import math
 import sys
-
+from figure_new.tasks_may.dropdownlist_class import DropdownList
 import win32api
 import win32ui
 import win32gui
@@ -18,6 +17,7 @@ import win32com
 def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(25*scale), int(15*scale))
 
     def facet_measure_type_1():  # передача i в качестве аргумента по умолчанию
@@ -61,6 +61,7 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
 def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(25*scale), int(10*scale))
 
     def light_diametr(text):
@@ -130,6 +131,7 @@ def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_si
 def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(25*scale), int(15*scale))
 
     def facet_type_1(text):  # передача i в качестве аргумента по умолчанию
@@ -174,6 +176,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
 def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(23*scale), int(8*scale))
     button_size_small = (int(12*scale), int(8*scale))
 
@@ -342,6 +345,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
 def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*20), int(scale*10))
 
     def diametr(text):  # передача i в качестве аргумента по умолчанию
@@ -420,6 +424,7 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
 def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*40), int(scale*8))
 
     def order_number(text):  # передача i в качестве аргумента по умолчанию
@@ -462,6 +467,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
 def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*40), int(scale*9))
 
     def focus_lens(text):  # передача i в качестве аргумента по умолчанию
@@ -486,6 +492,7 @@ def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = N
 def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*40), int(scale*10))
     button_size_small = (int(scale*10), int(scale*10))
 
@@ -567,6 +574,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
 def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*40), int(scale*10))
     button_size_small = (int(scale*10), int(scale*10))
 
@@ -647,6 +655,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
 def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, FlatFacetPanelControlGroup,typeFacetPanelGroup, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
     button_size = (int(scale*13), int(scale*20))
     button_size_big = (int(scale * 30), int(scale * 20))
 
@@ -737,16 +746,30 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
 def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
+    dropDownDict = {}
+
     button_size = (int(scale*55), int(scale*13))
 
-    for i in range(1, 6):
-        def buff(i=i):  # передача i в качестве аргумента по умолчанию
-            drawingTemplate.current_figure.type = int(i)
-            print('TYPE ',i)
+    def test_function(option):
+        print(option)
 
-        buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
-                                             colors, lambda i=i: buff(i), f'type {i}', font,
-                                             border_size=border_size)
+    dropDownDict['dropDownList_Type'] = DropdownList(
+        interfceSurfce,
+        (0, 0),
+        colors,
+        button_size,
+        ("Type 1", "Type 2", "Type 3", "Type 4", "Type 5"),
+        3, test_function, default_value='', scale=1, font = font
+    )
+
+    # for i in range(1, 6):
+    #     def buff(i=i):  # передача i в качестве аргумента по умолчанию
+    #         drawingTemplate.current_figure.type = int(i)
+    #         print('TYPE ',i)
+    #
+    #     buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
+    #                                          colors, lambda i=i: buff(i), f'type {i}', font,
+    #                                          border_size=border_size)
     def add_lens():  # передача i в качестве аргумента по умолчанию
         drawingTemplate.add_lens()
 

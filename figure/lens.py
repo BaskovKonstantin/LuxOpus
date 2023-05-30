@@ -3,7 +3,7 @@ import math
 from figure.facet_measure import facet_measure
 from figure.cover_measure import cover_measure
 from figure.roughness_measure import roughness_measure
-from figure.measure import line_measure
+from figure.line_measure import line_measure
 from figure.dash_line import dashed_line
 from figure_new.tasks_may.covers_class import CoversMeasure
 from figure_new.tasks_may.chamfers_class import Chamfers
@@ -593,6 +593,7 @@ class lens:
             self.measureDict['side_measure'].scale = self.scale
             self.measureDict['side_measure'].draw()
             self.surface.blit(self.measureDict['side_measure'].measure_surface, self.measureDict['side_measure'].blit_point)
+
         # if (self.types[0] !=3):
         #     radius_width = 150
         #     if not ('R1_measure' in self.measureDict.keys()):
