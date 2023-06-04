@@ -269,12 +269,13 @@ while running:
     for ControlPanel in ControlPanels:
         ControlPanel.draw()
     commonControlPanelGroup.draw()
-    if dt.current_figure.type > 5:
-        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1', 'Радиус 2']
-    elif dt.current_figure.type == 2 or dt.current_figure.type == 1:
-        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1']
-    else:
-        typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = []
+    if (dt.current_figure):
+        if dt.current_figure.type > 5:
+            typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1', 'Радиус 2']
+        elif dt.current_figure.type == 2 or dt.current_figure.type == 1:
+            typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1']
+        else:
+            typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = []
 
     typeControlPanelGroup.draw()
     flatFacetControlPanelGroup.draw()

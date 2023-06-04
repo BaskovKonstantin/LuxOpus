@@ -8,7 +8,7 @@ from tkinter import filedialog
 import pygame
 import math
 import sys
-from figure_new.tasks_may.dropdownlist_class import DropdownList
+from figure.figure_new.tasks_may.dropdownlist_class import DropdownList
 import win32api
 import win32ui
 import win32gui
