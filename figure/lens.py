@@ -12,9 +12,13 @@ class lens:
 
 
     def check_click(self, click_pos):
-        width = self.width*self.scale
-        left_point = (int(self.surface_width/2 - width/2) + self.R1/12, self.axis_center_point - self.diametr/2)
-        right_point = (int(self.surface_width/2 - width/2) + self.width + self.R2/24,self.axis_center_point + self.diametr/2)
+        R1 = int(self.R1*self.scale )
+        R2 = int(self.R2*self.scale )
+        width = int(self.width*self.scale)
+        diametr = int(self.diametr*self.scale)
+        click_pos = (click_pos[0] , click_pos[1] )
+        self.click_point = click_pos
+
 
         if (self.show_measure):
             for key in self.measureDict.keys():
@@ -29,12 +33,9 @@ class lens:
 
         self.select_measure = False
         self.selected_measure = None
-        if (click_pos[0] > left_point[0] and click_pos[0] < right_point[0] and
-                click_pos[1] > left_point[1] and click_pos[1] < right_point[1]):
+        if (click_pos[0] > self.left_point[0] and click_pos[0] < self.right_point[0] and
+                click_pos[1] > self.left_point[1] and click_pos[1] < self.right_point[1]):
             print('Click on lens')
-
-
-
             return True
         return False
     def get_hatching_unit(self, side_size = 30, width = 2):
@@ -58,11 +59,20 @@ class lens:
 
 
         self.surface = pygame.Surface(
-            (2 * R1 if R1 > R2 else 2 * R2, 2*R1 if R1 >R2 else 2*R2), pygame.SRCALPHA)
+            (2 * R1 if R1 > R2 else 2 * R2,
+             2*R1 if R1 >R2 else 2*R2),
+            pygame.SRCALPHA)
+        self.left_point = (self.surface.get_width()/2 - width/2, self.surface.get_height()/2 - diametr/2)
+        self.right_point = (self.surface.get_width()/2 + width/2, self.surface.get_height()/2 + diametr/2)
+
+
         # self.surface.fill(self.colors['test'])
+        # pygame.draw.rect(self.surface, self.colors['test'], (self.surface.get_width()/2 - width/2, self.surface.get_height()/2 - diametr/2, width, diametr))
+        # pygame.draw.circle(self.surface, self.colors['test'], (self.surface.get_height()/2,self.surface.get_width()/2), width/2)
+
 
         self.surface_width = self.surface.get_width()
-        self.axis_center_point = self.surface.get_height()/2
+        self.axis_center_height = self.surface.get_height()/2
 
         arrow_height = 15
         angle_start_R1 = 0
@@ -79,65 +89,65 @@ class lens:
 
             for position_x in range( int(self.surface_width/2 - width/2) , int(self.surface_width/2 - width/2) + width, hatching_unit_side_size + step):
 
-                for position_y in range(int(self.axis_center_point - diametr/2), int(self.axis_center_point + diametr/2), hatching_unit_side_size + step):
+                for position_y in range(int(self.axis_center_height - diametr/2), int(self.axis_center_height + diametr/2), hatching_unit_side_size + step):
                     self.surface.blit(hatching_unit, (position_x, position_y))
-            pygame.draw.rect(self.surface, self.colors['transparent'], pygame.Rect( int(self.surface_width/2 - width/2), int(self.axis_center_point + diametr/2), width, hatching_unit_side_size) )
+            pygame.draw.rect(self.surface, self.colors['transparent'], pygame.Rect( int(self.surface_width/2 - width/2), int(self.axis_center_height + diametr/2), width, hatching_unit_side_size) )
 
         #Левый
         if (self.types[0] == 1):
             if (self.show_streak):
                 pygame.draw.circle(self.surface, self.colors['transparent'],
                                    (int(self.surface_width/2 - width/2) + R1,
-                                    (self.axis_center_point )), R1 + 4*step, 4*step)
+                                    (self.axis_center_height )), R1 + 4*step, 4*step)
 
             rect = pygame.Rect(int(self.surface_width/2 - width/2),
-                                    self.axis_center_point - R1,
+                                    self.axis_center_height - R1,
                                2*R1, 2*R1)
             angle_start_R1 = -math.asin(diametr/(2 * R1)) + math.pi
             angle_end_R1 = math.asin(diametr/(2 * R1)) + math.pi
             pygame.draw.arc(self.surface, self.colors['border'], rect, angle_start_R1, angle_end_R1, self.border_size)
             # pygame.draw.arc(self.surface, self.colors['border'], rect, math.pi/2, -math.pi/2, self.border_size)
-            self.key_point_1 = (int(self.surface_width/2 - width/2), self.axis_center_point)
+            self.key_point_1 = (int(self.surface_width/2 - width/2), self.axis_center_height)
         if (self.types[0] == 2):
             if (self.show_streak):
                 for position_x in range(int(self.surface_width/2 - width/2)  - R1, int(self.surface_width/2 - width/2) - step//2, hatching_unit_side_size + step):
 
-                    for position_y in range(int(self.axis_center_point - diametr / 2) ,
-                                            int(self.axis_center_point + diametr / 2),
+                    for position_y in range(int(self.axis_center_height - diametr / 2) ,
+                                            int(self.axis_center_height + diametr / 2),
                                             hatching_unit_side_size + step):
                         self.surface.blit(hatching_unit, (position_x, position_y))
                 pygame.draw.rect(self.surface, self.colors['transparent'],
-                                 pygame.Rect(int(self.surface_width/2 - width/2) - R1 , int(self.axis_center_point + diametr/2) - 10, R1,
+                                 pygame.Rect(int(self.surface_width/2 - width/2) - R1 , int(self.axis_center_height + diametr/2) - 10, R1,
                                              hatching_unit_side_size))
 
 
             rect = pygame.Rect(int(self.surface_width/2 - width/2) - 2*R1 ,
-                                    self.axis_center_point - R1 ,
+                                    self.axis_center_height - R1 ,
                                2 * R1, 2 * R1)
             angle_start_R1 = -math.asin(diametr / (2 * R1))
             angle_end_R1 = math.asin(diametr / (2 * R1))
             if (self.show_streak):
                 pygame.draw.circle(self.surface, self.colors['transparent'],
                                    (int(self.surface_width/2 - width/2) - R1,
-                                    (self.axis_center_point )), R1)
+                                    (self.axis_center_height )), R1)
             pygame.draw.arc(self.surface, self.colors['border'], rect, angle_start_R1, angle_end_R1, self.border_size)
             # pygame.draw.arc(self.surface, self.colors['border'], rect, math.pi/2, -math.pi/2 ,self.border_size)
 
-            self.key_point_1 = (int(self.surface_width/2 - width/2) , self.axis_center_point)
+            self.key_point_1 = (int(self.surface_width/2 - width/2) , self.axis_center_height)
         if (self.types[0] == 3):
             if (self.show_streak):
                 pygame.draw.rect(self.surface, self.colors['transparent'],
                                  pygame.Rect( int(self.surface_width/2 - width/2),
-                                              int(self.axis_center_point - diametr/2),
+                                              int(self.axis_center_height - diametr/2),
                                               R1/12, diametr) )
 
             pygame.draw.line(self.surface,self.colors['border'],
-                             (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_point - diametr/2),
-                             (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_point + diametr/2), self.border_size )
+                             (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_height - diametr/2),
+                             (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_height + diametr/2), self.border_size )
             angle_start_R1 = -math.asin(diametr / (2 * R1)) + math.pi
             angle_end_R1 = math.asin(diametr / (2 * R1)) + math.pi
 
-            self.key_point_1 = (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_point)
+            self.key_point_1 = (int(self.surface_width/2 - width/2) + R1/12, self.axis_center_height)
 
 
         # Правый
@@ -145,10 +155,10 @@ class lens:
             if (self.show_streak):
                 pygame.draw.circle(self.surface, self.colors['transparent'],
                                    (int(self.surface_width/2 - width/2) + width - R2,
-                                    (self.axis_center_point )), R2 + 4*step, 4*step)
+                                    (self.axis_center_height )), R2 + 4*step, 4*step)
 
             rect = pygame.Rect(int(self.surface_width/2 - width/2) - 2* R2 + width,
-                                    self.axis_center_point - R2 ,
+                                    self.axis_center_height - R2 ,
                                2*R2, 2*R2)
             angle_start_R2 = -math.asin(diametr / (2 * R2))
             angle_end_R2 = math.asin(diametr / (2 * R2))
@@ -156,21 +166,21 @@ class lens:
             # pygame.draw.arc(self.surface, self.colors['border'], rect, math.pi/2, -math.pi/2 ,self.border_size)
 
             self.key_point_2 = (int(self.surface_width/2 - width/2) + width,
-                               self.axis_center_point)
+                               self.axis_center_height)
         if (self.types[1] == 2):
             if (self.show_streak):
                 for position_x in range(int(self.surface_width/2 - width/2) + width + 2*step, int(self.surface_width/2 - width/2) + width + R2, hatching_unit_side_size + step):
 
-                    for position_y in range(int(self.axis_center_point - diametr / 2) + step,
-                                            int(self.axis_center_point + diametr / 2),
+                    for position_y in range(int(self.axis_center_height - diametr / 2) + step,
+                                            int(self.axis_center_height + diametr / 2),
                                             hatching_unit_side_size + step):
                         self.surface.blit(hatching_unit, (position_x, position_y))
                 pygame.draw.rect(self.surface, self.colors['transparent'],
-                                 pygame.Rect(int(self.surface_width/2 - width/2) + width, int(self.axis_center_point + diametr / 2), R2,
+                                 pygame.Rect(int(self.surface_width/2 - width/2) + width, int(self.axis_center_height + diametr / 2), R2,
                                              hatching_unit_side_size))
 
             rect = pygame.Rect(int(self.surface_width/2 - width/2) + width,
-                                    self.axis_center_point - R2 ,
+                                    self.axis_center_height - R2 ,
                                2*R2, 2*R2)
             angle_start_R2 = -math.asin(diametr / (2 * R2)) + math.pi
             angle_end_R2 = math.asin(diametr / (2 * R2)) + math.pi
@@ -178,42 +188,42 @@ class lens:
             if (self.show_streak):
                 pygame.draw.circle(self.surface, self.colors['transparent'],
                                    (int(self.surface_width/2 - width/2) + width + R2,
-                                    (self.axis_center_point )), R2)
+                                    (self.axis_center_height )), R2)
 
             pygame.draw.arc(self.surface, self.colors['border'], rect, angle_start_R2, angle_end_R2, self.border_size)
             # pygame.draw.arc(self.surface, self.colors['border'], rect, math.pi/2, -math.pi/2 ,self.border_size)
 
             self.key_point_2 = (int(self.surface_width/2 - width/2) + width,
-                               self.axis_center_point)
+                               self.axis_center_height)
         if (self.types[1] == 3):
             if (self.show_streak):
                 pygame.draw.rect(self.surface, self.colors['transparent'],
                                  pygame.Rect( int(self.surface_width/2 - width/2) + width + R2/24,
-                                              int(self.axis_center_point - diametr/2),
+                                              int(self.axis_center_height - diametr/2),
                                               R2/12, diametr) )
 
 
             pygame.draw.line(self.surface,self.colors['border'],
-                             (int(self.surface_width/2 - width/2) + width + R2/24 ,self.axis_center_point - diametr/2),
-                             (int(self.surface_width/2 - width/2) + width + R2/24,self.axis_center_point + diametr/2), self.border_size )
+                             (int(self.surface_width/2 - width/2) + width + R2/24 ,self.axis_center_height - diametr/2),
+                             (int(self.surface_width/2 - width/2) + width + R2/24,self.axis_center_height + diametr/2), self.border_size )
             angle_start_R2 = -math.asin(diametr / (2 * R2)) + math.pi
             angle_end_R2 = math.asin(diametr / (2 * R2)) + math.pi
 
-            self.key_point_2 = (int(self.surface_width/2 - width/2) + width + R2/24, self.axis_center_point)
+            self.key_point_2 = (int(self.surface_width/2 - width/2) + width + R2/24, self.axis_center_height)
 
         start_x_R1 = int(self.surface_width/2 - width/2) + R1
-        # start_y_R1 =      self.axis_center_point - R1
+        # start_y_R1 =      self.axis_center_height - R1
 
         if (self.types[0] == 2):
             start_x_R1 = int(self.surface_width/2 - width/2) - R1
-            start_y_R1 =      self.axis_center_point - R1
+            start_y_R1 =      self.axis_center_height - R1
             angle_start_R1, angle_end_R1 = angle_end_R1, angle_start_R1
 
         start_x_R2 = int(self.surface_width/2 - width/2) + R2 + width
-        # start_y_R2 =      self.axis_center_point - R2
+        # start_y_R2 =      self.axis_center_height - R2
         if (self.types[1] == 1):
             start_x_R2 = int(self.surface_width/2 - width/2) - R2 + width
-            # start_y_R2 =      self.axis_center_point - R2
+            # start_y_R2 =      self.axis_center_height - R2
 
             angle_start_R2, angle_end_R2 = angle_end_R2, angle_start_R2
 
@@ -221,28 +231,28 @@ class lens:
             point_1_x = int(self.surface_width/2 - width/2) + R1 / 12
         else:
             point_1_x = start_x_R1 + R1 * math.cos(angle_end_R1)
-        point_1_y = self.axis_center_point + R1 * math.sin(angle_end_R1)
+        point_1_y = self.axis_center_height + R1 * math.sin(angle_end_R1)
         point_1 = (point_1_x ,point_1_y)
 
         if (self.types[1] == 3):
             point_2_x = int(self.surface_width/2 - width/2) + R2 / 24  + width
         else:
             point_2_x = start_x_R2 + R2 * math.cos(angle_end_R2)
-        point_2_y = self.axis_center_point + R2 * math.sin(angle_end_R2)
+        point_2_y = self.axis_center_height + R2 * math.sin(angle_end_R2)
         point_2 = (point_2_x,point_2_y)
 
         if (self.types[0] == 3):
             point_3_x = int(self.surface_width/2 - width/2) + R1 / 12
         else:
             point_3_x = start_x_R1 + R1 * math.cos(angle_start_R1)
-        point_3_y = self.axis_center_point + R1 * math.sin(angle_start_R1)
+        point_3_y = self.axis_center_height + R1 * math.sin(angle_start_R1)
         point_3 = (point_3_x,point_3_y)
 
         if (self.types[1] == 3):
             point_4_x = int(self.surface_width/2 - width/2) + R2 / 24  + width
         else:
             point_4_x = start_x_R2 + R2 * math.cos(angle_start_R2)
-        point_4_y = self.axis_center_point + R2 * math.sin(angle_start_R2)
+        point_4_y = self.axis_center_height + R2 * math.sin(angle_start_R2)
         point_4 = (point_4_x,point_4_y)
 
 
@@ -268,14 +278,14 @@ class lens:
                 facet_point_1_x = int(self.surface_width / 2) + R1 / 12
             else:
                 facet_point_1_x = start_x_R1 + R1 * math.cos(facet_angle_end_R1)
-            facet_point_1_y = self.axis_center_point + R1 * math.sin(facet_angle_end_R1)
+            facet_point_1_y = self.axis_center_height + R1 * math.sin(facet_angle_end_R1)
             self.facet_point_1 = (facet_point_1_x, facet_point_1_y)
 
             if (self.types[0] == 3):
                 facet_point_3_x = int(self.surface_width / 2) + R1 / 12
             else:
                 facet_point_3_x = start_x_R1 + R1 * math.cos(facet_angle_start_R1)
-            facet_point_3_y = self.axis_center_point + R1 * math.sin(facet_angle_start_R1)
+            facet_point_3_y = self.axis_center_height + R1 * math.sin(facet_angle_start_R1)
             self.facet_point_3 = (facet_point_3_x, facet_point_3_y)
 
             if (self.left_facet_type == 1):
@@ -325,14 +335,14 @@ class lens:
                 facet_point_2_x = int(self.surface_width / 2) + R2 / 24 + width
             else:
                 facet_point_2_x = start_x_R2 + R2 * math.cos(facet_angle_end_R2)
-            facet_point_2_y = self.axis_center_point + R2 * math.sin(facet_angle_end_R2)
+            facet_point_2_y = self.axis_center_height + R2 * math.sin(facet_angle_end_R2)
             self.facet_point_2 = (facet_point_2_x, facet_point_2_y)
 
             if (self.types[1] == 3):
                 facet_point_4_x = int(self.surface_width / 2) + R2 / 24 + width
             else:
                 facet_point_4_x = start_x_R2 + R2 * math.cos(facet_angle_start_R2)
-            facet_point_4_y = self.axis_center_point + R2 * math.sin(facet_angle_start_R2) - 2
+            facet_point_4_y = self.axis_center_height + R2 * math.sin(facet_angle_start_R2) - 2
             self.facet_point_4 = (facet_point_4_x,
                                   facet_point_4_y)
 
@@ -366,17 +376,21 @@ class lens:
         if (self.show_measure):
             dash_length = 10
             dashed_line(self.surface, self.colors['border'],
-                        (int(self.surface_width/2 - width), self.axis_center_point),
-                        (int(self.surface_width/2 + width), self.axis_center_point), width=self.border_size-1,
+                        (int(self.surface_width/2 - width), self.axis_center_height),
+                        (int(self.surface_width/2 + width), self.axis_center_height), width=self.border_size-1,
                         dash_length=dash_length, dotted=True)
 
             # self.draw_faset_measure()
             self.draw_base_measure()
 
+        # pygame.draw.circle(self.surface, self.colors['test'], self.left_point, width/2)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.right_point, width/2)
+        # pygame.draw.circle(self.surface, (255,0,255), self.click_point, 10)
+
 
         self.screen.blit(
             self.surface,
-            (self.blit_point[0]*self.scale, self.blit_point[1]*self.scale) )
+            (self.blit_point[0], self.blit_point[1]) )
     def draw_faset_measure(self):
 
         width = self.width*self.scale
@@ -631,13 +645,13 @@ class lens:
         #     #                                             font = self.font)
         #     #
         #     #     # self.measureDict['R2_measure'] = arrow((int(self.surface_width/2 - width/2 + width - radius_width),
-        #     #     #                                         self.axis_center_point ), self.surface,
+        #     #     #                                         self.axis_center_height ), self.surface,
         #     #     #                         self.colors, size = (radius_width, 10), font = self.font,
         #     #     #                         text = f'R{R1}', opposite=True, angle_rotate=8)
         #     # else:
         #     #     # self.measureDict['R2_measure'].text = f'R{R2}'
         #     #     # self.measureDict['R2_measure'].blit_point = (int(self.surface_width/2 - width/2 + width - radius_width),
-        #     #     #                                         self.axis_center_point )
+        #     #     #                                         self.axis_center_height )
         #     #
         #     #     self.measureDict['R2_measure'].draw()
         #     #     self.surface.blit(self.measureDict['R2_measure'].surface,
@@ -651,14 +665,14 @@ class lens:
         #
         #         if (self.types[0] == 2):
         #             self.circle_center_roughness_measure_1 = (int(self.surface_width/2 - width/2) - R1,
-        #                                 self.axis_center_point )
+        #                                 self.axis_center_height )
         #             angle = 25
         #             point = (self.circle_center_roughness_measure_1[0] + R1*math.cos( math.radians(angle) ) ,
         #                      self.circle_center_roughness_measure_1[1] + R1*math.sin( math.radians(angle) ) )
         #             angle = -90
         #         if (self.types[0] == 1):
         #             self.circle_center_roughness_measure_1 = (int(self.surface_width / 2) + R1,
-        #                                   self.axis_center_point)
+        #                                   self.axis_center_height)
         #             angle = 20
         #             point = (self.circle_center_roughness_measure_1[0] - R1 * math.cos(math.radians(angle) ) - 1.3*roughness_measure_size[0],
         #                      self.circle_center_roughness_measure_1[1] - R1 * math.sin(math.radians(angle)))
@@ -680,7 +694,7 @@ class lens:
         #                      self.circle_center_roughness_measure_1[1] + R1 * math.sin(math.radians(angle)) - 1.3*roughness_measure_size[1])
         #             self.measureDict['roughness_measure_1'].blit_point = point
         #             self.circle_center_roughness_measure_1 = (int(self.surface_width/2 - width/2) - R1,
-        #                                 self.axis_center_point )
+        #                                 self.axis_center_height )
         #             angle = 5
         #         if (self.types[0] == 1):
         #             angle = 20
@@ -688,7 +702,7 @@ class lens:
         #                      self.circle_center_roughness_measure_1[1] - R1 * math.sin(math.radians(angle)) )
         #             self.measureDict['roughness_measure_1'].blit_point = point
         #             self.circle_center_roughness_measure_1 = (int(self.surface_width / 2) + R1,
-        #                                   self.axis_center_point)
+        #                                   self.axis_center_height)
         #             angle = 20
         #         self.measureDict['roughness_measure_1'].draw()
         #         self.surface.blit(self.measureDict['roughness_measure_1'].surface,
@@ -699,7 +713,7 @@ class lens:
         #         roughness_measure_size = (60,60)
         #         if (self.types[1] == 2):
         #             self.circle_center_roughness_measure_2 = (int(self.surface_width/2 - width/2) + width + R2,
-        #                                 self.axis_center_point )
+        #                                 self.axis_center_height )
         #             angle = 25
         #
         #             point = (self.circle_center_roughness_measure_2[0] - R2*math.cos( math.radians(angle) ) ,
@@ -707,7 +721,7 @@ class lens:
         #             angle = 90
         #         if (self.types[1] == 1):
         #             self.circle_center_roughness_measure_2 = (int(self.surface_width / 2) + width - R2,
-        #                                   self.axis_center_point)
+        #                                   self.axis_center_height)
         #             angle = 25
         #             point = (self.circle_center_roughness_measure_2[0] + R2 * math.cos(math.radians(angle)),
         #                      self.circle_center_roughness_measure_2[1] + R2 * math.sin(math.radians(angle)))
@@ -732,7 +746,7 @@ class lens:
         #
         #
         #             self.circle_center_roughness_measure_2 = (int(self.surface_width/2 - width/2) + width + R2,
-        #                                 self.axis_center_point )
+        #                                 self.axis_center_height )
         #             angle = 25
         #
         #         if (self.types[1] == 1):
@@ -745,7 +759,7 @@ class lens:
         #
         #
         #             self.circle_center_roughness_measure_2 = (int(self.surface_width / 2) + width - R2,
-        #                                   self.axis_center_point)
+        #                                   self.axis_center_height)
         #             angle = 15
         #
         #
@@ -773,7 +787,7 @@ class lens:
         #     else:
         #         if (self.types[0] == 2):
         #             self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1,
-        #                             (self.axis_center_point - R1))
+        #                             (self.axis_center_height - R1))
         #
         #             point = (self.circle_center_cover_measure_1[0],
         #                      self.circle_center_cover_measure_1[1])
@@ -784,7 +798,7 @@ class lens:
         #
         #         if (self.types[0] == 1):
         #             self.circle_center_cover_measure_1 =(int(self.surface_width/2 - width/2) ,
-        #                             (self.axis_center_point - R1))
+        #                             (self.axis_center_height - R1))
         #             point = (self.circle_center_cover_measure_1[0],
         #                      self.circle_center_cover_measure_1[1] )
         #
@@ -832,7 +846,7 @@ class lens:
         #         if (self.types[1] == 2):
         #             self.circle_center_cover_measure_2 = \
         #                 (int(self.surface_width / 2 - width / 2) + width ,
-        #                  (self.axis_center_point - R2))
+        #                  (self.axis_center_height - R2))
         #
         #
         #             point = (self.circle_center_cover_measure_2[0],
@@ -844,7 +858,7 @@ class lens:
         #         if (self.types[1] == 1):
         #             self.circle_center_cover_measure_2 = \
         #                 (int(self.surface_width/2 )  - 2*R2 + width/2,
-        #                             (self.axis_center_point - R2))
+        #                             (self.axis_center_height - R2))
         #
         #             point = (self.circle_center_cover_measure_2[0]  + 5,
         #                      self.circle_center_cover_measure_2[1] )
@@ -860,6 +874,8 @@ class lens:
         #         self.surface.blit(self.measureDict['cover_measure_2'].surface,
         #                           (self.measureDict['cover_measure_2'].blit_point[0] ,
         #                            self.measureDict['cover_measure_2'].blit_point[1] ))
+
+
 
 
     def __init__(self, screen, colors, start_point, width, diametr, R1, R2,
@@ -881,7 +897,7 @@ class lens:
         self.R1 = R1
         self.R2 = R2
         self.border_size = border_size
-        self.axis_center_point = axis_center_point
+        self.axis_center_height = axis_center_point
         self.show_measure = show_measure
         self.show_streak =show_streak
 
@@ -921,6 +937,7 @@ class lens:
         self.measureDict = dict()
         self.select_measure = False
         self.selected_measure = None
+        self.click_point = (0,0)
 
 
 

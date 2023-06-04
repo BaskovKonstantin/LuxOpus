@@ -57,7 +57,7 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
                 sign = '',
                 font_size= int(4*scale))
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -127,7 +127,7 @@ def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_si
                 sign = 'Общая толщина',
                 font_size= int(4*scale))
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -172,7 +172,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 font_size= int(4*scale))
 
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -341,7 +341,7 @@ def initAllowanceBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                  font_size=int(scale*4))
 
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -420,7 +420,7 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
 
 
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -463,7 +463,7 @@ def initCustomerBtn(drawingTemplate , interfceSurfce, colors, border_size, font 
                 onChangeAction=lambda text: catalog_number(text),
                 sign = 'PN номер')
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -488,7 +488,7 @@ def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = N
                 onChangeAction=lambda text: focus_lenses_for_the_visible_spectrum(text),
                 sign = 'Фокус линзы для видимого спектра')
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -570,7 +570,7 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
                  sign='Радиус заказчика')
 
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -651,7 +651,7 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
                  sign='Радиус заказчика')
 
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, FlatFacetPanelControlGroup,typeFacetPanelGroup, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -742,7 +742,7 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
                                          colors, lambda : PDF(), 'PDF', font,
                                          border_size=border_size)
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -755,11 +755,15 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
 
     dropDownDict['dropDownList_Type'] = DropdownList(
         interfceSurfce,
-        (0, 0),
-        colors,
-        button_size,
-        ("Type 1", "Type 2", "Type 3", "Type 4", "Type 5"),
-        3, test_function, default_value='', scale=1, font = font
+        blit_point = (0,0),
+        colors = colors,
+        cell_size = (button_size[0]*0.8, button_size[1]),
+        variants = ("Type 1", "Type 2", "Type 3", "Type 4", "Type 5"),
+        max_height = 3,
+        function = test_function,
+        default_value='',
+        scale=1,
+        font = font
     )
 
     # for i in range(1, 6):
@@ -784,7 +788,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
                                          colors, lambda: add_img(), 'add img', font,
                                          border_size=border_size)
 
-    return inputBoxDict, buttonDict
+    return inputBoxDict, buttonDict, dropDownDict
 
 # def initButton(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
 #     buttonDict = dict()
@@ -978,7 +982,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
 #                                                  colors, text='width', font=font,
 #                                                  onChangeAction=lambda text: width_buff(text))
 #
-#     return inputBoxDict, buttonDict
+#     return inputBoxDict, buttonDict, dropDownDict
 
 
 

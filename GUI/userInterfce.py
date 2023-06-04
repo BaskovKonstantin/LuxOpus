@@ -10,9 +10,15 @@ class controlPanel:
         for key in self.inputBoxDict.keys():
             if key not in self.DisabledInputBox:
                 self.inputBoxDict[key].draw()
-        for key in self.buttonDict.keys():
+
+
+        for key in self.dropDownDict.keys():
             if key not in self.DisabledButtons:
-                self.buttonDict[key].draw()
+                self.dropDownDict[key].draw()
+
+
+        for key in self.buttonDict.keys():
+            self.buttonDict[key].draw()
         for key in self.imageSurfaceDict.keys():
             self.surface.blit(self.imageSurfaceDict[key][0], self.imageSurfaceDict[key][1])
 
@@ -28,12 +34,12 @@ class controlPanel:
         pygame.draw.rect(self.surface, self.colors['border'],self.mainRect ,self.border_size)
     def checkBtn(self, event, mouseX, mouseY):
 
-        for key in self.buttonDict.keys():
+        for key in self.dropDownDict.keys():
             # if (mouseX > (self.posX + self.buttonDict[key].pos[0]) and mouseX < (
             #         self.posX + self.buttonDict[key].pos[0] + self.buttonDict[key].size[0])
             #         and (mouseY > (self.posY + self.buttonDict[key].pos[1]) and mouseY < (
             #                 self.posY + self.buttonDict[key].pos[1] + self.buttonDict[key].size[1]))):
-                self.dropDownDict[key].handle_event()
+                self.dropDownDict[key].handle_event(event, mouseX, mouseY)
 
 
         for key in self.buttonDict.keys():
@@ -71,13 +77,15 @@ class controlPanel:
                  border_size, font = None,
                  buttonDict = {},
                  inputBoxDict = {},
-                 imageSurfaceDict = {}):
+                 imageSurfaceDict = {},
+                 dropDownDict = {}):
         self.drawingTemplate = drawingTemplate
         self.posX = posX
         self.posY = posY
 
         self.buttonDict = buttonDict
         self.inputBoxDict = inputBoxDict
+        self.dropDownDict = dropDownDict
         self.imageSurfaceDict = imageSurfaceDict
 
         self.screen = screen

@@ -37,6 +37,8 @@ class line_measure:
 
     def check_click(self, click_pos):
         inaccuracy = 20
+
+
         if (self.angle_rotate == 0):
             if (self.measure_shift*self.scale > 0):
                 if (click_pos[1] < self.arrow.blit_point[1] + inaccuracy and click_pos[1] > self.text_point[1] - inaccuracy  and
@@ -56,13 +58,10 @@ class line_measure:
                     return False
 
         if (self.angle_rotate == -90):
-            print('click_pos[1] - ', click_pos[1])
-            print('self.blit_point[0] - ', self.arrow.blit_point[1]  + inaccuracy)
-            print('self.blit_point[0] + self.width - ', self.arrow.blit_point[1]  + self.width - inaccuracy)
 
             if (self.measure_shift*self.scale > 0):
-                if (click_pos[0] < self.measure_shift*self.scale - inaccuracy - self.arrow.start_point[0] + self.arrow_height
-                        and click_pos[0] > self.measure_shift*self.scale - inaccuracy - self.arrow.start_point[0] - self.arrow_height
+                if (click_pos[0] < self.measure_shift - inaccuracy - self.arrow.start_point[0] + self.arrow_height
+                        and click_pos[0] > self.measure_shift - inaccuracy - self.arrow.start_point[0] - self.arrow_height
                 and click_pos[1] > self.arrow.blit_point[1] + inaccuracy
                         and click_pos[1]  < self.arrow.blit_point[1] + self.width - inaccuracy):
 
@@ -71,8 +70,8 @@ class line_measure:
                 else:
                     return False
             else:
-                if (click_pos[0] < -self.measure_shift*self.scale + inaccuracy + self.arrow.start_point[0] - self.arrow_height
-                        and click_pos[0] > self.measure_shift*self.scale + inaccuracy + self.arrow.start_point[0] + self.arrow_height):
+                if (click_pos[0] < -self.measure_shift + inaccuracy + self.arrow.start_point[0] - self.arrow_height
+                        and click_pos[0] > self.measure_shift + inaccuracy + self.arrow.start_point[0] + self.arrow_height):
 
                     print('click measure Vertical')
                     return True
@@ -91,14 +90,14 @@ class line_measure:
 
         if (self.measure_shift*self.scale > 0):
             pygame.draw.line(self.measure_surface, self.colors['border'],
-                             (self.width - 5, 0 + self.font_size),
-                             (self.width - 5, self.measure_shift*self.scale),
-                             self.border_size - 1)
+                             (self.width - 6, 0 + self.font_size),
+                             (self.width - 6, self.measure_shift*self.scale),
+                             self.border_size)
 
             pygame.draw.line(self.measure_surface, self.colors['border'],
                              (0, 0 + self.font_size),
                              (0, self.measure_shift*self.scale),
-                             self.border_size - 1)
+                             self.border_size)
             self.arrow.blit_point = (0 - int(self.width - self.arrow_height/2), 0 + self.font_size)
             self.arrow.draw()
 
@@ -119,14 +118,14 @@ class line_measure:
             # self.surface.blit(self.measure_surface, self.blit_point)
         else:
             pygame.draw.line(self.measure_surface, self.colors['border'],
-                             (self.width - 5, abs(self.measure_shift*self.scale)),
-                             (self.width - 5, abs(00)),
-                             self.border_size - 1)
+                             (self.width - 6, abs(self.measure_shift*self.scale)),
+                             (self.width - 6, abs(00)),
+                             self.border_size)
 
             pygame.draw.line(self.measure_surface, self.colors['border'],
                              (0, abs(self.measure_shift*self.scale )),
                              (0, abs(0)),
-                             self.border_size - 1)
+                             self.border_size)
 
             self.arrow.blit_point = (0 - int(self.width - self.arrow_height/2), abs(self.measure_shift*self.scale) - self.arrow_height*2)
             self.arrow.draw()
