@@ -133,7 +133,7 @@ class Radius:
         self.surface.fill(self.colors['transparent'])
 
         # drawing circle (only for development)
-        # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
+        pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
         #
         # drawing pointer
         # drawing line

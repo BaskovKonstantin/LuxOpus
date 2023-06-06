@@ -603,7 +603,7 @@ class lens:
             if not ('R1_measure' in self.measureDict.keys()):
 
                 self.measureDict['R1_measure'] = Radius(self.surface,
-                                                        (int(self.surface_width/2 -2*width - R1 - 15),0 ),
+                                                        (int(self.surface_width/2 -2*width - R1 - 15),0),
                                                         self.colors,
                                                         surface_radius = R1,
                                                         radius_length = R1/2,
@@ -616,7 +616,7 @@ class lens:
                                                         font = self.font)
 
             else:
-
+                self.measureDict['R1_measure'].scale = self.scale
                 self.measureDict['R1_measure'].draw()
                 self.surface.blit(self.measureDict['R1_measure'].surface,
                                   self.measureDict['R1_measure'].blit_point)
@@ -787,8 +787,8 @@ class lens:
 
                     point = (self.circle_center_cover_measure_1[0],
                              self.circle_center_cover_measure_1[1])
-                    self.measureDict['cover_measure_2'].cover_type = 0
-                    self.measureDict['cover_measure_2'].angle_position = 0
+                    self.measureDict['cover_measure_1'].cover_type = 0
+                    self.measureDict['cover_measure_1'].angle_position = 0
                     self.measureDict['cover_measure_1'].blit_point = point
 
 
@@ -798,8 +798,8 @@ class lens:
                     point = (self.circle_center_cover_measure_1[0],
                              self.circle_center_cover_measure_1[1] )
 
-                    self.measureDict['cover_measure_2'].cover_type = 1
-                    self.measureDict['cover_measure_2'].angle_position = 180
+                    self.measureDict['cover_measure_1'].cover_type = 1
+                    self.measureDict['cover_measure_1'].angle_position = 180
                     self.measureDict['cover_measure_1'].blit_point = point
 
                 self.measureDict['cover_measure_1'].draw()
@@ -836,7 +836,7 @@ class lens:
                     cover_size=cover_measure_size,
                     angle = 180,
                     line_width= 2,
-                    cover_type = 1)
+                    cover_type = 0)
 
             else:
                 if (self.types[1] == 2):
