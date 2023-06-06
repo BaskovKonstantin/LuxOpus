@@ -9,6 +9,8 @@ from figure_new.tasks_may.covers_class import CoversMeasure
 from figure_new.tasks_may.chamfers_class import Chamfers
 from figure.arrow import arrow
 from figure_new.tasks_may.radius_class import Radius
+from figure.figure_new.tasks_may.covers_class import CoversMeasure
+from figure.figure_new.tasks_may.chamfers_class import Chamfers
 
 class lens:
 
