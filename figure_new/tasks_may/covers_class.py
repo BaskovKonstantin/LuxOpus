@@ -39,13 +39,13 @@ class CoversMeasure:
     # проверяет нажатие по покрытию (окружности и линиям). возвращает True/False
     def check_click(self, mouse_pos) -> bool:
 
-        offset_mouse = [mouse_pos[0] - self.blit_point[0],
-                        mouse_pos[1] - self.blit_point[1]]
+        offset_mouse = [int(mouse_pos[0]),
+                        int(mouse_pos[1])]
 
         if self.surface.get_rect().collidepoint(offset_mouse):
 
-            # if self.surface.get_at(offset_mouse) == self.colors['border']:
-            #     print('RIGHT IN COVER!')
+            if self.surface.get_at(offset_mouse) == self.colors['border']:
+                print('Cover mouse click works')
             return True
 
         return False
