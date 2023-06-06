@@ -22,9 +22,15 @@ class Radius:
                  font_size: int = 16,
                  scale: int = 1):
 
+        self.surface_radius_origin = surface_radius
+        self.radius_length_origin = radius_length
+        self.radius_width_origin = radius_width
+        self.triangle_width_origin = triangle_width
+        self.triangle_length_origin = triangle_length
         self.end_pos = (0, 0)
         self.start_pos = (0, 0)
         self.scale = scale
+        self.previous_scale = scale
         self.radius_type = radius_type
         self.screen = screen
         self.blit_point = blit_point
@@ -32,12 +38,16 @@ class Radius:
         self.surface_radius = surface_radius * self.scale
         self.radius_length = radius_length * self.scale
         self.radius_width = radius_width * self.scale
-        self.triangle_length = triangle_length * self.scale
-        self.triangle_width = triangle_width * self.scale
         self.angle = angle
         self.limit = limit
+        # self.triangle_length = self.radius_length * 1 / 4
+        self.triangle_width = triangle_width * self.scale
+        self.triangle_length = triangle_length * self.scale
         self.line_length = self.surface_radius * 0.95
-        self.font = pygame.font.Font(font, font_size * self.scale)
+        self.font_size = font_size * self.scale
+        self.font_name = font
+        self.font = pygame.font.Font(self.font_name, self.font_size)
+        self.text = text
         self.radius_text = self.font.render(text, True, self.colors['text'])
 
         # creating new surface
@@ -94,6 +104,31 @@ class Radius:
         return False
 
     def draw(self):
+
+        # rescaling
+
+        if self.scale != self.previous_scale:
+
+            self.surface_radius = int(self.surface_radius_origin * self.scale)
+            self.radius_length = int(self.radius_length_origin * self.scale)
+            self.radius_width = int(self.radius_width_origin * self.scale)
+            self.triangle_width = int(self.triangle_width_origin * self.scale)
+            self.triangle_length = int(self.triangle_length_origin * self.scale)
+            self.line_length = int(self.surface_radius * 0.95)
+            self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
+            self.radius_text = self.font.render(self.text, True, self.colors['text'])
+
+            if self.radius_type == 1:
+                self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2),
+                                              pygame.SRCALPHA)
+                self.surface_center = [self.surface_radius, self.surface_radius]
+
+            elif self.radius_type == 0:
+                self.surface = pygame.Surface((self.surface_radius * 4, self.surface_radius * 4),
+                                              pygame.SRCALPHA)
+                self.surface_center = [self.surface_radius * 2, self.surface_radius * 2]
+
+            self.previous_scale = self.scale
         # filling with black
         self.surface.fill(self.colors['transparent'])
 
@@ -110,7 +145,7 @@ class Radius:
                                (self.surface_radius - self.radius_length))
         elif self.radius_type == 0:
             pygame.draw.circle(self.surface, self.colors['transparent'], self.surface_center,
-                               self.surface_radius * 2 + 10, (self.surface_radius - self.radius_length + 10))
+                               self.surface_radius * 2 + 10, int(self.surface_radius - self.radius_length + 10))
 
         # drawing triangle
         pygame.draw.polygon(self.surface, self.colors['border'], self.triangle_points())
