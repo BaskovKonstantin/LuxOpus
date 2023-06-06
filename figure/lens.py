@@ -5,12 +5,12 @@ from figure.cover_measure import cover_measure
 from figure.roughness_measure import roughness_measure
 from figure.line_measure import line_measure
 from figure.dash_line import dashed_line
-from figure_new.tasks_may.covers_class import CoversMeasure
-from figure_new.tasks_may.chamfers_class import Chamfers
-from figure.arrow import arrow
-from figure_new.tasks_may.radius_class import Radius
 from figure.figure_new.tasks_may.covers_class import CoversMeasure
 from figure.figure_new.tasks_may.chamfers_class import Chamfers
+from figure.arrow import arrow
+from figure.figure_new.tasks_may.covers_class import CoversMeasure
+from figure.figure_new.tasks_may.chamfers_class import Chamfers
+from figure.figure_new.tasks_may.radius_class import Radius
 
 class lens:
 

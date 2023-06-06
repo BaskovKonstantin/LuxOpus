@@ -76,19 +76,19 @@ class Radius:
                 # pygame.draw.circle(self.surface, self.colors['test'], start_point, 5)
             if end_point[0] - self.triangle_width / 2 < offset_mouse[0] < start_point[0] + self.triangle_width / 2 and \
                     end_point[1] - self.triangle_width / 2 < offset_mouse[1] < start_point[1] + self.triangle_width / 2:
-                print('click')
+                print('Radius click works fine')
                 return True
             if end_point[0] - self.triangle_width / 2 < offset_mouse[0] < start_point[0] + self.triangle_width / 2 and \
                     start_point[1] - self.triangle_width / 2 < offset_mouse[1] < end_point[1] + self.triangle_width / 2:
-                print('click')
+                print('Radius click works fine')
                 return True
             if start_point[0] - self.triangle_width / 2 < offset_mouse[0] < end_point[0] + self.triangle_width / 2 and \
                     end_point[1] - self.triangle_width / 2 < offset_mouse[1] < start_point[1] + self.triangle_width / 2:
-                print('click')
+                print('Radius click works fine')
                 return True
             if start_point[0] - self.triangle_width / 2 < offset_mouse[0] < end_point[0] + self.triangle_width / 2 and \
                     start_point[1] - self.triangle_width / 2 < offset_mouse[1] < end_point[1] + self.triangle_width / 2:
-                print('click')
+                print('Radius click works fine')
                 return True
 
         return False
