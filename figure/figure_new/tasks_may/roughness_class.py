@@ -24,6 +24,12 @@ class RoughnessMeasure:
                  limit: Tuple[int, int] = None):
 
         self.scale = scale
+        self.previous_scale = scale
+        self.line_width_origin = line_width
+        self.surface_radius_origin = surface_radius
+        self.size_origin = size
+        self.font_size_origin = font_size
+        self.font_name = font
         self.screen = screen
         self.colors = colors
         self.blit_point = blit_point
@@ -33,7 +39,9 @@ class RoughnessMeasure:
         self.angle_rotate = angle_rotate
         self.limit = limit
         self.width, self.height = size[0] * scale, size[1] * scale
-
+        self.text_method_origin = text_method
+        self.text_designation_origin = text_designation
+        self.text_base_len_origin = text_base_len
         self.font_size = font_size * scale
         self.font = pygame.font.Font(font, self.font_size)
         self.left_offset = self.height // 2 * tan(radians(30)) * 3 / 2
@@ -62,19 +70,52 @@ class RoughnessMeasure:
                         mouse_pos[1] - self.blit_point[1]]
 
         if self.surface.get_rect().collidepoint(offset_mouse):
-
-            if self.surface.get_at(offset_mouse) == self.colors['border']:
-                print('RIGHT IN ROUGHNESS!')
+            inaccuracy_x = self.roughness_rect.width / 10
+            inaccuracy_y = self.roughness_rect.height / 10
+            if (self.roughness_rect.left - inaccuracy_x < offset_mouse[
+                0] < self.roughness_rect.right + inaccuracy_x) and (
+                    self.roughness_rect.top - inaccuracy_y < offset_mouse[
+                1] < self.roughness_rect.bottom + inaccuracy_y):
+                print('click')
                 return True
-
         return False
 
     def draw(self):
 
+        # rescaling
+        if self.previous_scale != self.scale:
+            self.line_width = int(self.line_width_origin * self.scale)
+            self.surface_radius = int(self.surface_radius_origin * self.scale)
+            self.width, self.height = int(self.size_origin[0] * self.scale), int(self.size_origin[1] * self.scale)
+
+            self.font_size = int(self.font_size_origin * self.scale)
+            self.font = pygame.font.Font(self.font_name, self.font_size)
+            self.left_offset = self.height // 2 * tan(radians(30)) * 3 / 2
+            self.text_method = self.font.render(self.text_method_origin, True, self.colors['border'])
+            self.text_base_len = self.font.render(self.text_base_len_origin, True, self.colors['border'])
+            self.text_designation = self.font.render(self.text_designation_origin, True, self.colors['border'])
+
+            self.get_roughness_size()
+            self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            if self.roughness_type == 0:
+                self.surface = pygame.Surface(((self.surface_radius + max(self.width, self.height)) * 2,
+                                               (self.surface_radius + max(self.width, self.height)) * 2),
+                                              pygame.SRCALPHA)
+                self.surface_center = (self.surface_radius + max(self.width, self.height),
+                                       self.surface_radius + max(self.width, self.height))
+            elif self.roughness_type == 1:
+                self.surface = pygame.Surface((self.surface_radius * 2,
+                                               self.surface_radius * 2), pygame.SRCALPHA)
+                self.surface_center = (self.surface_radius,
+                                       self.surface_radius)
+
+            self.build_surface()
+            self.previous_scale = self.scale
+
         # surface
         self.surface.fill((0, 0, 0, 0))
 
-        #pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         if self.roughness_type == 1:
 
@@ -102,62 +143,21 @@ class RoughnessMeasure:
                 y_offset = cos(radians(
                     self.angle_rotate - 180)) * self.roughness_surface.get_width() / 2 + self.roughness_surface.get_height() * sin(
                     radians(self.angle_rotate - 180))
-            if 270 <= self.formatted_angle(self.angle_rotate) < 360:
+            if 270 <= self.formatted_angle(self.angle_rotate) <= 360:
                 x_offset = self.roughness_surface.get_width() / 2 * cos(radians(self.angle_rotate - 270)) + (
-                            self.roughness_surface.get_height()) * sin(radians(self.angle_rotate - 270))
+                    self.roughness_surface.get_height()) * sin(radians(self.angle_rotate - 270))
                 y_offset = sin(radians(self.angle_rotate - 270)) * self.roughness_surface.get_width() / 2 + (
-                            self.roughness_surface.get_height()) * cos(radians(self.angle_rotate - 270))
-
-            self.surface.blit(roughness_surface_rotated, (dot_on_surface[0] - x_offset,
-                                                          dot_on_surface[1] - y_offset))
-            """
-            pygame.draw.rect(self.surface, self.colors['test'], (
-            dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
-            roughness_surface_rotated.get_height()), 1)
-            pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
-            """
-
-        elif self.roughness_type == 0:
-
-            big_radius = self.height + self.surface_radius
-            dot_on_surface = (self.surface_center[0] + big_radius * cos(radians(self.angle_rotate)),
-                              self.surface_center[1] - big_radius * sin(radians(self.angle_rotate)))
-
-            if 90 < self.formatted_angle(self.angle_rotate) < 270:
-                angle = self.angle_rotate - 180 - 270
-            else:
-                angle = self.angle_rotate + 270
-            roughness_surface_rotated = pygame.transform.rotate(self.roughness_surface, angle)
-
-            if 0 <= self.formatted_angle(self.angle_rotate) < 90:
-                x_offset = self.roughness_surface.get_height() * cos(
-                    radians(self.angle_rotate)) + self.left_offset / 3 * sin(
-                    radians(self.angle_rotate))
-                y_offset = cos(radians(self.angle_rotate)) * self.left_offset / 3
-            if 90 <= self.formatted_angle(self.angle_rotate) < 180:
-                x_offset = self.width / 2 * cos(radians(self.angle_rotate - 90)) - (self.width / 2 - self.left_offset / 3) * cos(radians(self.angle_rotate-90))
-                y_offset = sin(radians(self.angle_rotate - 90)) * self.width / 2 + (self.width / 2 - self.left_offset / 3) * sin(radians(self.angle_rotate-90))
-            if 180 <= self.formatted_angle(self.angle_rotate) < 270:
-                x_offset = self.width / 2 * sin(radians(self.angle_rotate - 180)) + (self.width / 2 - self.left_offset / 3) * sin(radians(self.angle_rotate-180))
-                y_offset = cos(radians(self.angle_rotate - 180)) * self.width / 2 + self.height * sin(
-                    radians(self.angle_rotate - 180)) + (self.width / 2 - self.left_offset / 3) * cos(radians(self.angle_rotate-180))
-            if 270 <= self.formatted_angle(self.angle_rotate) < 360:
-                x_offset = self.width / 2 * cos(radians(self.angle_rotate - 270)) + (
-                    self.height) * sin(radians(self.angle_rotate - 270)) + (self.width / 2 - self.left_offset / 3) * cos(radians(self.angle_rotate-270))
-                y_offset = sin(radians(self.angle_rotate - 270)) * self.width / 2 + (
-                    self.height) * cos(radians(self.angle_rotate - 270)) - (self.width / 2 - self.left_offset / 3) * sin(radians(self.angle_rotate-270))
+                    self.roughness_surface.get_height()) * cos(radians(self.angle_rotate - 270))
 
             self.surface.blit(roughness_surface_rotated, (dot_on_surface[0] - x_offset,
                                                           dot_on_surface[1] - y_offset))
 
-            """
-            pygame.draw.rect(self.surface, self.colors['test'], (
-                dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
-                roughness_surface_rotated.get_height()), 1)
-            pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
-            """
+            self.roughness_rect = pygame.rect.Rect(
+                (dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
+                 roughness_surface_rotated.get_height()))
 
-        self.screen.blit(self.surface, self.blit_point)
+            # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
+            # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
 
     def get_roughness_size(self):
 
