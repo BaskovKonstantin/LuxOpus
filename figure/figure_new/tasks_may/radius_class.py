@@ -133,7 +133,7 @@ class Radius:
         self.surface.fill(self.colors['transparent'])
 
         # drawing circle (only for development)
-        pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
         #
         # drawing pointer
         # drawing line
@@ -181,7 +181,7 @@ class Radius:
                     math.radians(self.angle - 180))
                 y_offset = t_height * math.cos(math.radians(self.angle - 180)) + t_width / 2 * math.sin(
                     math.radians(self.angle - 180))
-            elif 0 < self.formatted_angle(self.angle) <= 90:
+            elif 0 <= self.formatted_angle(self.angle) <= 90:
                 x_text = self.surface_center[0] + center_text * math.cos(
                     math.radians(self.angle)) - self.radius_width / 2 * math.sin(math.radians(self.angle))
                 y_text = self.surface_center[1] - center_text * math.sin(
@@ -226,7 +226,7 @@ class Radius:
                     math.radians(self.angle))
                 y_offset = t_height * math.cos(math.radians(self.angle)) + t_width / 2 * math.sin(
                     math.radians(self.angle))
-            elif 270 < self.formatted_angle(self.angle) < 360:
+            elif 270 < self.formatted_angle(self.angle) <= 360:
                 x_text = self.surface_center[0] + center_text * math.sin(
                     math.radians(self.angle - 270)) + self.radius_width / 2 * math.cos(math.radians(self.angle - 270))
                 y_text = self.surface_center[1] + center_text * math.cos(
@@ -240,8 +240,9 @@ class Radius:
         # blit our surface on screen
         self.screen.blit(self.surface, self.blit_point)
 
-    def move_angle(self, mouse_pos):
+    def move_angle(self, last_mouse_pos: Tuple[int, int], pos_change: Tuple[int, int]):
 
+        mouse_pos = (last_mouse_pos[0] + pos_change[0], last_mouse_pos[1] + pos_change[1])
         # recalculate angle based on mouse pos
         x_diff = mouse_pos[0] - (self.blit_point[0] + self.surface_center[0])
         y_diff = mouse_pos[1] - (self.blit_point[1] + self.surface_center[1])
