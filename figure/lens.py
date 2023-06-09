@@ -613,12 +613,15 @@ class lens:
                                                         angle = 180,
                                                         text = 'R1',
                                                         radius_type = 0,
-                                                        limit=(149, 211),
+                                                        #limit=(149, 211),
                                                         font = self.font)
 
             else:
                 self.measureDict['R1_measure'].scale = self.scale
+                self.measureDict['R1_measure'].blit_point = (self.surface_width/2 - R1 - width/2,
+                                                             R1 - self.measureDict['R1_measure'].surface.get_height()/2)
                 self.measureDict['R1_measure'].draw()
+
                 self.surface.blit(self.measureDict['R1_measure'].surface,
                                   self.measureDict['R1_measure'].blit_point)
         if (self.types[1] !=3):
@@ -649,6 +652,9 @@ class lens:
 
             else:
                 self.measureDict['R2_measure'].scale = self.scale
+                self.measureDict['R2_measure'].blit_point = (self.surface_width/2 - R2 - width/2 - diametr,
+                                                             R2 - self.measureDict['R2_measure'].surface.get_height()/2+(R1-R2))
+                #print(R2, diametr, width)
                 self.measureDict['R2_measure'].draw()
                 self.surface.blit(self.measureDict['R2_measure'].surface,
                                   self.measureDict['R2_measure'].blit_point)
@@ -806,8 +812,9 @@ class lens:
                     # self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1,
                     #                (self.axis_center_point - R1))
                     # подставил значения наугад
-                    self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1 + 450,
-                                   (self.axis_center_point - R1 - 30))
+                    self.measureDict['cover_measure_1'].scale = self.scale
+                    self.circle_center_cover_measure_1 = (self.surface_width/2 - width/2 - self.measureDict['cover_measure_1'].width,
+                                                             R1 - self.measureDict['cover_measure_1'].surface.get_height()/2)
                     point = (self.circle_center_cover_measure_1[0],
                              self.circle_center_cover_measure_1[1] )
 
@@ -871,11 +878,12 @@ class lens:
                     #     (int(self.surface_width/2 )  - 2*R2 + width/2,
                     #                 (self.axis_center_point - R2))
                     # подставил значения наугад
+                    self.measureDict['cover_measure_2'].scale = self.scale
                     self.circle_center_cover_measure_2 = \
-                        (int(self.surface_width / 2) - 2 * R2 + width / 2 - 35,
-                         (self.axis_center_point - R2 - 30))
-
-                    point = (self.circle_center_cover_measure_2[0]  + 5,
+                        (self.surface_width / 2 - self.measureDict['cover_measure_2'].width-R2-diametr/2,
+                         R2 - self.measureDict['cover_measure_2'].surface.get_height() / 2 + (R1 - R2))
+                    print(width, diametr, R2)
+                    point = (self.circle_center_cover_measure_2[0],
                              self.circle_center_cover_measure_2[1] )
                     self.measureDict['cover_measure_2'].cover_type = 0
                     # закоментил эту строку потому-что из-за неё cover встаёт в позицию -20 в каждой итерации

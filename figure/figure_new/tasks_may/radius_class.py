@@ -241,7 +241,7 @@ class Radius:
                     math.radians(self.angle - 270))
         text_pos = (x_text - x_offset, y_text - y_offset)
         self.surface.blit(text, text_pos)
-
+        pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
         # blit our surface on screen
         self.screen.blit(self.surface, self.blit_point)
 
@@ -267,14 +267,17 @@ class Radius:
         angle = math.degrees(math.atan2(x_diff, y_diff)) - 90
         if self.limit is not None:
             if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.limit[0]):
-                if (0 <= self.formatted_angle(angle) < self.formatted_angle(self.limit[1])) or (self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) <= 360):
+                if (0 <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1])) or (self.formatted_angle(self.limit[0]) <= self.formatted_angle(angle) <= 360):
                     self.angle = angle
             else:
-                if self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) < self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(angle) < self.formatted_angle(self.limit[0]):
+                    self.angle = self.limit[0]
+                elif self.formatted_angle(angle) > self.formatted_angle(self.limit[1]):
+                    self.angle = self.limit[1]
+                elif self.formatted_angle(self.limit[0]) <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1]):
                     self.angle = angle
         else:
             self.angle = angle
-        print(self.formatted_angle(self.angle))
 
     def get_line_points(self):
 
