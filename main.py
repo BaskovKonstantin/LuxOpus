@@ -19,6 +19,7 @@ from GUI.signature import signature
 from Template.cellTemplate import cell
 from figure.roughness_measure import roughness_measure
 from figure.figure_new.tasks_may.radius_class import Radius
+from figure.figure_new.tasks_may.covers_class import CoversMeasure
 
 global_x = 'SOS'
 
@@ -170,10 +171,10 @@ controlPanelDict['scale'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 + typeControlPanelGroup_size[0]*0.83, margin/4,
                                              typeControlPanelGroup_size[0]*0.1, typeControlPanelGroup_size[1]*0.9,
                                              colors, interfaceBorderSize)
-controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict = \
-                        initBtn.initScaleBtn(dt,
-                        controlPanelDict['scale'].surface, colors,
-                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+# controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict = \
+#                         initBtn.initScaleBtn(dt,
+#                         controlPanelDict['scale'].surface, colors,
+#                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 
 controlPanelDict['facet_type'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 , margin/4 + typeControlPanelGroup_size[1]*0.75,
@@ -341,6 +342,9 @@ while running:
                         prev_blit_point = current_input.selected_measure.blit_point
                     if (isinstance(current_input.selected_measure, Radius)):
                         pass
+                    if (isinstance(current_input.selected_measure, CoversMeasure)):
+                        pass
+
 
             if (isinstance(current_input, image)) and current_input.resize_mode:
                 prev_point_x = current_input.point_x
@@ -447,7 +451,10 @@ while running:
 
                 # События вызываемое если был нажат радису ########
                     if (isinstance(current_input.selected_measure, Radius)):
-                        current_input.selected_measure.move_angle(start_pos,(x_diff, y_diff))
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
+                    if (isinstance(current_input.selected_measure, CoversMeasure)):
+                        print('HERE 123')
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
                 # По этому примеру можно вставлять и другие типы фигур
 
                 else:

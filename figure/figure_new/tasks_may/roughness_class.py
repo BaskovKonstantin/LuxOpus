@@ -48,6 +48,7 @@ class RoughnessMeasure:
         self.text_method = self.font.render(text_method, True, self.colors['border'])
         self.text_base_len = self.font.render(text_base_len, True, self.colors['border'])
         self.text_designation = self.font.render(text_designation, True, self.colors['border'])
+        self.last_mouse_pos = (0, 0)
 
         self.get_roughness_size()
         self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -66,8 +67,8 @@ class RoughnessMeasure:
 
     def check_click(self, mouse_pos) -> bool:
 
-        offset_mouse = [mouse_pos[0] - self.blit_point[0],
-                        mouse_pos[1] - self.blit_point[1]]
+        offset_mouse = [mouse_pos[0],
+                        mouse_pos[1]]
 
         if self.surface.get_rect().collidepoint(offset_mouse):
             inaccuracy_x = self.roughness_rect.width / 10
@@ -77,6 +78,7 @@ class RoughnessMeasure:
                     self.roughness_rect.top - inaccuracy_y < offset_mouse[
                 1] < self.roughness_rect.bottom + inaccuracy_y):
                 print('click')
+                self.last_mouse_pos = offset_mouse
                 return True
         return False
 
@@ -166,15 +168,24 @@ class RoughnessMeasure:
         self.width = max(len1, len2, self.width)
 
     # меняет угол, не перересовывая покрытие. учитывает лимит угла
-    def move_angle(self, mouse_pos):
-        x_diff = mouse_pos[0] - (self.blit_point[0] + self.surface_center[0])
-        y_diff = mouse_pos[1] - (self.blit_point[1] + self.surface_center[1])
+    def move_angle(self, pos_change: Tuple[int, int]):
+        mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
+        # recalculate angle based on mouse pos
+        x_diff = mouse_pos[0] - self.surface_center[0]
+        y_diff = mouse_pos[1] - self.surface_center[1]
         angle = degrees(atan2(x_diff, y_diff)) - 90
         if self.limit is not None:
-            if self.limit[0] < self.formatted_angle(angle) < self.limit[1]:
-                self.angle_rotate = angle
+            if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.limit[0]):
+                if (0 <= self.formatted_angle(angle) < self.formatted_angle(self.limit[1])) or (
+                        self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) <= 360):
+                    self.angle = angle
+            else:
+                if self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) < self.formatted_angle(
+                        self.limit[1]):
+                    self.angle = angle
         else:
-            self.angle_rotate = angle
+            self.angle = angle
+        print(self.formatted_angle(self.angle))
 
     def build_surface(self):
 

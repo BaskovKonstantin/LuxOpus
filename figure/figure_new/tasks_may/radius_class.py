@@ -40,6 +40,7 @@ class Radius:
         self.radius_width = radius_width * self.scale
         self.angle = angle
         self.limit = limit
+        self.last_mouse_pos = (0, 0)
         # self.triangle_length = self.radius_length * 1 / 4
         self.triangle_width = triangle_width * self.scale
         self.triangle_length = triangle_length * self.scale
@@ -87,18 +88,22 @@ class Radius:
             if end_point[0] - self.triangle_width / 2 < offset_mouse[0] < start_point[0] + self.triangle_width / 2 and \
                     end_point[1] - self.triangle_width / 2 < offset_mouse[1] < start_point[1] + self.triangle_width / 2:
                 print('Radius click works fine')
+                self.last_mouse_pos = offset_mouse
                 return True
             if end_point[0] - self.triangle_width / 2 < offset_mouse[0] < start_point[0] + self.triangle_width / 2 and \
                     start_point[1] - self.triangle_width / 2 < offset_mouse[1] < end_point[1] + self.triangle_width / 2:
                 print('Radius click works fine')
+                self.last_mouse_pos = offset_mouse
                 return True
             if start_point[0] - self.triangle_width / 2 < offset_mouse[0] < end_point[0] + self.triangle_width / 2 and \
                     end_point[1] - self.triangle_width / 2 < offset_mouse[1] < start_point[1] + self.triangle_width / 2:
                 print('Radius click works fine')
+                self.last_mouse_pos = offset_mouse
                 return True
             if start_point[0] - self.triangle_width / 2 < offset_mouse[0] < end_point[0] + self.triangle_width / 2 and \
                     start_point[1] - self.triangle_width / 2 < offset_mouse[1] < end_point[1] + self.triangle_width / 2:
                 print('Radius click works fine')
+                self.last_mouse_pos = offset_mouse
                 return True
 
         return False
@@ -181,7 +186,7 @@ class Radius:
                     math.radians(self.angle - 180))
                 y_offset = t_height * math.cos(math.radians(self.angle - 180)) + t_width / 2 * math.sin(
                     math.radians(self.angle - 180))
-            elif 0 < self.formatted_angle(self.angle) <= 90:
+            elif 0 <= self.formatted_angle(self.angle) <= 90:
                 x_text = self.surface_center[0] + center_text * math.cos(
                     math.radians(self.angle)) - self.radius_width / 2 * math.sin(math.radians(self.angle))
                 y_text = self.surface_center[1] - center_text * math.sin(
@@ -240,33 +245,36 @@ class Radius:
         # blit our surface on screen
         self.screen.blit(self.surface, self.blit_point)
 
-
-
-    def move_angle(self, last_mouse_pos: Tuple[int, int], pos_change: Tuple[int, int]):
-
-        mouse_pos = (last_mouse_pos[0] + pos_change[0], last_mouse_pos[1] + pos_change[1])
-        # Значение x взял методом тыка
-        x_diff = -193
-        print(x_diff)
-        y_diff = -pos_change[1]
-        angle = math.degrees(math.atan2(x_diff, y_diff)) - 90
-        if self.limit is not None:
-            if self.limit[0] < self.formatted_angle(angle) < self.limit[1]:
-                self.angle = angle
-        else:
-            self.angle = angle
     # def move_angle(self, last_mouse_pos: Tuple[int, int], pos_change: Tuple[int, int]):
     #
     #     mouse_pos = (last_mouse_pos[0] + pos_change[0], last_mouse_pos[1] + pos_change[1])
-    #     # recalculate angle based on mouse pos
-    #     x_diff = mouse_pos[0] - (self.blit_point[0] + self.surface_center[0])
-    #     y_diff = mouse_pos[1] - (self.blit_point[1] + self.surface_center[1])
+    #     # Значение x взял методом тыка
+    #     x_diff = -193
+    #     print(x_diff)
+    #     y_diff = -pos_change[1]
     #     angle = math.degrees(math.atan2(x_diff, y_diff)) - 90
     #     if self.limit is not None:
     #         if self.limit[0] < self.formatted_angle(angle) < self.limit[1]:
     #             self.angle = angle
     #     else:
     #         self.angle = angle
+
+    def move_angle(self, pos_change: Tuple[int, int]):
+        mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
+        # recalculate angle based on mouse pos
+        x_diff = mouse_pos[0] - self.surface_center[0]
+        y_diff = mouse_pos[1] - self.surface_center[1]
+        angle = math.degrees(math.atan2(x_diff, y_diff)) - 90
+        if self.limit is not None:
+            if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.limit[0]):
+                if (0 <= self.formatted_angle(angle) < self.formatted_angle(self.limit[1])) or (self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) <= 360):
+                    self.angle = angle
+            else:
+                if self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) < self.formatted_angle(self.limit[1]):
+                    self.angle = angle
+        else:
+            self.angle = angle
+        print(self.formatted_angle(self.angle))
 
     def get_line_points(self):
 

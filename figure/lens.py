@@ -603,16 +603,17 @@ class lens:
             if not ('R1_measure' in self.measureDict.keys()):
 
                 self.measureDict['R1_measure'] = Radius(self.surface,
-                                                        (int(self.surface_width/2 -2*width - R1 - 15),0),
+                                                        (int(self.surface_width/2 -2*width - R1 - 25 +diametr),0-diametr+10),
                                                         self.colors,
                                                         surface_radius = R1,
                                                         radius_length = R1/2,
                                                         radius_width = 1,
                                                         triangle_length=30,
                                                         triangle_width=30,
-                                                        angle = 0,
+                                                        angle = 180,
                                                         text = 'R1',
-                                                        radius_type = 1,
+                                                        radius_type = 0,
+                                                        limit=(149, 211),
                                                         font = self.font)
 
             else:
@@ -626,24 +627,32 @@ class lens:
 
 
                 self.measureDict['R2_measure'] = Radius(self.surface,
-                                                        (int(self.surface_width/2 + R2/2  - 13),
-                                                         40 ),
+                                                        (int(self.surface_width/2 - R2 - 13 - diametr - 61),
+                                                         0-diametr/2-36),
                                                         self.colors,
                                                         surface_radius = R2,
                                                         radius_length = R2/2,
                                                         radius_width = 1,
                                                         triangle_length= 30,
                                                         triangle_width=30,
-                                                        angle = 180,
+                                                        angle = 0,
                                                         text = 'R2',
-                                                        radius_type = 1,
+                                                        radius_type = 0,
+                                                        limit=(-38, 38),
                                                         font = self.font)
 
+                # не знаю что это но на всякий случай комментил
+                # self.measureDict['R2_measure'] = arrow((int(self.surface_width / 2 - width / 2 + width - radius_width),
+                #                                         self.axis_center_point), self.surface,
+                #                                        self.colors, size=(radius_width, 10), font=self.font,
+                #                                        text=f'R{R1}', opposite=True, angle_rotate=8)
 
-                self.measureDict['R2_measure'] = arrow((int(self.surface_width/2 - width/2 + width - radius_width),
-                                                        self.axis_center_point ), self.surface,
-                                        self.colors, size = (radius_width, 10), font = self.font,
-                                        text = f'R{R1}', opposite=True, angle_rotate=8)
+            else:
+                self.measureDict['R2_measure'].scale = self.scale
+                self.measureDict['R2_measure'].draw()
+                self.surface.blit(self.measureDict['R2_measure'].surface,
+                                  self.measureDict['R2_measure'].blit_point)
+
             #else:
             #    self.measureDict['R2_measure'].text = f'R{R2}'
             #    self.measureDict['R2_measure'].blit_point = (int(self.surface_width/2 - width/2 + width - radius_width),
@@ -777,9 +786,10 @@ class lens:
                         colors=self.colors,
                         surface_radius=self.R1,
                         cover_size=cover_measure_size,
-                        angle=0,
+                        angle=200,
                         line_width=2,
-                        cover_type=1)
+                        limit=(149, 211),
+                        cover_type=0)
             else:
                 if (self.types[0] == 2):
                     self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1,
@@ -788,18 +798,22 @@ class lens:
                     point = (self.circle_center_cover_measure_1[0],
                              self.circle_center_cover_measure_1[1])
                     self.measureDict['cover_measure_1'].cover_type = 0
-                    self.measureDict['cover_measure_1'].angle_position = 0
+                    self.measureDict['cover_measure_1'].angle = 0
                     self.measureDict['cover_measure_1'].blit_point = point
 
 
                 if (self.types[0] == 1):
-                    self.circle_center_cover_measure_1 =(int(self.surface_width/2 - width/2) ,
-                                    (self.axis_center_point - R1))
+                    # self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1,
+                    #                (self.axis_center_point - R1))
+                    # подставил значения наугад
+                    self.circle_center_cover_measure_1 = (int(self.surface_width/2 - width/2) - 2*R1 + 450,
+                                   (self.axis_center_point - R1 - 30))
                     point = (self.circle_center_cover_measure_1[0],
                              self.circle_center_cover_measure_1[1] )
 
-                    self.measureDict['cover_measure_1'].cover_type = 1
-                    self.measureDict['cover_measure_1'].angle_position = 180
+                    self.measureDict['cover_measure_1'].cover_type = 0
+                    # закоментил эту строку потому-что из-за неё cover встаёт в позицию 200 в каждой итерации
+                    #self.measureDict['cover_measure_1'].angle = 200
                     self.measureDict['cover_measure_1'].blit_point = point
 
                 self.measureDict['cover_measure_1'].draw()
@@ -834,9 +848,10 @@ class lens:
                     colors = self.colors,
                     surface_radius = self.R2,
                     cover_size=cover_measure_size,
-                    angle = 180,
+                    angle = -20,
                     line_width= 2,
-                    cover_type = 0)
+                    cover_type = 0,
+                    limit=(-38,38))
 
             else:
                 if (self.types[1] == 2):
@@ -848,18 +863,23 @@ class lens:
                     point = (self.circle_center_cover_measure_2[0],
                              self.circle_center_cover_measure_2[1])
                     self.measureDict['cover_measure_2'].cover_type = 1
-                    self.measureDict['cover_measure_2'].angle_position = 180
+                    self.measureDict['cover_measure_2'].angle = 180
 
 
                 if (self.types[1] == 1):
+                    # self.circle_center_cover_measure_2 = \
+                    #     (int(self.surface_width/2 )  - 2*R2 + width/2,
+                    #                 (self.axis_center_point - R2))
+                    # подставил значения наугад
                     self.circle_center_cover_measure_2 = \
-                        (int(self.surface_width/2 )  - 2*R2 + width/2,
-                                    (self.axis_center_point - R2))
+                        (int(self.surface_width / 2) - 2 * R2 + width / 2 - 35,
+                         (self.axis_center_point - R2 - 30))
 
                     point = (self.circle_center_cover_measure_2[0]  + 5,
                              self.circle_center_cover_measure_2[1] )
                     self.measureDict['cover_measure_2'].cover_type = 0
-                    self.measureDict['cover_measure_2'].angle_position = 10
+                    # закоментил эту строку потому-что из-за неё cover встаёт в позицию -20 в каждой итерации
+                    #self.measureDict['cover_measure_2'].angle = -20
 
                 self.measureDict['cover_measure_2'].blit_point = point
                 self.measureDict['cover_measure_2'].surface_radius = R2

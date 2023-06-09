@@ -24,13 +24,14 @@ class CoversMeasure:
         self.screen = screen
         self.blit_point = blit_point
         self.width, self.height = cover_size[0] * self.scale, cover_size[1] * self.scale
-        self.angle_position = angle
+        self.angle = angle
         self.surface_radius = surface_radius * scale
         self.cover_type = cover_type
         self.limit = limit
         self.colors = colors
         self.line_width = line_width * scale
         self.end_pos = [0, 0]
+        self.last_mouse_pos = [0, 0]
 
         if self.cover_type == 0:
             self.surface = pygame.Surface(
@@ -54,6 +55,7 @@ class CoversMeasure:
                 0] + self.width / 2 + inaccuracy and self.end_pos[1] - self.height / 2 - inaccuracy < offset_mouse[1] < \
                     self.end_pos[1] + self.height / 2 + inaccuracy:
                 print('Cover click works fine')
+                self.last_mouse_pos = offset_mouse
                 return True
 
         return False
@@ -84,7 +86,7 @@ class CoversMeasure:
         self.surface.fill(self.colors['transparent'])
         #
         # # рисуем окружность *для разработки*
-        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
 
         # Рисуем крестик на поверхности
         self.get_cover_points()
@@ -117,23 +119,29 @@ class CoversMeasure:
             length = self.surface_radius + self.width // 2
         elif self.cover_type == 1:
             length = self.surface_radius - self.width // 2
-
-        end_pos_x = self.surface_center[0] + length * cos(radians(self.angle_position))
-        end_pos_y = self.surface_center[1] - length * sin(radians(self.angle_position))
+        end_pos_x = self.surface_center[0] + length * cos(radians(self.angle))
+        end_pos_y = self.surface_center[1] - length * sin(radians(self.angle))
         self.end_pos = [end_pos_x, end_pos_y]
 
     # меняет угол, не перересовывая покрытие. учитывает лимит угла
-    def move_angle(self, mouse_pos):
-
+    def move_angle(self, pos_change: Tuple[int,int]):
+        mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
         # recalculate angle based on mouse pos
-        x_diff = mouse_pos[0] - (self.blit_point[0] + self.surface_center[0])
-        y_diff = mouse_pos[1] - (self.blit_point[1] + self.surface_center[1])
+        x_diff = mouse_pos[0] - self.surface_center[0]
+        y_diff = mouse_pos[1] - self.surface_center[1]
         angle = degrees(atan2(x_diff, y_diff)) - 90
         if self.limit is not None:
-            if self.limit[0] < self.formatted_angle(angle) < self.limit[1]:
-                self.angle_position = angle
+            if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.limit[0]):
+                if (0 <= self.formatted_angle(angle) < self.formatted_angle(self.limit[1])) or (
+                        self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) <= 360):
+                    self.angle = angle
+            else:
+                if self.formatted_angle(self.limit[0]) < self.formatted_angle(angle) < self.formatted_angle(
+                        self.limit[1]):
+                    self.angle = angle
         else:
-            self.angle_position = angle
+            self.angle = angle
+        print(self.formatted_angle(self.angle))
 
     # вспомогательная функция для move_angle
     def formatted_angle(self, angle):
