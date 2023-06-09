@@ -14,6 +14,127 @@ import win32ui
 import win32gui
 import win32com
 
+
+
+
+def initScaleBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
+    buttonDict = {}
+    inputBoxDict = {}
+    dropDownDict = {}
+    button_size = (int(15 * scale), int(9 * scale))
+    step = 3
+    #############################################################
+    def scale_1_10():
+        drawingTemplate.current_figure.scale = 0.1
+        drawingTemplate.cell_dict['scale'].text = '1:10'
+
+    buttonDict['scale_1_10'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(5 * scale)),
+               button_size, colors, action=lambda text: scale_1_10(), text='1:10',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_5():
+        drawingTemplate.current_figure.scale = 0.2
+        drawingTemplate.cell_dict['scale'].text = '1:5'
+
+    buttonDict['scale_1_5'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*1  + 2*step * scale)),
+               button_size, colors, action=lambda text: scale_1_5(), text='1:15',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_4():
+        drawingTemplate.current_figure.scale = 0.25
+        drawingTemplate.cell_dict['scale'].text = '1:4'
+
+    buttonDict['scale_1_4'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*2  + 3*step * scale)),
+               button_size, colors, action=lambda text: scale_1_4(), text='1:4',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_10_25():
+        drawingTemplate.current_figure.scale = 0.4
+        drawingTemplate.cell_dict['scale'].text = '1:2.5'
+
+    buttonDict['scale_10_25'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*3  + 4*step * scale)),
+               button_size, colors, action=lambda text: scale_10_25(), text='1:2.5',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_2():
+        drawingTemplate.current_figure.scale = 0.5
+        drawingTemplate.cell_dict['scale'].text = '1:2'
+
+    buttonDict['scale_1_2'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*4  + 5*step * scale)),
+               button_size, colors, action=lambda text: scale_1_2(), text='1:2',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_1():
+        drawingTemplate.current_figure.scale = 1
+        drawingTemplate.cell_dict['scale'].text = '1:1'
+
+    buttonDict['scale_1_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*5  + 6*step * scale)),
+               button_size, colors, action=lambda text: scale_1_1(), text='1:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_2_1():
+        drawingTemplate.current_figure.scale = 2
+        drawingTemplate.cell_dict['scale'].text = '2:1'
+
+    buttonDict['scale_2_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*6  + 7*step * scale)),
+               button_size, colors, action=lambda text: scale_2_1(), text='2:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_25_10():
+        drawingTemplate.current_figure.scale = 2.5
+        drawingTemplate.cell_dict['scale'].text = '2.5:1'
+
+    buttonDict['scale_25_10'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*7  + 8*step * scale)),
+               button_size, colors, action=lambda text: scale_25_10(), text='2.5:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_4_1():
+        drawingTemplate.current_figure.scale = 4
+        drawingTemplate.cell_dict['scale'].text = '4:1'
+
+    buttonDict['scale_4_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*8  + 9*step * scale)),
+               button_size, colors, action=lambda text: scale_4_1(), text='4:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_5_1():
+        drawingTemplate.current_figure.scale = 5
+        drawingTemplate.cell_dict['scale'].text = '5:1'
+
+    buttonDict['scale_5_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*9  + 10*step * scale)),
+               button_size, colors, action=lambda text: scale_5_1(), text='5:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_10_1():
+        drawingTemplate.current_figure.scale = 10
+        drawingTemplate.cell_dict['scale'].text = '10:1'
+    buttonDict['scale_10_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*10  + 11*step * scale)),
+               button_size, colors, action=lambda text: scale_10_1(), text='10:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+
+    return inputBoxDict, buttonDict
+
 def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -348,8 +469,33 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     dropDownDict = {}
     button_size = (int(scale*20), int(scale*10))
 
+    base_diametr = 250
+    base_width = 150
+
+    def scale_convert(base_size, cur_size):
+        limit = 0.2
+        scale_text_list = ['10:1', '5:1', '4:1', '2.5:1', '2:1', '1:1', '1:2', '1:2.5', '1:4', '1:5', '1:10']
+        scale_list = [10, 5, 4, 2.5, 2, 1, 0.5, 0.4, 0.25, 0.2, 0.1]
+        scale_list_rev = [0.1, 0.2, 0.25, 0.4, 0.5, 1, 2, 2.5, 4, 5, 10]
+        for i in range(0, len(scale_list)):
+            print('cur_size', cur_size)
+            print('base_size*scale_list[i]',base_size*scale_list[i])
+            print('scale_list[i]',scale_list[i])
+            print('scale_text_list[i]', scale_text_list[i])
+            print('scale_list_rev[i]', scale_list_rev[i])
+
+            if (base_size*scale_list[i] * (1+limit) >= cur_size ) and (base_size*scale_list[i] * (1-limit) <= cur_size ):
+            # if (base_size*(1+limit)*scale_list[i] < cur_size) or (base_size*(1-limit)*scale_list[i] > cur_size):
+                print('BOOOOM')
+                drawingTemplate.current_figure.scale = scale_list_rev[i]
+                drawingTemplate.cell_dict['scale'].text = scale_text_list[i]
+                break
+
     def diametr(text):  # передача i в качестве аргумента по умолчанию
-        if (text.isnumeric()): drawingTemplate.current_figure.diametr = int(text)
+        if (text.isnumeric()):
+            diametr = int(text)
+            scale_convert(base_diametr,diametr )
+            drawingTemplate.current_figure.diametr = diametr
     inputBoxDict['Диаметр'] = \
         inputBox(interfceSurfce,
                 (int(scale*90),int(scale*3)),
@@ -365,10 +511,13 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 button_size, colors, text='', font=font,
                 onChangeAction=lambda text: diametr_2(text),
                 sign = '',
-                 font_size=int(scale*5))
+                font_size=int(scale*5))
 
     def width(text):  # передача i в качестве аргумента по умолчанию
-        if (text.isnumeric()): drawingTemplate.current_figure.width = int(text)
+        if (text.isnumeric()):
+            width = int(text)
+            scale_convert(base_width,width )
+            drawingTemplate.current_figure.width = width
     inputBoxDict['Толщина'] = \
         inputBox(interfceSurfce,
                 (int(scale*90), int(scale*19)),
@@ -790,199 +939,6 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
 
     return inputBoxDict, buttonDict, dropDownDict
 
-# def initButton(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
-#     buttonDict = dict()
-#
-#     button_size = (int(scale*29), int(scale*13))
-#
-#     for i in range(1, 11):
-#         def buff(i=i):  # передача i в качестве аргумента по умолчанию
-#             drawingTemplate.current_figure.type = int(i)
-#
-#         buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
-#                                                   colors, lambda i=i: buff(i), f'type {i}', font,
-#                                                   border_size=border_size)
-#
-#     for i in range(0, 3):
-#         def lf_buff(i=i):  # передача i в качестве аргумента по умолчанию
-#             drawingTemplate.current_figure.left_facet_type = int(i)
-#
-#         buttonDict[f'set left facet type {i}'] = button(interfceSurfce,
-#                                                              (button_size[0] + 5, button_size[1] * (i)), button_size,
-#                                                              colors, lambda i=i: lf_buff(i),
-#                                                              f'left_facet_type {i}', font, font_size=9,
-#                                                              border_size=border_size)
-#     for i in range(0, 3):
-#         def rf_buff(i=i):  # передача i в качестве аргумента по умолчанию
-#             drawingTemplate.current_figure.right_facet_type = int(i)
-#
-#
-#         buttonDict[f'set right facet type {i}'] = button(interfceSurfce,
-#                                                               (2 * button_size[0] + 2 * 5, button_size[1] * (i)),
-#                                                               button_size,
-#                                                               colors, lambda i=i: rf_buff(i),
-#                                                               f'right_facet_type {i}', font, font_size=9,
-#                                                               border_size=border_size)
-#
-#     def add_lens():  # передача i в качестве аргумента по умолчанию
-#         drawingTemplate.add_lens()
-#
-#
-#     buttonDict[f'add_lens'] = button(interfceSurfce, (int(scale*57), int(scale*93)), button_size,
-#                                           colors, lambda: add_lens(), 'add lens', font,
-#                                           border_size=border_size)
-#
-#     def add_img():  # передача i в качестве аргумента по умолчанию
-#         drawingTemplate.add_img()
-#
-#
-#     buttonDict[f'add_img'] = button(interfceSurfce, (int(scale*57), 320), button_size,
-#                                          colors, lambda: add_img(), 'add img', font,
-#                                          border_size=border_size)
-#     inputBoxDict = dict()
-#
-#     def lfs_flat_1(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.left_facet_size = drawingTemplate.current_figure.R1 - int(text)
-#             drawingTemplate.current_figure.left_facet_measure_type = 2
-#             drawingTemplate.current_figure.measureDict['facet_left_big_measure'].text = text
-#         except:
-#             print('Some kind of shit lfc')
-#
-#     inputBoxDict['left_facet_flat_1_inpBox'] = inputBox(interfceSurfce,
-#                                                              (button_size[0] + 5, button_size[1] * (3)),
-#                                                              button_size, colors, text='150', font=font,
-#                                                              onChangeAction=lambda text: lfs_flat_1(text))
-#
-#     def lfs_flat_2(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.left_facet_size = int(
-#                 drawingTemplate.current_figure.R1 - (int(text) + drawingTemplate.current_figure.width))
-#             drawingTemplate.current_figure.left_facet_measure_type = 3
-#             drawingTemplate.current_figure.measureDict['facet_left_up_small_measure'].text = text
-#         except:
-#             print('Some kind of shit lfc')
-#
-#     inputBoxDict['left_facet_flat_2_inpBox'] = inputBox(interfceSurfce,
-#                                                              (button_size[0] + 5, button_size[1] * (4)),
-#                                                              button_size, colors, text='0', font=font,
-#                                                              onChangeAction=lambda text: lfs_flat_2(text))
-#
-#     def lfs_flat_3(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.left_facet_size = drawingTemplate.current_figure.width / 10 + \
-#                                                                   (drawingTemplate.current_figure.R1 - math.sqrt(
-#                                                                       (drawingTemplate.current_figure.R1) ** 2 -
-#                                                                       ((drawingTemplate.current_figure.R1 - int(text)) / 2) ** 2))
-#             drawingTemplate.current_figure.left_facet_measure_type = 1
-#             drawingTemplate.current_figure.measureDict['facet_left_side_measure'].text = text
-#         except:
-#             print('Some kind of shit lfc')
-#
-#     inputBoxDict['left_facet_flat_3_inpBox'] = inputBox(interfceSurfce,
-#                                                              (button_size[0] + 5, button_size[1] * (5)),
-#                                                              button_size, colors, text='0', font=font,
-#                                                              onChangeAction=lambda text: lfs_flat_3(text))
-#
-#     def rfs_flat_1(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.right_facet_size = drawingTemplate.current_figure.R2 - int(text)
-#             drawingTemplate.current_figure.right_facet_measure_type = 2
-#             drawingTemplate.current_figure.measureDict['facet_right_up_big_measure'].text = text
-#         except Exception as e:
-#             print(e)
-#             print('Some kind of shit rfc')
-#
-#     inputBoxDict['right_facet_flat_1_inpBox'] = inputBox(interfceSurfce,
-#                                                               (2 * button_size[0] + 2 * 5, button_size[1] * (3)),
-#                                                               button_size, colors, text='150', font=font,
-#                                                               onChangeAction=lambda text: rfs_flat_1(text))
-#
-#     def rfs_flat_2(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.right_facet_size = \
-#                 int(drawingTemplate.current_figure.R2 - (int(text) + drawingTemplate.current_figure.width))
-#             drawingTemplate.current_figure.right_facet_measure_type = 3
-#             drawingTemplate.current_figure.measureDict['facet_right_up_small_measure'].text = text
-#         except:
-#             print('Some kind of shit rfc')
-#
-#     inputBoxDict['right_facet_flat_2_inpBox'] = inputBox(interfceSurfce,
-#                                                               (2 * button_size[0] + 2 * 5, button_size[1] * (4)),
-#                                                               button_size, colors, text='0', font=font,
-#                                                               onChangeAction=lambda text: rfs_flat_2(text))
-#
-#     def rfs_flat_3(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             res = drawingTemplate.current_figure.width / 10 + \
-#                   (drawingTemplate.current_figure.R2 - math.sqrt(
-#                       (drawingTemplate.current_figure.R2) ** 2 - (
-#                                   (drawingTemplate.current_figure.R2 - int(text)) / 2) ** 2))
-#             drawingTemplate.current_figure.right_facet_measure_type = 1
-#             drawingTemplate.current_figure.measureDict['facet_right_side_measure'].text = text
-#
-#         except Exception as e:
-#             print(e)
-#             pass
-#
-#         try:
-#             drawingTemplate.current_figure.right_facet_size = res
-#         except Exception as e:
-#             print(e)
-#             drawingTemplate.current_figure.right_facet_size = 0
-#             print('Some kind of shit rfc')
-#         # drawingTemplate.current_figure.right_facet_size = drawingTemplate.current_figure.width/10 +\
-#         #                                                     int( drawingTemplate.current_figure.R2/10 -
-#         #                                                     math.sqrt((drawingTemplate.current_figure.R2/10) **2 - (int(text)/2)**2))
-#
-#     inputBoxDict['right_facet_flat_3_inpBox'] = inputBox(interfceSurfce,
-#                                                               (2 * button_size[0] + 2 * 5, button_size[1] * (5)),
-#                                                               button_size, colors, text='0', font=font,
-#                                                               onChangeAction=lambda text: rfs_flat_3(text))
-#
-#     def R1_buff(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.R1 = int(text)
-#         except:
-#             print('Some kind of shit r1')
-#
-#     inputBoxDict['R1_inpBox'] = inputBox(interfceSurfce, (3 * button_size[0] + 3 * 5, button_size[1] * (0)),
-#                                               button_size, colors, text='R1', font=font,
-#                                               onChangeAction=lambda text: R1_buff(text))
-#
-#     def R2_buff(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.R2 = int(text)
-#         except:
-#             print('Some kind of shit r2')
-#
-#     inputBoxDict['R2_inpBox'] = inputBox(interfceSurfce, (3 * button_size[0] + 3 * 5, button_size[1] * (1)),
-#                                               button_size, colors, text='R2', font=font,
-#                                               onChangeAction=lambda text: R2_buff(text))
-#
-#     def diametr_buff(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.diametr = int(text)
-#         except:
-#             print('Some kind of shit diametr')
-#
-#     inputBoxDict['diametr_inpBox'] = inputBox(interfceSurfce,
-#                                                    (3 * button_size[0] + 3 * 5, button_size[1] * (2)), button_size,
-#                                                    colors, text='diametr', font=font,
-#                                                    onChangeAction=lambda text: diametr_buff(text))
-#
-#     def width_buff(text):  # передача i в качестве аргумента по умолчанию
-#         try:
-#             drawingTemplate.current_figure.width = int(text)
-#         except:
-#             print('Some kind of shit width')
-#
-#     inputBoxDict['width_inpBox'] = inputBox(interfceSurfce,
-#                                                  (3 * button_size[0] + 3 * 5, button_size[1] * (3)), button_size,
-#                                                  colors, text='width', font=font,
-#                                                  onChangeAction=lambda text: width_buff(text))
-#
-#     return inputBoxDict, buttonDict, dropDownDict
 
 
 

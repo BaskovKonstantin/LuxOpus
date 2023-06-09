@@ -18,6 +18,8 @@ from GUI.image import image
 from GUI.signature import signature
 from Template.cellTemplate import cell
 from figure.roughness_measure import roughness_measure
+from figure_new.tasks_may.radius_class import Radius
+from figure_new.tasks_may.covers_class import CoversMeasure
 
 
 global_x = 'SOS'
@@ -168,6 +170,14 @@ controlPanelDict['scale'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 + typeControlPanelGroup_size[0]*0.83, margin/4,
                                              typeControlPanelGroup_size[0]*0.1, typeControlPanelGroup_size[1]*0.9,
                                              colors, interfaceBorderSize)
+controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict = \
+                        initBtn.initScaleBtn(dt,
+                        controlPanelDict['scale'].surface, colors,
+                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+
+
+
+
 controlPanelDict['facet_type'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 , margin/4 + typeControlPanelGroup_size[1]*0.75,
                                              typeControlPanelGroup_size[0]*0.8, typeControlPanelGroup_size[1]*0.15,
@@ -288,13 +298,14 @@ while running:
             if event.button == 4:  # колесо мыши вверх
                 print("Колесо мыши вверх")
                 dt.scale += scale_step
-                dt.current_figure.scale += scale_step
+
+                dt.current_figure.super_scale += scale_step
                 dt.init_draw_cell()
                 dt.draw_param_table()
             elif event.button == 5:  # колесо мыши вниз
                 print("Колесо мыши вниз")
                 dt.scale += -scale_step
-                dt.current_figure.scale += -scale_step
+                dt.current_figure.super_scale += -scale_step
                 dt.init_draw_cell()
                 dt.draw_param_table()
         elif event.type == pygame.VIDEORESIZE:
@@ -428,6 +439,12 @@ while running:
                             or isinstance(current_input.selected_measure, arrow)):
 
                         current_input.selected_measure.blit_point = (prev_blit_point[0] - x_diff ,prev_blit_point[1] - y_diff)
+                    if (isinstance(current_input.selected_measure, Radius)):
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
+
+                    if (isinstance(current_input.selected_measure, CoversMeasure)):
+                        print('HERE 123')
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
 
                 else:
                     current_input.blit_point = (current_input.blit_point[0] -x_diff, current_input.blit_point[1]-y_diff)
