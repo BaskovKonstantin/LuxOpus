@@ -20,6 +20,7 @@ from Template.cellTemplate import cell
 from figure.roughness_measure import roughness_measure
 from figure.figure_new.tasks_may.radius_class import Radius
 from figure.figure_new.tasks_may.covers_class import CoversMeasure
+from figure.figure_new.tasks_may.roughness_class import RoughnessMeasure
 
 global_x = 'SOS'
 
@@ -344,6 +345,8 @@ while running:
                         pass
                     if (isinstance(current_input.selected_measure, CoversMeasure)):
                         pass
+                    if (isinstance(current_input.selected_measure, RoughnessMeasure)):
+                        pass
 
 
             if (isinstance(current_input, image)) and current_input.resize_mode:
@@ -453,7 +456,8 @@ while running:
                     if (isinstance(current_input.selected_measure, Radius)):
                         current_input.selected_measure.move_angle((x_diff, y_diff))
                     if (isinstance(current_input.selected_measure, CoversMeasure)):
-                        print('HERE 123')
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
+                    if (isinstance(current_input.selected_measure, RoughnessMeasure)):
                         current_input.selected_measure.move_angle((x_diff, y_diff))
                 # По этому примеру можно вставлять и другие типы фигур
 

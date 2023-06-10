@@ -11,6 +11,7 @@ from figure.arrow import arrow
 from figure.figure_new.tasks_may.covers_class import CoversMeasure
 from figure.figure_new.tasks_may.chamfers_class import Chamfers
 from figure.figure_new.tasks_may.radius_class import Radius
+from figure.figure_new.tasks_may.roughness_class import RoughnessMeasure
 
 class lens:
 
@@ -613,14 +614,14 @@ class lens:
                                                         angle = 180,
                                                         text = 'R1',
                                                         radius_type = 0,
-                                                        #limit=(149, 211),
+                                                        limit=(149, 211),
                                                         font = self.font)
 
             else:
                 self.measureDict['R1_measure'].scale = self.scale
+                self.measureDict['R1_measure'].draw()
                 self.measureDict['R1_measure'].blit_point = (self.surface_width/2 - R1 - width/2,
                                                              R1 - self.measureDict['R1_measure'].surface.get_height()/2)
-                self.measureDict['R1_measure'].draw()
 
                 self.surface.blit(self.measureDict['R1_measure'].surface,
                                   self.measureDict['R1_measure'].blit_point)
@@ -652,10 +653,11 @@ class lens:
 
             else:
                 self.measureDict['R2_measure'].scale = self.scale
+                self.measureDict['R2_measure'].draw()
                 self.measureDict['R2_measure'].blit_point = (self.surface_width/2 - R2 - width/2 - diametr,
                                                              R2 - self.measureDict['R2_measure'].surface.get_height()/2+(R1-R2))
                 #print(R2, diametr, width)
-                self.measureDict['R2_measure'].draw()
+
                 self.surface.blit(self.measureDict['R2_measure'].surface,
                                   self.measureDict['R2_measure'].blit_point)
 
@@ -690,17 +692,24 @@ class lens:
                     angle = -90
 
                 self.measureDict['roughness_measure_1'] = \
-                    roughness_measure(self.surface, self.colors,
-                                    point,
-                                    size = roughness_measure_size,
-                                    angle_rotate=-angle,
-                                    font = self.font,
-                                    text_method = 'T1',
-                                    text_base_len = 'B1',
-                                    text_designation = 'D1')
+                    RoughnessMeasure(self.surface,
+                                     colors=self.colors,
+                                     blit_point=point,
+                                     surface_radius=R1,
+                                     size = roughness_measure_size,
+                                     angle=170,
+                                     line_width=2,
+                                     font = self.font,
+                                     limit=(149, 211),
+                                     text_method = 'T1',
+                                     text_base_len = 'B1',
+                                     text_designation = 'D1',
+                                     roughness_type=0)
             else:
                 if (self.types[0] == 2):
                     angle = 25
+                    self.measureDict['roughness_measure_1'].scale = self.scale
+                    self.measureDict['roughness_measure_1'].draw()
                     point = (self.circle_center_roughness_measure_1[0] + R1 * math.cos(math.radians(angle)) - 1*roughness_measure_size[0],
                              self.circle_center_roughness_measure_1[1] + R1 * math.sin(math.radians(angle)) - 1.3*roughness_measure_size[1])
                     self.measureDict['roughness_measure_1'].blit_point = point
@@ -709,13 +718,18 @@ class lens:
                     angle = 5
                 if (self.types[0] == 1):
                     angle = 20
-                    point = (self.circle_center_roughness_measure_1[0] - R1 * math.cos(math.radians(angle) ) - width,
-                             self.circle_center_roughness_measure_1[1] - R1 * math.sin(math.radians(angle)) )
+                    # point = (self.circle_center_roughness_measure_1[0] - R1 * math.cos(math.radians(angle) ) - width,
+                    #          self.circle_center_roughness_measure_1[1] - R1 * math.sin(math.radians(angle)) )
+                    self.measureDict['roughness_measure_1'].scale = self.scale
+                    self.measureDict['roughness_measure_1'].draw()
+                    point = (self.surface_width - R1 - width/2 - (self.measureDict['roughness_measure_1'].surface.get_width()/2 - R1),
+                             R1 - self.measureDict['roughness_measure_1'].surface.get_height()/2)
                     self.measureDict['roughness_measure_1'].blit_point = point
                     self.circle_center_roughness_measure_1 = (int(self.surface_width / 2) + R1,
                                           self.axis_center_point)
                     angle = 20
-                self.measureDict['roughness_measure_1'].draw()
+                # self.measureDict['roughness_measure_1'].scale = self.scale
+                # self.measureDict['roughness_measure_1'].draw()
                 self.surface.blit(self.measureDict['roughness_measure_1'].surface,
                                   (self.measureDict['roughness_measure_1'].blit_point[0] ,
                                    self.measureDict['roughness_measure_1'].blit_point[1] ))
@@ -738,19 +752,24 @@ class lens:
                              self.circle_center_roughness_measure_2[1] + R2 * math.sin(math.radians(angle)))
                     angle = 90
 
-                self.measureDict['roughness_measure_2'] = \
-                    roughness_measure(self.surface, self.colors,
-                                    point,
-                                    size = roughness_measure_size,
-                                    angle_rotate=-angle,
-                                    font = self.font,
-                                    text_method = 'T1',
-                                    text_base_len = 'B1',
-                                    text_designation = 'D1')
+                self.measureDict['roughness_measure_2'] = RoughnessMeasure(self.surface,
+                                                                           point,
+                                                                           self.colors,
+                                                                           line_width=2,
+                                                                           surface_radius=R2,
+                                                                           roughness_type=0,
+                                                                           size = roughness_measure_size,
+                                                                           angle=30,
+                                                                           font = self.font,
+                                                                           limit=(-38, 38),
+                                                                           text_method = 'T1',
+                                                                           text_base_len = 'B1',
+                                                                           text_designation = 'D1')
             else:
                 if (self.types[1] == 2):
                     angle = 25
-
+                    self.measureDict['roughness_measure_2'].scale = self.scale
+                    self.measureDict['roughness_measure_2'].draw()
                     point = (self.circle_center_roughness_measure_2[0] - R2*math.cos( math.radians(angle) ) ,
                              self.circle_center_roughness_measure_2[1] - R2*math.sin( math.radians(angle) ) )
                     self.measureDict['roughness_measure_2'].blit_point = point
@@ -763,9 +782,12 @@ class lens:
                 if (self.types[1] == 1):
                     angle = 25
 
-                    point = (self.circle_center_roughness_measure_2[0] + R2 * math.cos(math.radians(angle)),
-                             self.circle_center_roughness_measure_2[1] + R2 * math.sin(math.radians(angle)))
-
+                    # point = (self.circle_center_roughness_measure_2[0] + R2 * math.cos(math.radians(angle)),
+                    #          self.circle_center_roughness_measure_2[1] + R2 * math.sin(math.radians(angle)))
+                    self.measureDict['roughness_measure_2'].scale = self.scale
+                    self.measureDict['roughness_measure_2'].draw()
+                    point = (self.surface_width/2 - R2 - diametr/2 - (self.measureDict['roughness_measure_2'].surface.get_width()/2 - R2),
+                             R2 - self.measureDict['roughness_measure_2'].surface.get_height()/2+(R1-R2))
                     self.measureDict['roughness_measure_2'].blit_point = point
 
 
@@ -774,7 +796,7 @@ class lens:
                     angle = 15
 
 
-                self.measureDict['roughness_measure_2'].draw()
+                # self.measureDict['roughness_measure_2'].draw()
                 self.surface.blit(self.measureDict['roughness_measure_2'].surface,
                                   (self.measureDict['roughness_measure_2'].blit_point[0] ,
                                    self.measureDict['roughness_measure_2'].blit_point[1] ))
@@ -813,6 +835,7 @@ class lens:
                     #                (self.axis_center_point - R1))
                     # подставил значения наугад
                     self.measureDict['cover_measure_1'].scale = self.scale
+                    self.measureDict['cover_measure_1'].draw()
                     self.circle_center_cover_measure_1 = (self.surface_width/2 - width/2 - self.measureDict['cover_measure_1'].width,
                                                              R1 - self.measureDict['cover_measure_1'].surface.get_height()/2)
                     point = (self.circle_center_cover_measure_1[0],
@@ -823,7 +846,7 @@ class lens:
                     #self.measureDict['cover_measure_1'].angle = 200
                     self.measureDict['cover_measure_1'].blit_point = point
 
-                self.measureDict['cover_measure_1'].draw()
+                # self.measureDict['cover_measure_1'].draw()
                 self.surface.blit(self.measureDict['cover_measure_1'].surface,
                                   (self.measureDict['cover_measure_1'].blit_point[0] ,
                                    self.measureDict['cover_measure_1'].blit_point[1] ))
@@ -879,10 +902,10 @@ class lens:
                     #                 (self.axis_center_point - R2))
                     # подставил значения наугад
                     self.measureDict['cover_measure_2'].scale = self.scale
+                    self.measureDict['cover_measure_2'].draw()
                     self.circle_center_cover_measure_2 = \
                         (self.surface_width / 2 - self.measureDict['cover_measure_2'].width-R2-diametr/2,
                          R2 - self.measureDict['cover_measure_2'].surface.get_height() / 2 + (R1 - R2))
-                    print(width, diametr, R2)
                     point = (self.circle_center_cover_measure_2[0],
                              self.circle_center_cover_measure_2[1] )
                     self.measureDict['cover_measure_2'].cover_type = 0
@@ -894,7 +917,7 @@ class lens:
 
 
 
-                self.measureDict['cover_measure_2'].draw()
+                #self.measureDict['cover_measure_2'].draw()
                 self.surface.blit(self.measureDict['cover_measure_2'].surface,
                                   (self.measureDict['cover_measure_2'].blit_point[0] ,
                                    self.measureDict['cover_measure_2'].blit_point[1] ))
