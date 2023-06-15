@@ -881,7 +881,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
     button_size = (int(scale*55), int(scale*13))
 
     def test_function(option):
-        print(option)
+        drawingTemplate.current_figure.type = int(option.split(' ')[1])
 
     dropDownDict['dropDownList_Type'] = DropdownList(
         interfceSurfce,

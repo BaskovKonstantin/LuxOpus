@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LuxOpus.iml" filepath="$PROJECT_DIR$/.idea/LuxOpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/masterLuxOpus.iml" filepath="$PROJECT_DIR$/.idea/masterLuxOpus.iml" />
     </modules>
   </component>
 </project>
