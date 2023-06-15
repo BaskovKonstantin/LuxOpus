@@ -227,32 +227,32 @@ class lens:
         else:
             point_1_x = start_x_R1 + R1 * math.cos(angle_end_R1)
         point_1_y = self.axis_center_point + R1 * math.sin(angle_end_R1)
-        point_1 = (point_1_x ,point_1_y)
+        self.point_1 = (point_1_x ,point_1_y)
 
         if (self.types[1] == 3):
             point_2_x = int(self.surface_width/2 - width/2) + R2 / 24  + width
         else:
             point_2_x = start_x_R2 + R2 * math.cos(angle_end_R2)
         point_2_y = self.axis_center_point + R2 * math.sin(angle_end_R2)
-        point_2 = (point_2_x,point_2_y)
+        self.point_2 = (point_2_x,point_2_y)
 
         if (self.types[0] == 3):
             point_3_x = int(self.surface_width/2 - width/2) + R1 / 12
         else:
             point_3_x = start_x_R1 + R1 * math.cos(angle_start_R1)
         point_3_y = self.axis_center_point + R1 * math.sin(angle_start_R1)
-        point_3 = (point_3_x,point_3_y)
+        self.point_3 = (point_3_x,point_3_y)
 
         if (self.types[1] == 3):
             point_4_x = int(self.surface_width/2 - width/2) + R2 / 24  + width
         else:
             point_4_x = start_x_R2 + R2 * math.cos(angle_start_R2)
         point_4_y = self.axis_center_point + R2 * math.sin(angle_start_R2)
-        point_4 = (point_4_x,point_4_y)
+        self.point_4 = (point_4_x,point_4_y)
 
 
-        pygame.draw.line(self.surface, self.colors['border'], point_1, point_2, self.border_size)
-        pygame.draw.line(self.surface, self.colors['border'], point_3, point_4,self.border_size)
+        pygame.draw.line(self.surface, self.colors['border'], self.point_1, self.point_2, self.border_size)
+        pygame.draw.line(self.surface, self.colors['border'], self.point_3, self.point_4,self.border_size)
 
 
         #Фаски
@@ -286,14 +286,14 @@ class lens:
             if (self.left_facet_type == 1):
                 if (self.types[0] == 2 ):
                     pygame.draw.rect(self.surface, self.colors['transparent'],
-                                     pygame.Rect(point_1[0] - self.left_facet_size / 2,
-                                                 point_1[1] - 2 * self.border_size,
+                                     pygame.Rect(self.point_1[0] - self.left_facet_size / 2,
+                                                 self.point_1[1] - 2 * self.border_size,
                                                  self.left_facet_size,
                                                  self.left_facet_size + 2 * self.border_size))
 
                     pygame.draw.rect(self.surface, self.colors['transparent'],
-                                     pygame.Rect(point_3[0] - self.left_facet_size / 2,
-                                                 point_3[1] - self.left_facet_size + self.border_size,
+                                     pygame.Rect(self.point_3[0] - self.left_facet_size / 2,
+                                                 self.point_3[1] - self.left_facet_size + self.border_size,
                                                  self.left_facet_size,
                                                  self.left_facet_size))
 
@@ -301,17 +301,17 @@ class lens:
 
 
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (point_1[0] + self.left_facet_size / 2, point_1[1]),
-                                     (self.facet_point_1[0], point_1[1]), self.border_size)
+                                     (self.point_1[0] + self.left_facet_size / 2, self.point_1[1]),
+                                     (self.facet_point_1[0], self.point_1[1]), self.border_size)
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (self.facet_point_1[0], point_1[1]),
+                                     (self.facet_point_1[0], self.point_1[1]),
                                      self.facet_point_1, self.border_size)
 
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (point_3[0] + self.left_facet_size / 2, point_3[1]),
-                                     (self.facet_point_3[0], point_3[1]), self.border_size)
+                                     (self.point_3[0] + self.left_facet_size / 2, self.point_3[1]),
+                                     (self.facet_point_3[0], self.point_3[1]), self.border_size)
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (self.facet_point_3[0], point_3[1]),
+                                     (self.facet_point_3[0], self.point_3[1]),
                                      self.facet_point_3, self.border_size)
 
         #Правая
@@ -345,26 +345,26 @@ class lens:
 
                 if (self.types[1] == 2):
                     pygame.draw.rect(self.surface, self.colors['transparent'],
-                                     pygame.Rect(point_2[0] - self.right_facet_size / 2 - 2 * self.border_size,
-                                                 point_2[1] - 2 * self.border_size,
+                                     pygame.Rect(self.point_2[0] - self.right_facet_size / 2 - 2 * self.border_size,
+                                                 self.point_2[1] - 2 * self.border_size,
                                                  self.right_facet_size + 2 * self.border_size,
                                                  self.right_facet_size + 2 * self.border_size))
 
                     pygame.draw.rect(self.surface, self.colors['transparent'],
-                                     pygame.Rect(point_4[0] - self.right_facet_size / 2 - 2 * self.border_size,
-                                                 point_4[1] - self.right_facet_size + self.border_size,
+                                     pygame.Rect(self.point_4[0] - self.right_facet_size / 2 - 2 * self.border_size,
+                                                 self.point_4[1] - self.right_facet_size + self.border_size,
                                                  self.right_facet_size + 2 * self.border_size,
                                                  self.right_facet_size + 2 * self.border_size))
 
 
 
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (self.facet_point_2[0], point_2[1]),
+                                     (self.facet_point_2[0], self.point_2[1]),
                                      self.facet_point_2, self.border_size)
 
 
                     pygame.draw.line(self.surface, self.colors['border'],
-                                     (self.facet_point_4[0], point_4[1]),
+                                     (self.facet_point_4[0], self.point_4[1]),
                                      self.facet_point_4, self.border_size)
 
         # #Отображение размеров
@@ -519,7 +519,7 @@ class lens:
         # Здесь задается фаски#
         # Справа
         size = (60,80)
-        if (self.right_facet_type == 2):
+        if (self.right_facet_type == 2 and self.left_facet_type != 2):
             if not ('facet_right_measure' in self.measureDict.keys()):
                 self.measureDict['facet_right_measure'] =\
                     Chamfers(
@@ -529,25 +529,36 @@ class lens:
                         line_width= self.border_size,
                         pointer_length= 40,
                         text = '45',
-                        chamfer_type = 3,
+                        chamfer_type = 1,
                         font=self.font,
-                        first_point= (100, 100))
+                        first_point= self.point_2)
             else:
-                self.measureDict['facet_right_measure'].blit_point = self.facet_point_2
+                #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
                                       self.measureDict['facet_right_measure'].blit_point)
         # и справа
         size = (60,80)
-        if (self.left_facet_type == 2):
+        if (self.left_facet_type == 2 and self.right_facet_type != 2):
             if not ('facet_left_measure' in self.measureDict.keys()):
-                self.measureDict['facet_left_measure'] =\
-                    facet_measure(
-                                self.surface,
-                                self.colors,
-                        (self.facet_point_1[0] + size[0]/3,self.facet_point_1[1] - diametr/2 ),
-                        size = size,
-                                 text=str('Upp'), font=self.font,)
+                self.measureDict['facet_left_measure'] = \
+                    Chamfers(
+                        screen=self.surface,
+                        colors=self.colors,
+                        line_length=40,
+                        line_width=self.border_size,
+                        pointer_length=40,
+                        text='UP',
+                        chamfer_type=3,
+                        font=self.font,
+                        first_point=self.point_1)
+                # self.measureDict['facet_left_measure'] =\
+                #     facet_measure(
+                #                 self.surface,
+                #                 self.colors,
+                #         (self.facet_point_1[0] + size[0]/3,self.facet_point_1[1] - diametr/2 ),
+                #         size = size,
+                #                  text=str('Upp'), font=self.font,)
 
             else:
                 try:
@@ -557,6 +568,27 @@ class lens:
                                       self.measureDict['facet_left_measure'].blit_point)
                 except:
                     pass
+        if (self.right_facet_type == 2 and self.left_facet_type == 2):
+            if not ('facet_right_measure' in self.measureDict.keys()):
+                self.measureDict['facet_right_measure'] =\
+                    Chamfers(
+                        screen = self.surface,
+                        colors = self.colors,
+                        line_length= 100,
+                        triangle_part=0.3,
+                        line_width= self.border_size,
+                        pointer_length= 100,
+                        text = '45',
+                        chamfer_type = 2,
+                        font=self.font,
+                        first_point= self.point_1,
+                        second_point=self.point_2)
+            else:
+                #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
+                self.measureDict['facet_right_measure'].draw()
+                self.surface.blit(self.measureDict['facet_right_measure'].surface,
+                                      self.measureDict['facet_right_measure'].blit_point)
+
     def draw_base_measure(self):
         R1 = int(self.R1*self.scale)
         R2 = int(self.R2*self.scale)

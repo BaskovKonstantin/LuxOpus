@@ -11,6 +11,7 @@ class Chamfers:
                  chamfer_type: int,
                  first_point: Tuple[int, int],
                  angle: int = 45,
+                 triangle_part: int = 0.5,
                  second_point: Tuple[int, int] = None,
                  scale: int = 1, font: str = 'arial.ttf', font_size: int = 16):
         self.scale = scale
@@ -18,6 +19,7 @@ class Chamfers:
         self.colors = colors
         self.line_length = line_length * self.scale
         self.pointer_length = pointer_length * self.scale
+        self.triangle_part = triangle_part
         self.line_width = line_width * self.scale
         self.text = text
         self.chamfer_type = chamfer_type
@@ -88,14 +90,15 @@ class Chamfers:
                                 (self.offset[0] - (self.second_point[0] - self.first_point[0]), self.offset[1])))
 
             if self.second_point[0] > self.first_point[0]:
-                self.screen.blit(self.surface,
-                                 (self.second_point[0] - self.offset[0], self.second_point[1] - self.offset[1]))
+                self.blit_point = (self.second_point[0] - self.offset[0], self.second_point[1] - self.offset[1])
+                self.screen.blit(self.surface, self.blit_point)
             else:
-                self.screen.blit(self.surface,
-                                 (self.first_point[0] - self.offset[0], self.first_point[1] - self.offset[1]))
+                self.blit_point = (self.first_point[0] - self.offset[0], self.first_point[1] - self.offset[1])
+                self.screen.blit(self.surface, self.blit_point)
 
         elif self.chamfer_type == 1 or self.chamfer_type == 3:
-            self.screen.blit(self.surface, (self.first_point[0] - self.offset[0], self.first_point[1] - self.offset[1]))
+            self.blit_point = (self.first_point[0] - self.offset[0], self.first_point[1] - self.offset[1])
+            self.screen.blit(self.surface, self.blit_point)
 
     def get_surface_size(self):
 
@@ -143,17 +146,17 @@ class Chamfers:
     def get_polygon_dots(self):
 
         if self.chamfer_type == 3 or self.chamfer_type == 2:
-            mid_dot = (self.first_dot[0] // 2, self.first_dot[1] // 2)
-            left_dot = (mid_dot[0] - self.pointer_length // 8 * cos(radians(self.angle)),
-                        mid_dot[1] + self.pointer_length // 8 * sin(radians(self.angle)))
-            right_dot = (mid_dot[0] + self.pointer_length // 8 * cos(radians(self.angle)),
-                         mid_dot[1] - self.pointer_length // 8 * sin(radians(self.angle)))
+            mid_dot = (self.first_dot[0] * self.triangle_part, self.first_dot[1] * self.triangle_part)
+            left_dot = (mid_dot[0] - self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                        mid_dot[1] + self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
+            right_dot = (mid_dot[0] + self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                         mid_dot[1] - self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
 
         if self.chamfer_type == 1:
-            mid_dot = (self.first_dot[0] // 2, self.first_dot[1] // 2)
-            left_dot = (mid_dot[0] - self.pointer_length // 8 * cos(radians(self.angle)),
-                        mid_dot[1] - self.pointer_length // 8 * sin(radians(self.angle)))
-            right_dot = (mid_dot[0] + self.pointer_length // 8 * cos(radians(self.angle)),
-                         mid_dot[1] + self.pointer_length // 8 * sin(radians(self.angle)))
+            mid_dot = (self.first_dot[0] * self.triangle_part, self.first_dot[1] * self.triangle_part)
+            left_dot = (mid_dot[0] - self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                        mid_dot[1] - self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
+            right_dot = (mid_dot[0] + self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                         mid_dot[1] + self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
 
         return ((0,0), left_dot, right_dot)
