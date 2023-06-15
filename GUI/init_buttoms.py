@@ -8,132 +8,11 @@ from tkinter import filedialog
 import pygame
 import math
 import sys
-from figure_new.tasks_may.dropdownlist_class import DropdownList
+from figure.figure_new.tasks_may.dropdownlist_class import DropdownList
 import win32api
 import win32ui
 import win32gui
 import win32com
-
-
-
-
-def initScaleBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
-    buttonDict = {}
-    inputBoxDict = {}
-    dropDownDict = {}
-    button_size = (int(15 * scale), int(9 * scale))
-    step = 3
-    #############################################################
-    def scale_1_10():
-        drawingTemplate.current_figure.scale = 0.1
-        drawingTemplate.cell_dict['scale'].text = '1:10'
-
-    buttonDict['scale_1_10'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(5 * scale)),
-               button_size, colors, action=lambda text: scale_1_10(), text='1:10',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_1_5():
-        drawingTemplate.current_figure.scale = 0.2
-        drawingTemplate.cell_dict['scale'].text = '1:5'
-
-    buttonDict['scale_1_5'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*1  + 2*step * scale)),
-               button_size, colors, action=lambda text: scale_1_5(), text='1:15',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_1_4():
-        drawingTemplate.current_figure.scale = 0.25
-        drawingTemplate.cell_dict['scale'].text = '1:4'
-
-    buttonDict['scale_1_4'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*2  + 3*step * scale)),
-               button_size, colors, action=lambda text: scale_1_4(), text='1:4',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_10_25():
-        drawingTemplate.current_figure.scale = 0.4
-        drawingTemplate.cell_dict['scale'].text = '1:2.5'
-
-    buttonDict['scale_10_25'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*3  + 4*step * scale)),
-               button_size, colors, action=lambda text: scale_10_25(), text='1:2.5',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_1_2():
-        drawingTemplate.current_figure.scale = 0.5
-        drawingTemplate.cell_dict['scale'].text = '1:2'
-
-    buttonDict['scale_1_2'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*4  + 5*step * scale)),
-               button_size, colors, action=lambda text: scale_1_2(), text='1:2',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_1_1():
-        drawingTemplate.current_figure.scale = 1
-        drawingTemplate.cell_dict['scale'].text = '1:1'
-
-    buttonDict['scale_1_1'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*5  + 6*step * scale)),
-               button_size, colors, action=lambda text: scale_1_1(), text='1:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_2_1():
-        drawingTemplate.current_figure.scale = 2
-        drawingTemplate.cell_dict['scale'].text = '2:1'
-
-    buttonDict['scale_2_1'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*6  + 7*step * scale)),
-               button_size, colors, action=lambda text: scale_2_1(), text='2:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_25_10():
-        drawingTemplate.current_figure.scale = 2.5
-        drawingTemplate.cell_dict['scale'].text = '2.5:1'
-
-    buttonDict['scale_25_10'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*7  + 8*step * scale)),
-               button_size, colors, action=lambda text: scale_25_10(), text='2.5:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_4_1():
-        drawingTemplate.current_figure.scale = 4
-        drawingTemplate.cell_dict['scale'].text = '4:1'
-
-    buttonDict['scale_4_1'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*8  + 9*step * scale)),
-               button_size, colors, action=lambda text: scale_4_1(), text='4:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_5_1():
-        drawingTemplate.current_figure.scale = 5
-        drawingTemplate.cell_dict['scale'].text = '5:1'
-
-    buttonDict['scale_5_1'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*9  + 10*step * scale)),
-               button_size, colors, action=lambda text: scale_5_1(), text='5:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-    #############################################################
-    def scale_10_1():
-        drawingTemplate.current_figure.scale = 10
-        drawingTemplate.cell_dict['scale'].text = '10:1'
-    buttonDict['scale_10_1'] = \
-        button(interfceSurfce,
-               (int(5 * scale), int(button_size[1]*10  + 11*step * scale)),
-               button_size, colors, action=lambda text: scale_10_1(), text='10:1',
-               font=font, font_size=int(6 * scale), sign='', border_size = 2)
-
-    return inputBoxDict, buttonDict
 
 def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
@@ -142,9 +21,7 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
     button_size = (int(25*scale), int(15*scale))
 
     def facet_measure_type_1():  # передача i в качестве аргумента по умолчанию
-        print('KAAAAAAAAAK 111')
         drawingTemplate.current_figure.right_facet_measure_type = 1
-
 
     buttonDict['facet_type_1'] = \
         button(interfceSurfce,
@@ -153,7 +30,6 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
                font=font, font_size= int(4*scale), sign = '')
 
     def facet_measure_type_2():  # передача i в качестве аргумента по умолчанию
-        print('KAAAAAAAAAK 222')
         drawingTemplate.current_figure.right_facet_measure_type = 2
 
 
@@ -179,6 +55,7 @@ def initFlatFacetMeasureTypeBtn(drawingTemplate , interfceSurfce, colors, border
                 font_size= int(4*scale))
 
     return inputBoxDict, buttonDict, dropDownDict
+
 def initFlatFacetParamTypeBtn(drawingTemplate ,interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -254,9 +131,10 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     inputBoxDict = {}
     dropDownDict = {}
     button_size = (int(25*scale), int(15*scale))
-
+    ##########################################################
+    ###### Включение диагональной фаски
     def facet_type_1(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT 555555', text)
+        drawingTemplate.current_figure.left_facet_type = 2
     buttonDict['facet_type_1'] = \
         button(interfceSurfce,
                 (int(10*scale), int(5*scale)),
@@ -264,8 +142,11 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 action=lambda text: facet_type_1(text),
                 sign = '',
                 font_size= int(4*scale))
+    ##########################################################
+    ###### Включение диагональной фаски
     def facet_type_2(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT 9999999', text)
+        drawingTemplate.current_figure.left_facet_type = 2
+        drawingTemplate.current_figure.right_facet_type = 2
     buttonDict['facet_type_2'] = \
         button(interfceSurfce,
                 (int(10*scale) + 1*button_size[0] + 10, int(5*scale)),
@@ -273,8 +154,11 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 action=lambda text: facet_type_2(text),
                 sign = '',
                 font_size= int(4*scale))
+
+    ##########################################################
+    ###### Включение диагональной фаски
     def facet_type_3(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT 11111111', text)
+        drawingTemplate.current_figure.right_facet_type = 2
     buttonDict['facet_type_3'] = \
         button(interfceSurfce,
                 (int(10*scale) + 2*button_size[0] + int(scale*9), int(5*scale)),
@@ -282,13 +166,19 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 action=lambda text: facet_type_3(text),
                 sign = '',
                 font_size= int(4*scale))
-    def facet_type_4(text):  # передача i в качестве аргумента по умолчанию
-        print('INPUT BOX TEXT 77777777', text)
+##########################################################
+    # Включение плоской фаски
+    def facet_type_4(text):
+        drawingTemplate.current_figure.left_facet_type = 0
+        drawingTemplate.current_figure.right_facet_type = 1
+        print('drawingTemplate.current_figure.right_facet_type', drawingTemplate.current_figure.right_facet_type)
+        print('drawingTemplate.current_figure.left_facet_type', drawingTemplate.current_figure.left_facet_type)
+
     buttonDict['facet_type_4'] = \
         button(interfceSurfce,
                 (int(10*scale) + 3*button_size[0] + 30,int(5*scale)),
                 button_size, colors, text='type_4', font=font,
-                action=lambda text: facet_type_1(text),
+                action=lambda text: facet_type_4(text),
                 sign = '',
                 font_size= int(4*scale))
 
@@ -469,33 +359,8 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     dropDownDict = {}
     button_size = (int(scale*20), int(scale*10))
 
-    base_diametr = 250
-    base_width = 150
-
-    def scale_convert(base_size, cur_size):
-        limit = 0.2
-        scale_text_list = ['10:1', '5:1', '4:1', '2.5:1', '2:1', '1:1', '1:2', '1:2.5', '1:4', '1:5', '1:10']
-        scale_list = [10, 5, 4, 2.5, 2, 1, 0.5, 0.4, 0.25, 0.2, 0.1]
-        scale_list_rev = [0.1, 0.2, 0.25, 0.4, 0.5, 1, 2, 2.5, 4, 5, 10]
-        for i in range(0, len(scale_list)):
-            print('cur_size', cur_size)
-            print('base_size*scale_list[i]',base_size*scale_list[i])
-            print('scale_list[i]',scale_list[i])
-            print('scale_text_list[i]', scale_text_list[i])
-            print('scale_list_rev[i]', scale_list_rev[i])
-
-            if (base_size*scale_list[i] * (1+limit) >= cur_size ) and (base_size*scale_list[i] * (1-limit) <= cur_size ):
-            # if (base_size*(1+limit)*scale_list[i] < cur_size) or (base_size*(1-limit)*scale_list[i] > cur_size):
-                print('BOOOOM')
-                drawingTemplate.current_figure.scale = scale_list_rev[i]
-                drawingTemplate.cell_dict['scale'].text = scale_text_list[i]
-                break
-
     def diametr(text):  # передача i в качестве аргумента по умолчанию
-        if (text.isnumeric()):
-            diametr = int(text)
-            scale_convert(base_diametr,diametr )
-            drawingTemplate.current_figure.diametr = diametr
+        if (text.isnumeric()): drawingTemplate.current_figure.diametr = int(text)
     inputBoxDict['Диаметр'] = \
         inputBox(interfceSurfce,
                 (int(scale*90),int(scale*3)),
@@ -511,13 +376,10 @@ def initLensParamBtn(drawingTemplate , interfceSurfce, colors, border_size, font
                 button_size, colors, text='', font=font,
                 onChangeAction=lambda text: diametr_2(text),
                 sign = '',
-                font_size=int(scale*5))
+                 font_size=int(scale*5))
 
     def width(text):  # передача i в качестве аргумента по умолчанию
-        if (text.isnumeric()):
-            width = int(text)
-            scale_convert(base_width,width )
-            drawingTemplate.current_figure.width = width
+        if (text.isnumeric()): drawingTemplate.current_figure.width = int(text)
     inputBoxDict['Толщина'] = \
         inputBox(interfceSurfce,
                 (int(scale*90), int(scale*19)),
@@ -638,6 +500,7 @@ def initFocusBtn(drawingTemplate , interfceSurfce, colors, border_size, font = N
                 sign = 'Фокус линзы для видимого спектра')
 
     return inputBoxDict, buttonDict, dropDownDict
+
 def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -718,8 +581,8 @@ def initSurfaceA(drawingTemplate , interfceSurfce, colors, border_size, font = N
                  onChangeAction=lambda text: customer_radius(text),
                  sign='Радиус заказчика')
 
-
     return inputBoxDict, buttonDict, dropDownDict
+
 def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -799,8 +662,8 @@ def initSurfaceB(drawingTemplate , interfceSurfce, colors, border_size, font = N
                  onChangeAction=lambda text: customer_radius(text),
                  sign='Радиус заказчика')
 
-
     return inputBoxDict, buttonDict, dropDownDict
+
 def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, FlatFacetPanelControlGroup,typeFacetPanelGroup, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -892,6 +755,124 @@ def initTopPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, Fl
                                          border_size=border_size)
 
     return inputBoxDict, buttonDict, dropDownDict
+def initScaleBtn(drawingTemplate , interfceSurfce, colors, border_size, font = None, scale = 1):
+    buttonDict = {}
+    inputBoxDict = {}
+    dropDownDict = {}
+    button_size = (int(15 * scale), int(9 * scale))
+    step = 3
+    #############################################################
+    def scale_1_10():
+        drawingTemplate.current_figure.scale = 0.1
+        drawingTemplate.cell_dict['scale'].text = '1:10'
+
+    buttonDict['scale_1_10'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(5 * scale)),
+               button_size, colors, action=lambda text: scale_1_10(), text='1:10',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_5():
+        drawingTemplate.current_figure.scale = 0.2
+        drawingTemplate.cell_dict['scale'].text = '1:5'
+
+    buttonDict['scale_1_5'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*1  + 2*step * scale)),
+               button_size, colors, action=lambda text: scale_1_5(), text='1:15',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_4():
+        drawingTemplate.current_figure.scale = 0.25
+        drawingTemplate.cell_dict['scale'].text = '1:4'
+
+    buttonDict['scale_1_4'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*2  + 3*step * scale)),
+               button_size, colors, action=lambda text: scale_1_4(), text='1:4',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_10_25():
+        drawingTemplate.current_figure.scale = 0.4
+        drawingTemplate.cell_dict['scale'].text = '1:2.5'
+
+    buttonDict['scale_10_25'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*3  + 4*step * scale)),
+               button_size, colors, action=lambda text: scale_10_25(), text='1:2.5',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_2():
+        drawingTemplate.current_figure.scale = 0.5
+        drawingTemplate.cell_dict['scale'].text = '1:2'
+
+    buttonDict['scale_1_2'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*4  + 5*step * scale)),
+               button_size, colors, action=lambda text: scale_1_2(), text='1:2',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_1_1():
+        drawingTemplate.current_figure.scale = 1
+        drawingTemplate.cell_dict['scale'].text = '1:1'
+
+    buttonDict['scale_1_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*5  + 6*step * scale)),
+               button_size, colors, action=lambda text: scale_1_1(), text='1:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_2_1():
+        drawingTemplate.current_figure.scale = 2
+        drawingTemplate.cell_dict['scale'].text = '2:1'
+
+    buttonDict['scale_2_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*6  + 7*step * scale)),
+               button_size, colors, action=lambda text: scale_2_1(), text='2:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_25_10():
+        drawingTemplate.current_figure.scale = 2.5
+        drawingTemplate.cell_dict['scale'].text = '2.5:1'
+
+    buttonDict['scale_25_10'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*7  + 8*step * scale)),
+               button_size, colors, action=lambda text: scale_25_10(), text='2.5:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_4_1():
+        drawingTemplate.current_figure.scale = 4
+        drawingTemplate.cell_dict['scale'].text = '4:1'
+
+    buttonDict['scale_4_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*8  + 9*step * scale)),
+               button_size, colors, action=lambda text: scale_4_1(), text='4:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_5_1():
+        drawingTemplate.current_figure.scale = 5
+        drawingTemplate.cell_dict['scale'].text = '5:1'
+
+    buttonDict['scale_5_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*9  + 10*step * scale)),
+               button_size, colors, action=lambda text: scale_5_1(), text='5:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+    #############################################################
+    def scale_10_1():
+        drawingTemplate.current_figure.scale = 10
+        drawingTemplate.cell_dict['scale'].text = '10:1'
+    buttonDict['scale_10_1'] = \
+        button(interfceSurfce,
+               (int(5 * scale), int(button_size[1]*10  + 11*step * scale)),
+               button_size, colors, action=lambda text: scale_10_1(), text='10:1',
+               font=font, font_size=int(6 * scale), sign='', border_size = 2)
+
+    return inputBoxDict, buttonDict, dropDownDict
+
 def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, scale = 1):
     buttonDict = {}
     inputBoxDict = {}
@@ -915,14 +896,7 @@ def initLeftPanel(drawingTemplate, interfceSurfce,  colors, border_size, font, s
         font = font
     )
 
-    # for i in range(1, 6):
-    #     def buff(i=i):  # передача i в качестве аргумента по умолчанию
-    #         drawingTemplate.current_figure.type = int(i)
-    #         print('TYPE ',i)
-    #
-    #     buttonDict[f'set type {i}'] = button(interfceSurfce, (0, button_size[1] * (i - 1)), button_size,
-    #                                          colors, lambda i=i: buff(i), f'type {i}', font,
-    #                                          border_size=border_size)
+
     def add_lens():  # передача i в качестве аргумента по умолчанию
         drawingTemplate.add_lens()
 

@@ -18,11 +18,12 @@ from GUI.image import image
 from GUI.signature import signature
 from Template.cellTemplate import cell
 from figure.roughness_measure import roughness_measure
-from figure_new.tasks_may.radius_class import Radius
-from figure_new.tasks_may.covers_class import CoversMeasure
-
+from figure.figure_new.tasks_may.radius_class import Radius
+from figure.figure_new.tasks_may.covers_class import CoversMeasure
+from figure.figure_new.tasks_may.roughness_class import RoughnessMeasure
 
 global_x = 'SOS'
+
 
 # COLORS
 WHITE = (255, 255, 255)
@@ -170,7 +171,7 @@ controlPanelDict['scale'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 + typeControlPanelGroup_size[0]*0.83, margin/4,
                                              typeControlPanelGroup_size[0]*0.1, typeControlPanelGroup_size[1]*0.9,
                                              colors, interfaceBorderSize)
-controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict = \
+controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict, controlPanelDict['scale'].dropDownDict = \
                         initBtn.initScaleBtn(dt,
                         controlPanelDict['scale'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -247,7 +248,6 @@ topControlPanel.inputBoxDict, topControlPanel.buttonDict, topControlPanel.dropDo
                          topControlPanel.surface, colors, border_size=interfaceBorderSize,
                          font = 'fonts-GOST\\GOST_AU.TTF', FlatFacetPanelControlGroup= flatFacetControlPanelGroup, typeFacetPanelGroup = typeControlPanelGroup, scale=3  )
 ControlPanels.append(topControlPanel)
-
 def handleControlPanelevent(event):
     for ControlPanel in ControlPanels:
         inpBox = ControlPanel.handle_event(event)
@@ -274,15 +274,13 @@ while running:
     for ControlPanel in ControlPanels:
         ControlPanel.draw()
     commonControlPanelGroup.draw()
-    try:
+    if (dt.current_figure):
         if dt.current_figure.type > 5:
             typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1', 'Радиус 2']
         elif dt.current_figure.type == 2 or dt.current_figure.type == 1:
             typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = ['Радиус 1']
         else:
             typeControlPanelGroup.controlPanelsDict['parametr lens'].DisabledInputBox = []
-    except:
-        pass
 
     typeControlPanelGroup.draw()
     flatFacetControlPanelGroup.draw()
@@ -294,18 +292,16 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            scale_step = 0.05
             if event.button == 4:  # колесо мыши вверх
                 print("Колесо мыши вверх")
-                dt.scale += scale_step
-
-                dt.current_figure.super_scale += scale_step
+                dt.scale += 0.1
+                dt.current_figure.scale += 0.1
                 dt.init_draw_cell()
                 dt.draw_param_table()
             elif event.button == 5:  # колесо мыши вниз
                 print("Колесо мыши вниз")
-                dt.scale += -scale_step
-                dt.current_figure.super_scale += -scale_step
+                dt.scale += -0.1
+                dt.current_figure.scale += -0.1
                 dt.init_draw_cell()
                 dt.draw_param_table()
         elif event.type == pygame.VIDEORESIZE:
@@ -319,6 +315,10 @@ while running:
                 # сохраняем верхнюю половину экрана как изображение
                 pygame.image.save(screen.subsurface(pygame.Rect(margin_side_left + margin/2 - interfaceBorderSize/2, margin_side_top + margin/2 - interfaceBorderSize, size[0]*coef + 2*interfaceBorderSize, size[1]*coef + 2*interfaceBorderSize )),
                                   "screenshot.png")
+
+        #########################################################
+        # НАЧАЛО СОБЫТИЙ ПРОИСХОДЯЩИХ ПРИ НАЖАТИИ ЛЕВОЙ КНОПКИ МЫШИ
+        #######################################################
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('Mouse Down')
             is_mouse_down = True
@@ -330,8 +330,8 @@ while running:
             start_pos = pygame.mouse.get_pos()
             prev_pos = start_pos
             current_input =  dt.handle_event(event) if dt.handle_event(event) else handleControlPanelevent(event)
-            print('current_input_1',current_input)
 
+            print('current_input_1',current_input)
 
             if (isinstance(current_input, lens)) and current_input.select_measure:
                 print('CURREN INPUT', current_input.selected_measure)
@@ -342,11 +342,22 @@ while running:
                             isinstance(current_input.selected_measure, roughness_measure)
                     or isinstance(current_input.selected_measure, arrow)):
                         prev_blit_point = current_input.selected_measure.blit_point
+                    if (isinstance(current_input.selected_measure, Radius)):
+                        pass
+                    if (isinstance(current_input.selected_measure, CoversMeasure)):
+                        pass
+                    if (isinstance(current_input.selected_measure, RoughnessMeasure)):
+                        pass
+
+
             if (isinstance(current_input, image)) and current_input.resize_mode:
                 prev_point_x = current_input.point_x
                 prev_point_y = current_input.point_y
                 prev_height = current_input.height
                 prev_width = current_input.width
+        #########################################################
+        # КОНЕЦ СОБЫТИЙ ПРОИСХОДЯЩИХ ПРИ НАЖАТИИ ЛЕВОЙ КНОПКИ МЫШИ
+        #######################################################
 
 
 
@@ -394,7 +405,9 @@ while running:
                 dt.init_draw_cell()
                 dt.draw_param_table()
                 # dt.rescale_cell()
-
+#########################################################
+#НАЧАЛО СОБЫТИЙ ПРОИСХОДЯЩИХ ПРИ ЗАЖАТОЙ КНОПКИ МЫШИ
+#######################################################
         if (is_mouse_down):
 
             cur_pos = pygame.mouse.get_pos()
@@ -439,24 +452,32 @@ while running:
                             or isinstance(current_input.selected_measure, arrow)):
 
                         current_input.selected_measure.blit_point = (prev_blit_point[0] - x_diff ,prev_blit_point[1] - y_diff)
+
+                # События вызываемое если был нажат радису ########
                     if (isinstance(current_input.selected_measure, Radius)):
                         current_input.selected_measure.move_angle((x_diff, y_diff))
-
                     if (isinstance(current_input.selected_measure, CoversMeasure)):
-                        print('HERE 123')
                         current_input.selected_measure.move_angle((x_diff, y_diff))
+                    if (isinstance(current_input.selected_measure, RoughnessMeasure)):
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
+                # По этому примеру можно вставлять и другие типы фигур
 
                 else:
                     current_input.blit_point = (current_input.blit_point[0] -x_diff, current_input.blit_point[1]-y_diff)
                     current_input.original_blit_point = current_input.blit_point
                     prev_pos = cur_pos
                     prev_pos = cur_pos
+
             elif( isinstance(current_input, signature)):
                     current_input.point_x += -x_diff
                     current_input.point_y += -y_diff
 
                     prev_pos = cur_pos
                     prev_pos = cur_pos
+
+#########################################################
+# КОНЕЦ СОБЫТИЙ ПРОИСХОДЯЩИХ ПРИ ЗАЖАТОЙ КНОПКИ МЫШИ
+#######################################################
         # # Считываем нажатия клавиш
         keys = pygame.key.get_pressed()
         try:
