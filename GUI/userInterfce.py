@@ -36,7 +36,7 @@ class controlPanel:
             #         self.posX + self.buttonDict[key].pos[0] + self.buttonDict[key].size[0])
             #         and (mouseY > (self.posY + self.buttonDict[key].pos[1]) and mouseY < (
             #                 self.posY + self.buttonDict[key].pos[1] + self.buttonDict[key].size[1]))):
-                self.dropDownDict[key].handle_event(event, mouseX, mouseY)
+                self.dropDownDict[key].handle_event(event, mouseX-self.posX, mouseY-self.posY)
 
 
         for key in self.buttonDict.keys():

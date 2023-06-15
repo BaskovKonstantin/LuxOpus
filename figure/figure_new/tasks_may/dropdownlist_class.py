@@ -120,10 +120,9 @@ class DropdownList:
         self.screen.blit(self.surface, self.blit_point)
 
     def handle_event(self, event, mouse_x, mouse_y):
-
         mouse_pos = (mouse_x, mouse_y)
-        offset_mouse = [mouse_pos[0] - self.blit_point[0],
-                        mouse_pos[1] - self.blit_point[1]]
+        offset_mouse = [int(mouse_pos[0]),
+                        int(mouse_pos[1])]
 
         if self.helping_rect.collidepoint(offset_mouse) and self.is_opened:
             if event.type == pygame.MOUSEBUTTONDOWN:
