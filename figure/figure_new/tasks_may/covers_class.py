@@ -86,7 +86,7 @@ class CoversMeasure:
         self.surface.fill(self.colors['transparent'])
         #
         # # рисуем окружность *для разработки*
-        pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
 
         # Рисуем крестик на поверхности
         self.get_cover_points()

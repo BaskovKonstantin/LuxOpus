@@ -375,7 +375,7 @@ class lens:
                         (int(self.surface_width/2 + width), self.axis_center_point), width=self.border_size-1,
                         dash_length=dash_length, dotted=True)
 
-            # self.draw_faset_measure()
+            self.draw_faset_measure()
             self.draw_base_measure()
 
 
@@ -411,7 +411,6 @@ class lens:
                                           self.measureDict['facet_right_side_measure'].blit_point)
                     except:
                         pass
-
             if (self.right_facet_measure_type == 2):
                 width = self.facet_point_2[0] - self.key_point_1[0] + self.border_size*2
                 if not ('facet_right_up_big_measure' in self.measureDict.keys()):
@@ -477,7 +476,6 @@ class lens:
                                           self.measureDict['facet_left_side_measure'].blit_point)
                     except:
                         pass
-
             if (self.left_facet_measure_type == 2):
                 width = self.key_point_2[0] - self.facet_point_1[0]  + 2*self.border_size*2
                 if not ('facet_left_up_big_measure' in self.measureDict.keys()):
@@ -496,7 +494,6 @@ class lens:
                     self.measureDict['facet_left_up_big_measure'].draw()
                     self.surface.blit(self.measureDict['facet_left_up_big_measure'].measure_surface,
                                       self.measureDict['facet_left_up_big_measure'].blit_point)
-
             if (self.left_facet_measure_type == 3):
                 width = ( self.key_point_1[0] ) - self.facet_point_1[0] + self.border_size*2
                 if not ('facet_left_up_small_measure' in self.measureDict.keys()):
@@ -518,8 +515,11 @@ class lens:
                     self.surface.blit(self.measureDict['facet_left_up_small_measure'].measure_surface,
                                       self.measureDict['facet_left_up_small_measure'].blit_point)
 
+#######################################################################
+        # Здесь задается фаски#
+        # Справа
         size = (60,80)
-        if (self.right_facet_type == 2 or True):
+        if (self.right_facet_type == 2):
             if not ('facet_right_measure' in self.measureDict.keys()):
                 self.measureDict['facet_right_measure'] =\
                     Chamfers(
@@ -532,13 +532,12 @@ class lens:
                         chamfer_type = 3,
                         font=self.font,
                         first_point= (100, 100))
-
             else:
                 self.measureDict['facet_right_measure'].blit_point = self.facet_point_2
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
                                       self.measureDict['facet_right_measure'].blit_point)
-
+        # и справа
         size = (60,80)
         if (self.left_facet_type == 2):
             if not ('facet_left_measure' in self.measureDict.keys()):
@@ -921,7 +920,6 @@ class lens:
                 self.surface.blit(self.measureDict['cover_measure_2'].surface,
                                   (self.measureDict['cover_measure_2'].blit_point[0] ,
                                    self.measureDict['cover_measure_2'].blit_point[1] ))
-
 
     def __init__(self, screen, colors, start_point, width, diametr, R1, R2,
                  border_size, type, font = None, axis_center_point = 400, show_measure = True, show_streak = True,

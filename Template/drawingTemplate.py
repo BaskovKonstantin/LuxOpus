@@ -1306,7 +1306,7 @@ class drawingTemplate:
         self.lens_diametr = int(100*self.scale)
         self.lens_R1 = int(96*self.scale)
         self.lens_R2 = int(80*self.scale)
-        self.current_type = 3
+        self.current_type = 2
 
         self.left_facet_type = int(0)
         self.right_facet_type = int(0)

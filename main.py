@@ -24,6 +24,7 @@ from figure.figure_new.tasks_may.roughness_class import RoughnessMeasure
 
 global_x = 'SOS'
 
+
 # COLORS
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
@@ -75,7 +76,7 @@ leftControlPanel = controlPanel(dt, screen,
                           interfacePosX,
                           interfacePosY, size[0] * 0.8, size[1] * coef, colors, interfaceBorderSize,
                           font= 'fonts-GOST\\GOST_AU.TTF')
-leftControlPanel.inputBoxDict, leftControlPanel.buttonDict = \
+leftControlPanel.inputBoxDict, leftControlPanel.buttonDict, leftControlPanel.dropDownDict= \
     initBtn.initLeftPanel(dt, leftControlPanel.surface, colors,
                           border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=3  )
 ControlPanels.append(leftControlPanel)
@@ -92,12 +93,13 @@ commonControlPanelGroup = controlPanelGroup(screen, colors,
 
 controlPanelDict = {}
 
+
 controlPanelDict['Surface A'] = controlPanel(dt, commonControlPanelGroup.surface, margin/4, margin/8,
                                              commonControlPanelGroup_size[0]*0.45, commonControlPanelGroup_size[1]*0.6,
                                              colors, interfaceBorderSize)
-controlPanelDict['Surface A'].inputBoxDict, controlPanelDict['Surface A'].buttonDict = \
+controlPanelDict['Surface A'].inputBoxDict, controlPanelDict['Surface A'].buttonDict, controlPanelDict['Surface A'].dropDownDict = \
     initBtn.initSurfaceA(dt, controlPanelDict['Surface A'].surface, colors,
-                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef  )
+                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
 
 
 
@@ -106,7 +108,7 @@ controlPanelDict['Surface B'] = controlPanel(dt,
                                              commonControlPanelGroup_size[0]*0.45, commonControlPanelGroup_size[1]*0.6,
                                              colors, interfaceBorderSize)
 
-controlPanelDict['Surface B'].inputBoxDict, controlPanelDict['Surface B'].buttonDict = \
+controlPanelDict['Surface B'].inputBoxDict, controlPanelDict['Surface B'].buttonDict, controlPanelDict['Surface B'].dropDownDict = \
     initBtn.initSurfaceB(dt, controlPanelDict['Surface B'].surface, colors,
                          border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef  )
 
@@ -114,7 +116,7 @@ controlPanelDict['Focus'] = controlPanel(dt,
                                              commonControlPanelGroup.surface, margin/4 , commonControlPanelGroup_size[1]*0.7,
                                              commonControlPanelGroup_size[0]*0.92, commonControlPanelGroup_size[1]*0.1,
                                              colors, interfaceBorderSize)
-controlPanelDict['Focus'].inputBoxDict, controlPanelDict['Focus'].buttonDict = initBtn.initFocusBtn(dt,
+controlPanelDict['Focus'].inputBoxDict, controlPanelDict['Focus'].buttonDict, controlPanelDict['Focus'].dropDownDict = initBtn.initFocusBtn(dt,
                         controlPanelDict['Focus'].surface, colors,
                          border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef  )
 
@@ -124,10 +126,12 @@ controlPanelDict['Document Info'] = controlPanel(dt,
                                              commonControlPanelGroup_size[0]*0.92, commonControlPanelGroup_size[1]*0.14,
                                              colors, interfaceBorderSize)
 
-controlPanelDict['Document Info'].inputBoxDict, controlPanelDict['Document Info'].buttonDict = \
+controlPanelDict['Document Info'].inputBoxDict, controlPanelDict['Document Info'].buttonDict, controlPanelDict['Document Info'].dropDownDict = \
     initBtn.initCustomerBtn(dt,
                         controlPanelDict['Document Info'].surface, colors,
                          border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef  )
+
+
 
 commonControlPanelGroup.controlPanelsDict = controlPanelDict
 
@@ -143,7 +147,7 @@ controlPanelDict['parametr lens'] = controlPanel(dt,
                                              typeControlPanelGroup_size[0]*0.55, typeControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
 
-controlPanelDict['parametr lens'].inputBoxDict, controlPanelDict['parametr lens'].buttonDict = \
+controlPanelDict['parametr lens'].inputBoxDict, controlPanelDict['parametr lens'].buttonDict, controlPanelDict['parametr lens'].dropDownDict = \
                         initBtn.initLensParamBtn(dt,
                         controlPanelDict['parametr lens'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -153,35 +157,33 @@ imgSurfaceDict['lens_image'] = [initLensTypeImageSurface(
 controlPanelDict['parametr lens'].imageSurfaceDict = imgSurfaceDict
 
 
-
-
 controlPanelDict['allowance'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 + typeControlPanelGroup_size[0]*0.57, margin/4,
                                              typeControlPanelGroup_size[0]*0.23, typeControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
 
-
-controlPanelDict['allowance'].inputBoxDict, controlPanelDict['allowance'].buttonDict = \
+controlPanelDict['allowance'].inputBoxDict, controlPanelDict['allowance'].buttonDict, controlPanelDict['allowance'].dropDownDict = \
                         initBtn.initAllowanceBtn(dt,
                         controlPanelDict['allowance'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
-
-
 
 controlPanelDict['scale'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 + typeControlPanelGroup_size[0]*0.83, margin/4,
                                              typeControlPanelGroup_size[0]*0.1, typeControlPanelGroup_size[1]*0.9,
                                              colors, interfaceBorderSize)
-# controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict = \
-#                         initBtn.initScaleBtn(dt,
-#                         controlPanelDict['scale'].surface, colors,
-#                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+controlPanelDict['scale'].inputBoxDict, controlPanelDict['scale'].buttonDict, controlPanelDict['scale'].dropDownDict = \
+                        initBtn.initScaleBtn(dt,
+                        controlPanelDict['scale'].surface, colors,
+                        border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
+
+
+
 
 controlPanelDict['facet_type'] = controlPanel(dt,
                                              typeControlPanelGroup.surface, margin/4 , margin/4 + typeControlPanelGroup_size[1]*0.75,
                                              typeControlPanelGroup_size[0]*0.8, typeControlPanelGroup_size[1]*0.15,
                                              colors, interfaceBorderSize)
-controlPanelDict['facet_type'].inputBoxDict, controlPanelDict['facet_type'].buttonDict = \
+controlPanelDict['facet_type'].inputBoxDict, controlPanelDict['facet_type'].buttonDict, controlPanelDict['facet_type'].dropDownDict = \
                         initBtn.initFacetTypeBtn(dt,
                         controlPanelDict['facet_type'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -202,7 +204,7 @@ controlFacetPanelDict['parametr flat facet'] = controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/4, margin/8,
                                              flatFacetControlPanelGroup_size[0]*0.6, flatFacetControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
-controlFacetPanelDict['parametr flat facet'].inputBoxDict, controlFacetPanelDict['parametr flat facet'].buttonDict = \
+controlFacetPanelDict['parametr flat facet'].inputBoxDict, controlFacetPanelDict['parametr flat facet'].buttonDict, controlFacetPanelDict['parametr flat facet'].dropDownDict = \
                         initBtn.initFlatFacetParamTypeBtn(dt,
                         controlFacetPanelDict['parametr flat facet'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -216,7 +218,7 @@ controlFacetPanelDict['allowance']= controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/2 + flatFacetControlPanelGroup_size[0]*0.6, margin/8,
                                              flatFacetControlPanelGroup_size[0]*0.25, flatFacetControlPanelGroup_size[1]*0.7,
                                              colors, interfaceBorderSize)
-controlFacetPanelDict['allowance'].inputBoxDict, controlFacetPanelDict['allowance'].buttonDict = \
+controlFacetPanelDict['allowance'].inputBoxDict, controlFacetPanelDict['allowance'].buttonDict, controlFacetPanelDict['allowance'].dropDownDict = \
                         initBtn.initAllowanceBtn(dt,
                         controlFacetPanelDict['allowance'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -226,7 +228,7 @@ controlFacetPanelDict['measure type']= controlPanel(dt,
                                              flatFacetControlPanelGroup.surface, margin/4, margin/5 + flatFacetControlPanelGroup_size[1]*0.7,
                                              flatFacetControlPanelGroup_size[0]*0.9, flatFacetControlPanelGroup_size[1]*0.18,
                                              colors, interfaceBorderSize)
-controlFacetPanelDict['measure type'].inputBoxDict, controlFacetPanelDict['measure type'].buttonDict = \
+controlFacetPanelDict['measure type'].inputBoxDict, controlFacetPanelDict['measure type'].buttonDict, controlFacetPanelDict['measure type'].dropDownDict = \
                         initBtn.initFlatFacetMeasureTypeBtn(dt,
                         controlFacetPanelDict['measure type'].surface, colors,
                         border_size=interfaceBorderSize, font = 'fonts-GOST\\GOST_AU.TTF', scale=coef)
@@ -241,12 +243,11 @@ topControlPanel = controlPanel(dt, screen,
                           interfacePosX,
                           interfacePosY, screen_size[0] - margin/2 - interfacePosX, 50, colors, interfaceBorderSize,
                           font= 'fonts-GOST\\GOST_AU.TTF')
-topControlPanel.inputBoxDict, topControlPanel.buttonDict = \
+topControlPanel.inputBoxDict, topControlPanel.buttonDict, topControlPanel.dropDownDict = \
     initBtn.initTopPanel(dt,
                          topControlPanel.surface, colors, border_size=interfaceBorderSize,
                          font = 'fonts-GOST\\GOST_AU.TTF', FlatFacetPanelControlGroup= flatFacetControlPanelGroup, typeFacetPanelGroup = typeControlPanelGroup, scale=3  )
 ControlPanels.append(topControlPanel)
-
 def handleControlPanelevent(event):
     for ControlPanel in ControlPanels:
         inpBox = ControlPanel.handle_event(event)

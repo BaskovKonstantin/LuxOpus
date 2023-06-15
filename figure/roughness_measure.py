@@ -1,8 +1,5 @@
 import pygame
 
-
-
-
 class roughness_measure:
 
     def __init__(self, screen, colors, blit_point, size = (60,60),
