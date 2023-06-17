@@ -44,10 +44,11 @@ class RoughnessMeasure:
         self.text_base_len_origin = text_base_len
         self.font_size = font_size * scale
         self.font = pygame.font.Font(font, self.font_size)
+        self.font_small = pygame.font.Font(font, int(self.font_size/3*2))
         self.left_offset = self.height // 2 * tan(radians(30)) * 3 / 2
         self.text_method = self.font.render(text_method, True, self.colors['border'])
         self.text_base_len = self.font.render(text_base_len, True, self.colors['border'])
-        self.text_designation = self.font.render(text_designation, True, self.colors['border'])
+        self.text_designation = self.font_small.render(text_designation, True, self.colors['border'])
         self.last_mouse_pos = (0, 0)
         self.roughness_rect = pygame.rect.Rect(0, 0, 0, 0)
 
@@ -92,11 +93,12 @@ class RoughnessMeasure:
             self.width, self.height = int(self.size_origin[0] * self.scale), int(self.size_origin[1] * self.scale)
 
             self.font_size = int(self.font_size_origin * self.scale)
+            self.font_small = pygame.font.Font(self.font_name, int(self.font_size / 3 * 2))
             self.font = pygame.font.Font(self.font_name, self.font_size)
             self.left_offset = self.height // 2 * tan(radians(30)) * 3 / 2
             self.text_method = self.font.render(self.text_method_origin, True, self.colors['border'])
             self.text_base_len = self.font.render(self.text_base_len_origin, True, self.colors['border'])
-            self.text_designation = self.font.render(self.text_designation_origin, True, self.colors['border'])
+            self.text_designation = self.font_small.render(self.text_designation_origin, True, self.colors['border'])
 
             self.get_roughness_size()
             self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)

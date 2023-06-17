@@ -38,6 +38,8 @@ class Radius:
         self.surface_radius = surface_radius * self.scale
         self.radius_length = radius_length * self.scale
         self.radius_width = radius_width * self.scale
+        self.start_angle = angle
+        self.moved_once = False
         self.angle = angle
         self.limit = limit
         self.last_mouse_pos = (0, 0)
@@ -51,7 +53,10 @@ class Radius:
         self.text = text
         self.radius_text = self.font.render(text, True, self.colors['text'])
 
+        self.create_surface()
         # creating new surface
+
+    def create_surface(self):
         if self.radius_type == 1:
             self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2),
                                           pygame.SRCALPHA)
@@ -123,15 +128,7 @@ class Radius:
             self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
             self.radius_text = self.font.render(self.text, True, self.colors['text'])
 
-            if self.radius_type == 1:
-                self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2),
-                                              pygame.SRCALPHA)
-                self.surface_center = [self.surface_radius, self.surface_radius]
-
-            elif self.radius_type == 0:
-                self.surface = pygame.Surface((self.surface_radius * 4, self.surface_radius * 4),
-                                              pygame.SRCALPHA)
-                self.surface_center = [self.surface_radius * 2, self.surface_radius * 2]
+            self.create_surface()
 
             self.previous_scale = self.scale
         # filling with black
@@ -139,7 +136,11 @@ class Radius:
 
         # drawing circle (only for development)
         # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
-        #
+
+        # kostb1l
+        if not self.moved_once:
+            self.angle = self.start_angle
+
         # drawing pointer
         # drawing line
         self.get_line_points()
@@ -241,7 +242,7 @@ class Radius:
                     math.radians(self.angle - 270))
         text_pos = (x_text - x_offset, y_text - y_offset)
         self.surface.blit(text, text_pos)
-        pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
+        #pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
         # blit our surface on screen
         self.screen.blit(self.surface, self.blit_point)
 
@@ -260,6 +261,7 @@ class Radius:
     #         self.angle = angle
 
     def move_angle(self, pos_change: Tuple[int, int]):
+        self.moved_once = True
         mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
         # recalculate angle based on mouse pos
         x_diff = mouse_pos[0] - self.surface_center[0]

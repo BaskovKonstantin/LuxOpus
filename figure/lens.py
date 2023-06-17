@@ -534,6 +534,7 @@ class lens:
                         first_point= self.point_2)
             else:
                 #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
+                self.measureDict['facet_right_measure'].scale = self.scale
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
                                       self.measureDict['facet_right_measure'].blit_point)
@@ -562,6 +563,7 @@ class lens:
 
             else:
                 try:
+                    self.measureDict['facet_right_measure'].scale = self.scale
                     self.measureDict['facet_left_measure'].blit_point = (self.facet_point_1[0] - size[0]/2,self.facet_point_1[1] - diametr/2 )
                     self.measureDict['facet_left_measure'].draw()
                     self.surface.blit(self.measureDict['facet_left_measure'].surface,
@@ -584,7 +586,10 @@ class lens:
                         first_point= self.point_1,
                         second_point=self.point_2)
             else:
-                #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
+                #self.measureDict['facet_right_measure'].first_point = self.facet_point_24
+                self.measureDict['facet_right_measure'].scale = self.scale
+                self.measureDict['facet_right_measure'].first_point = self.point_1
+                self.measureDict['facet_right_measure'].second_point = self.point_2
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
                                       self.measureDict['facet_right_measure'].blit_point)
@@ -632,7 +637,15 @@ class lens:
 
         if (self.types[0] !=3):
             radius_width = 150
+            #print(self.types[0])
             if not ('R1_measure' in self.measureDict.keys()):
+
+                if self.types[0] == 1:
+                    angle = 180
+                    limit = (149, 211)
+                if self.types[0] == 2:
+                    angle = 0
+                    limit = (-31, 31)
 
                 self.measureDict['R1_measure'] = Radius(self.surface,
                                                         (int(self.surface_width/2 -2*width - R1 - 25 +diametr),0-diametr+10),
@@ -642,24 +655,46 @@ class lens:
                                                         radius_width = 1,
                                                         triangle_length=30,
                                                         triangle_width=30,
-                                                        angle = 180,
+                                                        angle = angle,
                                                         text = 'R1',
-                                                        radius_type = 0,
-                                                        limit=(149, 211),
+                                                        radius_type = self.types[0]-1,
+                                                        limit=limit,
                                                         font = self.font)
-
             else:
+
+                if self.measureDict['R1_measure'].radius_type != self.types[0]-1:
+                    self.measureDict['R1_measure'].radius_type = self.types[0]-1
+                    self.measureDict['R1_measure'].moved_once = False
+                    self.measureDict['R1_measure'].create_surface()
+                    if self.types[0] == 1:
+                        self.measureDict['R1_measure'].start_angle = 180
+                        self.measureDict['R1_measure'].limit = (149, 211)
+                    if self.types[0] == 2:
+                        self.measureDict['R1_measure'].start_angle = 0
+                        self.measureDict['R1_measure'].limit = (-31, 31)
                 self.measureDict['R1_measure'].scale = self.scale
                 self.measureDict['R1_measure'].draw()
-                self.measureDict['R1_measure'].blit_point = (self.surface_width/2 - R1 - width/2,
-                                                             R1 - self.measureDict['R1_measure'].surface.get_height()/2)
-
+                if self.types[0] == 1:
+                    self.measureDict['R1_measure'].blit_point = (self.surface_width/2 - R1 - width/2,
+                                                                 R1 - self.measureDict['R1_measure'].surface.get_height()/2)
+                elif self.types[0] == 2:
+                    self.measureDict['R1_measure'].blit_point = (self.surface_width / 2 - R1*2 - width/2,
+                                                                 R1 - self.measureDict[
+                                                                     'R1_measure'].surface.get_height() / 2)
+                print(R1, width, diametr)
                 self.surface.blit(self.measureDict['R1_measure'].surface,
                                   self.measureDict['R1_measure'].blit_point)
         if (self.types[1] !=3):
             radius_width = 150
-            if not ('R2_measure' in self.measureDict.keys()):
 
+            if not ('R2_measure' in self.measureDict.keys()):
+                #print(self.types[1])
+                if self.types[1] == 2:
+                    angle = 180
+                    limit = (142, 218)
+                if self.types[1] == 1:
+                    angle = 0
+                    limit = (-38, 38)
 
                 self.measureDict['R2_measure'] = Radius(self.surface,
                                                         (int(self.surface_width/2 - R2 - 13 - diametr - 61),
@@ -670,10 +705,10 @@ class lens:
                                                         radius_width = 1,
                                                         triangle_length= 30,
                                                         triangle_width=30,
-                                                        angle = 0,
+                                                        angle = angle,
                                                         text = 'R2',
-                                                        radius_type = 0,
-                                                        limit=(-38, 38),
+                                                        radius_type = self.types[1]-1,
+                                                        limit=limit,
                                                         font = self.font)
 
                 # не знаю что это но на всякий случай комментил
@@ -683,10 +718,27 @@ class lens:
                 #                                        text=f'R{R1}', opposite=True, angle_rotate=8)
 
             else:
+                if self.measureDict['R2_measure'].radius_type != self.types[1]-1:
+                    self.measureDict['R2_measure'].radius_type = self.types[1]-1
+                    self.measureDict['R2_measure'].moved_once = False
+                    self.measureDict['R2_measure'].create_surface()
+                    if self.types[1] == 2:
+                        self.measureDict['R2_measure'].start_angle = 180
+                        self.measureDict['R2_measure'].limit = (142, 218)
+                    if self.types[1] == 1:
+                        self.measureDict['R2_measure'].start_angle = 0
+                        self.measureDict['R2_measure'].limit = (-38, 38)
+
                 self.measureDict['R2_measure'].scale = self.scale
                 self.measureDict['R2_measure'].draw()
-                self.measureDict['R2_measure'].blit_point = (self.surface_width/2 - R2 - width/2 - diametr,
-                                                             R2 - self.measureDict['R2_measure'].surface.get_height()/2+(R1-R2))
+                if self.types[1] == 2:
+                    self.measureDict['R2_measure'].blit_point = (self.surface_width/2 + width/2, R2 - self.measureDict[
+                                                                     'R2_measure'].surface.get_height() / 2 + (R1 - R2))
+                elif self.types[1] == 1:
+                    self.measureDict['R2_measure'].blit_point = (self.surface_width / 2 - width/2 - diametr - R2,
+                                                                 R2 - self.measureDict[
+                                                                     'R2_measure'].surface.get_height() / 2 + (R1 - R2))
+
                 #print(R2, diametr, width)
 
                 self.surface.blit(self.measureDict['R2_measure'].surface,

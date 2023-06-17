@@ -14,7 +14,11 @@ class Chamfers:
                  triangle_part: int = 0.5,
                  second_point: Tuple[int, int] = None,
                  scale: int = 1, font: str = 'arial.ttf', font_size: int = 16):
+        self.line_length_origin = line_length
+        self.pointer_length_origin = pointer_length
+        self.line_width_origin = line_width
         self.scale = scale
+        self.previous_scale = scale
         self.screen = screen
         self.colors = colors
         self.line_length = line_length * self.scale
@@ -57,7 +61,23 @@ class Chamfers:
         return False
 
     def draw(self):
-        #pygame.draw.rect(self.screen, self.colors['test'], [self.first_point[0]-self.offset[0], self.first_point[1] - self.offset[1], self.surface.get_width(), self.surface.get_height()], 1)
+
+        # rescaling
+
+        if self.previous_scale != self.scale:
+            self.line_length = int(self.line_length_origin * self.scale)
+            self.pointer_length = int(self.pointer_length_origin * self.scale)
+            self.line_width = int(self.line_width_origin * self.scale)
+            self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
+            self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+            self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
+            self.polygon_dots = self.get_polygon_dots()
+            self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
+            self.surface = self.create_surface()
+
+            self.previous_scale = self.scale
+
+        # pygame.draw.rect(self.screen, self.colors['test'], [self.first_point[0]-self.offset[0], self.first_point[1] - self.offset[1], self.surface.get_width(), self.surface.get_height()], 1)
         self.surface.blit(self.rendered_text, (self.text_dot[0] + self.offset[0], self.text_dot[1] + self.offset[1]))
 
         pygame.draw.line(self.surface, self.colors['border'],
@@ -78,17 +98,16 @@ class Chamfers:
                              (self.offset[0] - (self.second_point[0] - self.first_point[0]), self.offset[1]),
                              (self.first_dot[0] + self.offset[0], self.first_dot[1] + self.offset[1]), self.line_width)
 
-            mid_dot = (self.first_dot[0] // 2 - (self.second_point[0] - self.first_point[0])//2, self.first_dot[1] // 2)
-            left_dot = (mid_dot[0] - self.pointer_length // 8 * cos(radians(self.angle)),
-                        mid_dot[1] - self.pointer_length // 8 * sin(radians(self.angle)))
-            right_dot = (mid_dot[0] + self.pointer_length // 8 * cos(radians(self.angle)),
-                         mid_dot[1] + self.pointer_length // 8 * sin(radians(self.angle)))
+            mid_dot = (self.first_dot[0] * self.triangle_part - (self.second_point[0] - self.first_point[0])*(1-self.triangle_part), self.first_dot[1]*self.triangle_part)
+            left_dot = (mid_dot[0] - self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                        mid_dot[1] - self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
+            right_dot = (mid_dot[0] + self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
+                         mid_dot[1] + self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
 
             pygame.draw.polygon(self.surface, self.colors['border'],
                                 ((left_dot[0] + self.offset[0], left_dot[1] + self.offset[1]),
                                 (right_dot[0] + self.offset[0], right_dot[1] + self.offset[1]),
                                 (self.offset[0] - (self.second_point[0] - self.first_point[0]), self.offset[1])))
-
             if self.second_point[0] > self.first_point[0]:
                 self.blit_point = (self.second_point[0] - self.offset[0], self.second_point[1] - self.offset[1])
                 self.screen.blit(self.surface, self.blit_point)

@@ -141,7 +141,7 @@ class CoversMeasure:
                     self.angle = angle
         else:
             self.angle = angle
-        print(self.formatted_angle(self.angle))
+        # print(self.formatted_angle(self.angle))
 
     # вспомогательная функция для move_angle
     def formatted_angle(self, angle):
