@@ -27,21 +27,16 @@ class CoversMeasure:
         self.angle = angle
         self.surface_radius = surface_radius * scale
         self.cover_type = cover_type
+        self.start_angle = angle
+        self.moved_once = False
         self.limit = limit
         self.colors = colors
         self.line_width = line_width * scale
         self.end_pos = [0, 0]
         self.last_mouse_pos = [0, 0]
 
-        if self.cover_type == 0:
-            self.surface = pygame.Surface(
-                ((self.surface_radius + self.width) * 2, (self.surface_radius + self.height) * 2),
-                pygame.SRCALPHA)
-            self.surface_center = (self.surface_radius + self.height, self.surface_radius + self.width)
+        self.create_surface()
 
-        elif self.cover_type == 1:
-            self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2), pygame.SRCALPHA)
-            self.surface_center = (self.surface_radius, self.surface_radius)
 
     # проверяет нажатие по покрытию (окружности и линиям). возвращает True/False
     def check_click(self, mouse_pos) -> bool:
@@ -70,15 +65,7 @@ class CoversMeasure:
             self.height = int(self.cover_size_origin[1] * self.scale)
             self.surface_radius = int(self.surface_radius_origin * self.scale)
 
-            if self.cover_type == 0:
-                self.surface = pygame.Surface(
-                    ((self.surface_radius + self.width) * 2, (self.surface_radius + self.height) * 2),
-                    pygame.SRCALPHA)
-                self.surface_center = (self.surface_radius + self.height, self.surface_radius + self.width)
-
-            elif self.cover_type == 1:
-                self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2), pygame.SRCALPHA)
-                self.surface_center = (self.surface_radius, self.surface_radius)
+            self.create_surface()
 
             self.previous_scale = self.scale
 
@@ -86,7 +73,9 @@ class CoversMeasure:
         self.surface.fill(self.colors['transparent'])
         #
         # # рисуем окружность *для разработки*
-        # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        if not self.moved_once:
+            self.angle = self.start_angle
 
         # Рисуем крестик на поверхности
         self.get_cover_points()
@@ -123,8 +112,21 @@ class CoversMeasure:
         end_pos_y = self.surface_center[1] - length * sin(radians(self.angle))
         self.end_pos = [end_pos_x, end_pos_y]
 
+    def create_surface(self):
+
+        if self.cover_type == 0:
+            self.surface = pygame.Surface(
+                ((self.surface_radius + self.width) * 2, (self.surface_radius + self.height) * 2),
+                pygame.SRCALPHA)
+            self.surface_center = (self.surface_radius + self.height, self.surface_radius + self.width)
+
+        elif self.cover_type == 1:
+            self.surface = pygame.Surface((self.surface_radius * 2, self.surface_radius * 2), pygame.SRCALPHA)
+            self.surface_center = (self.surface_radius, self.surface_radius)
+
     # меняет угол, не перересовывая покрытие. учитывает лимит угла
     def move_angle(self, pos_change: Tuple[int,int]):
+        self.moved_once = True
         mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
         # recalculate angle based on mouse pos
         x_diff = mouse_pos[0] - self.surface_center[0]

@@ -37,6 +37,8 @@ class RoughnessMeasure:
         self.surface_radius = surface_radius * scale
         self.roughness_type = roughness_type
         self.angle = angle
+        self.start_angle = angle
+        self.moved_once = False
         self.limit = limit
         self.width, self.height = size[0] * scale, size[1] * scale
         self.text_method_origin = text_method
@@ -52,20 +54,11 @@ class RoughnessMeasure:
         self.last_mouse_pos = (0, 0)
         self.roughness_rect = pygame.rect.Rect(0, 0, 0, 0)
 
-        self.get_roughness_size()
-        self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        if self.roughness_type == 0:
-            self.surface = pygame.Surface(((self.surface_radius + max(self.width, self.height)) * 2,
-                                           (self.surface_radius + max(self.width, self.height)) * 2), pygame.SRCALPHA)
-            self.surface_center = (self.surface_radius + max(self.width, self.height),
-                                   self.surface_radius + max(self.width, self.height))
-        elif self.roughness_type == 1:
-            self.surface = pygame.Surface((self.surface_radius * 2,
-                                           self.surface_radius * 2), pygame.SRCALPHA)
-            self.surface_center = (self.surface_radius,
-                                   self.surface_radius)
+        # self.get_roughness_size()
+        # self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.create_surface()
 
-        self.build_surface()
+
 
     def check_click(self, mouse_pos) -> bool:
 
@@ -100,27 +93,19 @@ class RoughnessMeasure:
             self.text_base_len = self.font.render(self.text_base_len_origin, True, self.colors['border'])
             self.text_designation = self.font_small.render(self.text_designation_origin, True, self.colors['border'])
 
-            self.get_roughness_size()
-            self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-            if self.roughness_type == 0:
-                self.surface = pygame.Surface(((self.surface_radius + max(self.width, self.height)) * 2,
-                                               (self.surface_radius + max(self.width, self.height)) * 2),
-                                              pygame.SRCALPHA)
-                self.surface_center = (self.surface_radius + max(self.width, self.height),
-                                       self.surface_radius + max(self.width, self.height))
-            elif self.roughness_type == 1:
-                self.surface = pygame.Surface((self.surface_radius * 2,
-                                               self.surface_radius * 2), pygame.SRCALPHA)
-                self.surface_center = (self.surface_radius,
-                                       self.surface_radius)
-
-            self.build_surface()
+            # self.get_roughness_size()
+            # self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            self.create_surface()
             self.previous_scale = self.scale
 
         # surface
         self.surface.fill((0, 0, 0, 0))
 
         # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+
+        if not self.moved_once:
+            self.angle = self.start_angle
+
 
         if self.roughness_type == 1:
 
@@ -209,8 +194,26 @@ class RoughnessMeasure:
 
             # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
             # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
-        # pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
+        #pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
         self.screen.blit(self.surface, self.blit_point)
+
+    def create_surface(self):
+
+        self.get_roughness_size()
+        self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+
+        if self.roughness_type == 0:
+            self.surface = pygame.Surface(((self.surface_radius + max(self.width, self.height)) * 2,
+                                           (self.surface_radius + max(self.width, self.height)) * 2), pygame.SRCALPHA)
+            self.surface_center = (self.surface_radius + max(self.width, self.height),
+                                   self.surface_radius + max(self.width, self.height))
+        elif self.roughness_type == 1:
+            self.surface = pygame.Surface((self.surface_radius * 2,
+                                           self.surface_radius * 2), pygame.SRCALPHA)
+            self.surface_center = (self.surface_radius,
+                                   self.surface_radius)
+
+        self.build_surface()
 
     def get_roughness_size(self):
 
@@ -220,6 +223,7 @@ class RoughnessMeasure:
 
     # меняет угол, не перересовывая покрытие. учитывает лимит угла
     def move_angle(self, pos_change: Tuple[int, int]):
+        self.moved_once = True
         mouse_pos = (self.last_mouse_pos[0] - pos_change[0], self.last_mouse_pos[1] - pos_change[1])
         # recalculate angle based on mouse pos
         x_diff = mouse_pos[0] - self.surface_center[0]
@@ -236,7 +240,7 @@ class RoughnessMeasure:
                     self.angle = angle
         else:
             self.angle = angle
-        print(self.formatted_angle(self.angle))
+        #print(self.formatted_angle(self.angle))
 
     def build_surface(self):
 
