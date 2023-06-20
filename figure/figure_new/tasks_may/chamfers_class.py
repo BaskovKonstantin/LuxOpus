@@ -13,7 +13,7 @@ class Chamfers:
                  angle: int = 45,
                  triangle_part: int = 0.5,
                  second_point: Tuple[int, int] = None,
-                 scale: int = 1, font: str = 'arial.ttf', font_size: int = 16):
+                 scale: int = 1, font: str = None, font_size: int = 16):
         self.line_length_origin = line_length
         self.pointer_length_origin = pointer_length
         self.line_width_origin = line_width
@@ -76,6 +76,15 @@ class Chamfers:
             self.surface = self.create_surface()
 
             self.previous_scale = self.scale
+
+        self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+
+        self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
+        self.polygon_dots = self.get_polygon_dots()
+
+        self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
+
+        self.surface = self.create_surface()
 
         # pygame.draw.rect(self.screen, self.colors['test'], [self.first_point[0]-self.offset[0], self.first_point[1] - self.offset[1], self.surface.get_width(), self.surface.get_height()], 1)
         self.surface.blit(self.rendered_text, (self.text_dot[0] + self.offset[0], self.text_dot[1] + self.offset[1]))
@@ -158,7 +167,7 @@ class Chamfers:
 
         elif self.chamfer_type == 1:
             surface = pygame.Surface((abs(self.text_dot[0]) + self.first_dot[0], abs(self.text_dot[1])))
-            print(surface.get_rect())
+            # print(surface.get_rect())
 
         return surface
 

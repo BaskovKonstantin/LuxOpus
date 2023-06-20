@@ -12,7 +12,7 @@ class ChoosingTable:
                  tables: Dict[str, Tuple],
                  function: Callable,
                  scale: int = 1,
-                 font: str = 'arial.ttf',
+                 font: str = None,
                  font_size: int = 16
                  ):
         self.scale = scale

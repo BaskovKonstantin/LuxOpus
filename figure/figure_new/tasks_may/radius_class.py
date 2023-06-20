@@ -18,7 +18,7 @@ class Radius:
                  text: str,
                  radius_type: int,
                  limit: Tuple[int, int] = None,
-                 font: str = 'arial.ttf',
+                 font: str = None,
                  font_size: int = 16,
                  scale: int = 1):
 
@@ -135,7 +135,7 @@ class Radius:
         self.surface.fill(self.colors['transparent'])
 
         # drawing circle (only for development)
-        # pygame.draw.circle(self.surface, self.colors['border'], self.surface_center, self.surface_radius, 1)
+        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         # kostb1l
         if not self.moved_once:

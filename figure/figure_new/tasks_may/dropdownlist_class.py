@@ -13,7 +13,7 @@ class DropdownList:
                  max_height: int,
                  function: Callable,
                  default_value: str = '',
-                 font: str = 'arial.ttf',
+                 font: str = None,
                  font_size: int = 16,
                  scale: int = 1):
         self.screen = screen

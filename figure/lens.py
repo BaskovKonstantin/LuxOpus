@@ -534,13 +534,20 @@ class lens:
                         first_point= self.point_2)
             else:
                 #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
+                self.measureDict['facet_right_measure'].line_length = 40
+                self.measureDict['facet_right_measure'].triangle_part = 0.5
+                self.measureDict['facet_right_measure'].pointer_length = 40
+                self.measureDict['facet_right_measure'].first_point = self.point_2
+                self.measureDict['facet_right_measure'].second_point = None
+                self.measureDict['facet_right_measure'].text = '45'
+                self.measureDict['facet_right_measure'].chamfer_type = 1
                 self.measureDict['facet_right_measure'].scale = self.scale
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
                                       self.measureDict['facet_right_measure'].blit_point)
         # и справа
         size = (60,80)
-        if (self.left_facet_type == 2 and self.right_facet_type != 2):
+        if (self.right_facet_type != 2 and self.left_facet_type == 2):
             if not ('facet_left_measure' in self.measureDict.keys()):
                 self.measureDict['facet_left_measure'] = \
                     Chamfers(
@@ -563,7 +570,14 @@ class lens:
 
             else:
                 try:
-                    self.measureDict['facet_right_measure'].scale = self.scale
+                    self.measureDict['facet_left_measure'].line_length = 40
+                    self.measureDict['facet_left_measure'].triangle_part = 0.5
+                    self.measureDict['facet_left_measure'].pointer_length = 40
+                    self.measureDict['facet_left_measure'].first_point = self.point_1
+                    self.measureDict['facet_left_measure'].second_point = None
+                    self.measureDict['facet_left_measure'].text = 'UP'
+                    self.measureDict['facet_left_measure'].chamfer_type = 3
+                    self.measureDict['facet_left_measure'].scale = self.scale
                     self.measureDict['facet_left_measure'].blit_point = (self.facet_point_1[0] - size[0]/2,self.facet_point_1[1] - diametr/2 )
                     self.measureDict['facet_left_measure'].draw()
                     self.surface.blit(self.measureDict['facet_left_measure'].surface,
@@ -571,8 +585,8 @@ class lens:
                 except:
                     pass
         if (self.right_facet_type == 2 and self.left_facet_type == 2):
-            if not ('facet_right_measure' in self.measureDict.keys()):
-                self.measureDict['facet_right_measure'] =\
+            if not ('facet_left_measure' in self.measureDict.keys()):
+                self.measureDict['facet_left_measure'] =\
                     Chamfers(
                         screen = self.surface,
                         colors = self.colors,
@@ -587,12 +601,17 @@ class lens:
                         second_point=self.point_2)
             else:
                 #self.measureDict['facet_right_measure'].first_point = self.facet_point_24
-                self.measureDict['facet_right_measure'].scale = self.scale
-                self.measureDict['facet_right_measure'].first_point = self.point_1
-                self.measureDict['facet_right_measure'].second_point = self.point_2
-                self.measureDict['facet_right_measure'].draw()
-                self.surface.blit(self.measureDict['facet_right_measure'].surface,
-                                      self.measureDict['facet_right_measure'].blit_point)
+                self.measureDict['facet_left_measure'].line_length = 100
+                self.measureDict['facet_left_measure'].triangle_part = 0.3
+                self.measureDict['facet_left_measure'].pointer_length = 100
+                self.measureDict['facet_left_measure'].first_point = self.point_1
+                self.measureDict['facet_left_measure'].second_point = self.point_2
+                self.measureDict['facet_left_measure'].text = '45'
+                self.measureDict['facet_left_measure'].chamfer_type = 2
+                self.measureDict['facet_left_measure'].scale = self.scale
+                self.measureDict['facet_left_measure'].draw()
+                self.surface.blit(self.measureDict['facet_left_measure'].surface,
+                                      self.measureDict['facet_left_measure'].blit_point)
 
     def draw_base_measure(self):
         R1 = int(self.R1*self.scale)
@@ -672,6 +691,9 @@ class lens:
                     if self.types[0] == 2:
                         self.measureDict['R1_measure'].start_angle = 0
                         self.measureDict['R1_measure'].limit = (-31, 31)
+                self.measureDict['R1_measure'].surface_radius = R1
+                self.measureDict['R1_measure'].radius_length = R1/2
+                self.measureDict['R1_measure'].line_length = int(R1 * 0.95)
                 self.measureDict['R1_measure'].scale = self.scale
                 self.measureDict['R1_measure'].draw()
                 if self.types[0] == 1:
@@ -718,6 +740,9 @@ class lens:
                 #                                        text=f'R{R1}', opposite=True, angle_rotate=8)
 
             else:
+                self.measureDict['R2_measure'].surface_radius = R2
+                self.measureDict['R2_measure'].radius_length = R2 / 2
+                self.measureDict['R2_measure'].line_length = int(R2 * 0.95)
                 if self.measureDict['R2_measure'].radius_type != self.types[1]-1:
                     self.measureDict['R2_measure'].radius_type = self.types[1]-1
                     self.measureDict['R2_measure'].moved_once = False
@@ -728,18 +753,17 @@ class lens:
                     if self.types[1] == 1:
                         self.measureDict['R2_measure'].start_angle = 0
                         self.measureDict['R2_measure'].limit = (-38, 38)
-
                 self.measureDict['R2_measure'].scale = self.scale
                 self.measureDict['R2_measure'].draw()
                 if self.types[1] == 2:
-                    self.measureDict['R2_measure'].blit_point = (self.surface_width/2 + width/2, R2 - self.measureDict[
-                                                                     'R2_measure'].surface.get_height() / 2 + (R1 - R2))
+                    self.measureDict['R2_measure'].blit_point = (self.surface_width/2 + width/2, self.surface.get_height()/2-diametr+50)#R2 - self.measureDict[
+                                                                     #'R2_measure'].surface.get_height() / 2 + abs(R1 - R2))
                 elif self.types[1] == 1:
                     self.measureDict['R2_measure'].blit_point = (self.surface_width / 2 - width/2 - diametr - R2,
                                                                  R2 - self.measureDict[
-                                                                     'R2_measure'].surface.get_height() / 2 + (R1 - R2))
+                                                                     'R2_measure'].surface.get_height() / 2 + abs(R1 - R2))
 
-                #print(R2, diametr, width)
+                (R2, diametr, width)
 
                 self.surface.blit(self.measureDict['R2_measure'].surface,
                                   self.measureDict['R2_measure'].blit_point)

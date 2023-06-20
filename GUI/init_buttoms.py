@@ -135,6 +135,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     ###### Включение диагональной фаски
     def facet_type_1(text):  # передача i в качестве аргумента по умолчанию
         drawingTemplate.current_figure.left_facet_type = 2
+        drawingTemplate.current_figure.right_facet_type = False
     buttonDict['facet_type_1'] = \
         button(interfceSurfce,
                 (int(10*scale), int(5*scale)),
@@ -159,6 +160,7 @@ def initFacetTypeBtn(drawingTemplate , interfceSurfce, colors, border_size, font
     ###### Включение диагональной фаски
     def facet_type_3(text):  # передача i в качестве аргумента по умолчанию
         drawingTemplate.current_figure.right_facet_type = 2
+        drawingTemplate.current_figure.left_facet_type = False
     buttonDict['facet_type_3'] = \
         button(interfceSurfce,
                 (int(10*scale) + 2*button_size[0] + int(scale*9), int(5*scale)),
