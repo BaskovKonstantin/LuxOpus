@@ -106,7 +106,6 @@ class RoughnessMeasure:
         if not self.moved_once:
             self.angle = self.start_angle
 
-
         if self.roughness_type == 1:
 
             short_radius = math.sqrt(
@@ -243,6 +242,8 @@ class RoughnessMeasure:
         #print(self.formatted_angle(self.angle))
 
     def build_surface(self):
+
+        #self.height = self.size_origin[1]
 
         pygame.draw.line(self.roughness_surface, self.colors['border'],
                          (0, self.height * 3 / 4),

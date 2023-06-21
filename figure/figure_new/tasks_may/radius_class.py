@@ -135,7 +135,7 @@ class Radius:
         self.surface.fill(self.colors['transparent'])
 
         # drawing circle (only for development)
-        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         # kostb1l
         if not self.moved_once:
@@ -242,7 +242,7 @@ class Radius:
                     math.radians(self.angle - 270))
         text_pos = (x_text - x_offset, y_text - y_offset)
         self.surface.blit(text, text_pos)
-        #pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
+        # pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
         # blit our surface on screen
         self.screen.blit(self.surface, self.blit_point)
 
