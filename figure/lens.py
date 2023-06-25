@@ -768,8 +768,6 @@ class lens:
                     self.measureDict['R2_measure'].blit_point = (self.surface.get_width()/2-R2*3+width/2,
                                                                  self.surface.get_height()/2 - R2*2)
 
-                print(R2, diametr, width)
-
                 self.surface.blit(self.measureDict['R2_measure'].surface,
                                   self.measureDict['R2_measure'].blit_point)
 
@@ -981,9 +979,10 @@ class lens:
                         surface_radius=self.R1,
                         cover_size=cover_measure_size,
                         angle=angle,
-                        line_width=2,
+                        line_width=1,
                         limit=limit,
-                        cover_type=self.types[0]-1)
+                        cover_type=self.types[0]-1,
+                        font=self.font)
             else:
 
                 if self.measureDict['cover_measure_1'].cover_type != self.types[0]-1:
@@ -1069,7 +1068,8 @@ class lens:
                     angle = angle,
                     line_width= 2,
                     cover_type = 0,
-                    limit=limit)
+                    limit=limit,
+                    font = self.font)
 
             else:
 
