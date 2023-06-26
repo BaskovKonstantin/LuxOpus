@@ -1,4 +1,5 @@
 from typing import Tuple, Dict
+from math import sqrt
 
 import pygame.surface
 
@@ -11,7 +12,8 @@ class Picture:
                  colors: Dict[str, Tuple[int,int,int]],
                  picture_type: int,
                  line_width: int = 1,
-                 scale: int = 1):
+                 scale: int = 1,
+                 font_name: str = None):
         self.scale = scale
         self.previous_scale = scale
         self.screen = screen
@@ -190,5 +192,165 @@ class Picture:
             pygame.draw.line(self.surface, self.colors['border'],
                              (0, self.size[1] - self.line_width // 2),
                              (self.size[0], self.size[1] - self.line_width // 2), self.line_width)
+
+        if self.picture_type in (i for i in range(17, 29)):
+            radius = max(self.size) / 2
+            center = (self.size[0]//2, self.size[1]//2)
+            pygame.draw.circle(self.surface, self.colors['border'], center, radius, self.line_width)
+        # Внешние непрозрачные
+        if self.picture_type == 17:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2),
+                              center[1] - self.size[1] // 4 * sqrt(2)),
+                             (center[0], center[1] + self.size[1] / 2 - self.line_width),
+                             self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0], center[1] + self.size[1] / 2 - self.line_width),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width,
+                              center[1] - self.size[1] // 4 * sqrt(2)), self.line_width)
+        # Внутренние непрозрачные
+        if self.picture_type == 18:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2),
+                              center[1] + self.size[1] // 4 * sqrt(2)),
+                             (center[0], center[1] - self.size[1] / 2 + self.line_width),
+                             self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0], center[1] - self.size[1] / 2 + self.line_width),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width,
+                              center[1] + self.size[1] // 4 * sqrt(2)), self.line_width)
+        # Светоделительные
+        if self.picture_type == 19:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 2 + self.line_width, center[1]),
+                             (center[0] + self.size[0] // 2 - self.line_width, center[1]),
+                             self.line_width)
+        # Фильтры
+        if self.picture_type == 20:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.line_width // 4,
+                              center[1] - self.size[1] // 2 + self.line_width),
+                             (center[0] - self.line_width // 4,
+                              center[1] + self.size[1] // 2 - self.line_width), self.line_width)
+        # Защитные непрозрачные
+        if self.picture_type == 21:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 2 + self.line_width,
+                              center[1] - self.size[1] // 10),
+                             (center[0] + self.size[0] // 2 - self.line_width,
+                              center[1] - self.size[1] // 10), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 2 + self.line_width,
+                              center[1] + self.size[1] // 10),
+                             (center[0] + self.size[0] // 2 - self.line_width,
+                              center[1] + self.size[1] // 10), self.line_width)
+        # Токопроводящие
+        if self.picture_type == 22:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] + self.line_width // 4 - self.size[0] // 10,
+                              center[1] - self.size[1] // 2 + self.line_width),
+                             (center[0] + self.line_width // 4 - self.size[0] // 10,
+                              center[1] + self.size[1] // 2 - self.line_width), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.line_width // 4 + self.size[0] // 10,
+                              center[1] - self.size[1] // 2 + self.line_width),
+                             (center[0] - self.line_width // 4 + self.size[0] // 10,
+                              center[1] + self.size[1] // 2 - self.line_width), self.line_width)
+        # Просветвляющие
+        if self.picture_type == 23:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width,
+                              center[1] - self.size[1] // 4 * sqrt(2)),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width,
+                              center[1] + self.size[1] // 4 * sqrt(2)), self.line_width)
+
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width,
+                              center[1] + self.size[1] // 4 * sqrt(2)),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width,
+                              center[1] - self.size[1] // 4 * sqrt(2)), self.line_width)
+        # Отрезающие
+        if self.picture_type == 24:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(3) + self.line_width // 2,
+                              center[1] + self.size[1] // 4 * sqrt(1)),
+                             (center[0] + self.line_width // 2, center[1] + self.size[1] // 4 * sqrt(1)),
+                             self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0], center[1] + self.size[1] // 4 * sqrt(1)),
+                             (center[0], center[1] - self.size[1] // 4 * sqrt(1)), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.line_width // 3, center[1] - self.size[1] // 4 * sqrt(1)),
+                             (center[0] + self.size[0] // 4 * sqrt(3) - self.line_width // 2,
+                              center[1] - self.size[1] // 4 * sqrt(1)), self.line_width)
+        # Узкополостные
+        if self.picture_type == 25:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(3) + self.line_width // 2,
+                              center[1] + self.size[1] // 4 * sqrt(1)),
+                             (center[0] + self.size[0] // 4 * sqrt(3) - self.line_width // 2,
+                              center[1] + self.size[1] // 4 * sqrt(1)), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.line_width // 4, center[1] - self.size[1] // 2),
+                             (center[0] - self.line_width // 4, center[1] + self.size[1] // 4 * sqrt(1)),
+                             self.line_width)
+        # Полосовые
+        if self.picture_type == 26:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(3) + self.line_width // 2,
+                              center[1] + self.size[1] // 4 * sqrt(1)),
+                             (center[0] - (self.size[0] // 4 * sqrt(2)) * 0.65,
+                              center[1] + (self.size[1] // 4 * sqrt(1))), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] + (self.size[1] // 4 * sqrt(2)) * 0.7),
+                             (center[0] - self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(3) + self.line_width * 0.75),
+                             self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(3) + self.line_width * 0.75),
+                             (center[0] + self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(3) + self.line_width * 0.75),
+                             self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] + self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(3) + self.line_width * 0.75),
+                             (center[0] + self.size[0] // 4 * sqrt(1) - self.line_width // 4,
+                              center[1] + (self.size[1] // 4 * sqrt(2)) * 0.7), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] + (self.size[0] // 4 * sqrt(1)) - self.line_width // 4,
+                              center[1] + (self.size[1] // 4 * sqrt(1))),
+                             (center[0] + self.size[0] // 4 * sqrt(3) - self.line_width // 2,
+                              center[1] + self.size[1] // 4 * sqrt(1)), self.line_width)
+        # Поляризующие
+        if self.picture_type == 27:
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(2) + self.line_width / 4),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(2) + self.line_width / 4), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(2) + self.line_width / 4),
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width // 4,
+                              center[1] + self.size[0] // 4 * sqrt(2) - self.line_width / 2), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] + self.size[0] // 4 * sqrt(2) - self.line_width // 4,
+                              center[1] + self.size[0] // 4 * sqrt(2) - self.line_width / 2),
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width // 4,
+                              center[1] + self.size[0] // 4 * sqrt(2) - self.line_width / 2), self.line_width)
+            pygame.draw.line(self.surface, self.colors['border'],
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width // 4,
+                              center[1] + self.size[0] // 4 * sqrt(2) - self.line_width / 2),
+                             (center[0] - self.size[0] // 4 * sqrt(2) + self.line_width // 4,
+                              center[1] - self.size[0] // 4 * sqrt(2) + self.line_width / 4), self.line_width)
+        # Специальные
+        if self.picture_type == 28:
+            font = pygame.font.Font(self.font_name, int(self.size[1] / 5 * 4))
+            sign = font.render("C", True, self.colors['border'])
+            self.surface.blit(sign,
+                              (center[0] - sign.get_width() / 2, center[1] - sign.get_height() / 2))
+
 
         # pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
