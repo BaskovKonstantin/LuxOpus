@@ -2,6 +2,8 @@ from typing import Tuple, Dict, Callable
 
 import pygame
 
+from picture_class import Picture
+
 
 class ChoosingTable:
     def __init__(self,
@@ -12,7 +14,7 @@ class ChoosingTable:
                  tables: Dict[str, Tuple],
                  function: Callable,
                  scale: int = 1,
-                 font: str = None,
+                 font: str = 'arial.ttf',
                  font_size: int = 16
                  ):
         self.scale = scale
@@ -72,7 +74,10 @@ class ChoosingTable:
             elif offset_mouse[1] > self.offset_y + self.cell_height and offset_mouse[0] > self.cell_width:
                 variant = self.chosen_table[int((offset_mouse[1] - self.offset_y) // self.cell_height)][
                     int(offset_mouse[0] // self.cell_width)]
-                self.function(variant)
+                if isinstance(variant, str) or isinstance(variant, int) or isinstance(variant, float):
+                    self.function(variant)
+                else:
+                    self.function(variant[1])
                 # for rect in self.cells_rects:
                 #    if pygame.rect.Rect(rect).collidepoint(offset_mouse):
 
@@ -123,8 +128,14 @@ class ChoosingTable:
                 i = 1
                 text_surface = self.font.render(str(self.chosen_table[row][col]), True, self.colors['border'])
                 while text_surface.get_width() > self.cell_width:
-                    text_surface = pygame.font.Font(self.font_name, self.font_size - i).render(
-                        str(self.chosen_table[row][col]), True, self.colors['border'])
+                    if isinstance(self.chosen_table[row][col], str) or isinstance(self.chosen_table[row][col], int) or isinstance(self.chosen_table[row][col], float):
+                        text_surface = pygame.font.Font(self.font_name, self.font_size - i).render(
+                            str(self.chosen_table[row][col]), True, self.colors['border'])
+                    else:
+                        side = min(self.cell_width, self.cell_height)*0.8
+                        self.chosen_table[row][col][0].size = (side, side)
+                        self.chosen_table[row][col][0].build_picture()
+                        text_surface = self.chosen_table[row][col][0].surface
                     i += 1
 
                 # Вычисление позиции текста внутри ячейки
@@ -134,5 +145,3 @@ class ChoosingTable:
                 # Отображение текста внутри ячейки
                 # self.surface.blit(text_surface, (text_x, text_y))
                 self.cells_texts.append((text_surface, (text_x, text_y)))
-
-
