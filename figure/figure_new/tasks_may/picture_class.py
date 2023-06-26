@@ -46,6 +46,8 @@ class Picture:
 
         self.surface = pygame.Surface(self.size, pygame.SRCALPHA)
 
+        self.surface.fill((0,0,0,0))
+
         # допуск прямолинейности
         if self.picture_type == 1:
             pygame.draw.line(self.surface, self.colors['border'],

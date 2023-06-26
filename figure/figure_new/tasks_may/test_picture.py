@@ -14,10 +14,10 @@ colors = {
 pygame.init()
 screen = pygame.display.set_mode((700, 700))
 surface = pygame.Surface((700, 700), pygame.SRCALPHA)
-picture = picture_class.Picture(surface, (20, 20), (100, 100), colors, 1, 4)
-pictures = []
-for i in range(1, 28):
-    pictures.append(picture_class.Picture(surface, (((i-1) % 5)*90, ((i-1)//5)*90), (80, 80), colors, i, 2))
+picture = picture_class.Picture(surface, (20, 20), (100, 100), colors, 1, 2)
+# pictures = []
+# for i in range(1, 28):
+#     pictures.append(picture_class.Picture(surface, (((i-1) % 5)*90, ((i-1)//5)*90), (80, 80), colors, i, 2))
 
 running = True
 while running:
@@ -26,14 +26,15 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                picture.scale += 0.5
+                if picture.picture_type > 1:
+                    picture.picture_type -= 1
             if event.key == pygame.K_BACKSPACE:
-                picture.scale -= 0.5
+                if picture.picture_type < 27:
+                    picture.picture_type += 1
 
     # отрисовка элементов
     surface.fill((0, 0, 0))
-    for i in pictures:
-        i.draw()
+    picture.draw()
     screen.blit(surface, (0, 0))
     pygame.display.update()
 
