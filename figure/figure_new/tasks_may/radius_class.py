@@ -141,6 +141,20 @@ class Radius:
         if not self.moved_once:
             self.angle = self.start_angle
 
+        if self.limit is not None:
+            if self.formatted_angle(self.limit[0]) > self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
+                        self.angle = self.limit[1]
+                    else:
+                        self.angle = self.limit[0]
+            elif self.formatted_angle(self.limit[0]) < self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) or self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
+                        self.angle = self.limit[1]
+                    else:
+                        self.angle = self.limit[0]
+
         # drawing pointer
         # drawing line
         self.get_line_points()

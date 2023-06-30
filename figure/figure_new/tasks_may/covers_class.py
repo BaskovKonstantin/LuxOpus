@@ -81,7 +81,21 @@ class CoversMeasure:
         if not self.moved_once:
             self.angle = self.start_angle
 
-        # Рисуем крестик на поверхности
+        if self.limit is not None:
+            if self.formatted_angle(self.limit[0]) > self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
+                        self.angle = self.limit[1]
+                    else:
+                        self.angle = self.limit[0]
+            elif self.formatted_angle(self.limit[0]) < self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) or self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
+                        self.angle = self.limit[1]
+                    else:
+                        self.angle = self.limit[0]
+
+        # Рисуем фигуру на поверхности
         self.get_cover_points()
         # Внешние непрозрачные
         if self.type == 1:
