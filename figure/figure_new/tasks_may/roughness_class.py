@@ -101,7 +101,7 @@ class RoughnessMeasure:
         # surface
         self.surface.fill((0, 0, 0, 0))
 
-        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         if not self.moved_once:
             self.angle = self.start_angle
@@ -159,7 +159,7 @@ class RoughnessMeasure:
                 (dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
                  roughness_surface_rotated.get_height()))
 
-            # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
+            pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
             # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
 
         elif self.roughness_type == 0:
@@ -205,12 +205,16 @@ class RoughnessMeasure:
                 dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
                 roughness_surface_rotated.get_height()))
 
-            # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
+            pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
             # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
-        # pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
-        self.screen.blit(self.surface, self.blit_point)
+        pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
+        #self.screen.blit(self.surface, self.blit_point)
 
     def create_surface(self):
+
+        self.line_width = int(self.line_width_origin * self.scale)
+        self.surface_radius = int(self.surface_radius_origin * self.scale)
+        self.width, self.height = int(self.size_origin[0] * self.scale), int(self.size_origin[1] * self.scale)
 
         self.get_roughness_size()
         self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -257,7 +261,8 @@ class RoughnessMeasure:
 
     def build_surface(self):
 
-        #self.height = self.size_origin[1]
+        # self.height = self.size_origin[1]*self.scale
+        #print('size_or',self.size_origin[1])
 
         pygame.draw.line(self.roughness_surface, self.colors['border'],
                          (0, self.height * 3 / 4),

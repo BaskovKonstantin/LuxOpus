@@ -61,7 +61,7 @@ class lens:
         x_diff = 2 * R1 if R1 > R2 else 2 * R2 - 2 * self.R1 if self.R1 > self.R2 else 2 * self.R2
         y_diff = 2 * R1 if R1 > R2 else 2 * R2 - 2 * self.R1 if self.R1 > self.R2 else 2 * self.R2
 
-
+        # !!!СДЕЛАЛ ТУТ ТУПОЕ ИЗМЕНЕНИЕ ЧТОБЫ ПРОВЕРИТЬ ВСЁ ЛИ РАБОТАЕТ!!!
         self.surface = pygame.Surface(
             (2 * (R1+100) if R1 > R2 else 2 * (R2+100), 2*(R1+100) if R1 >R2 else 2*(R2+100)), pygame.SRCALPHA)
         # self.surface.fill(self.colors['test'])
@@ -811,15 +811,15 @@ class lens:
                                      line_width=2,
                                      font = self.font,
                                      limit=limit,
-                                     text_method = 'T1',
+                                     text_method = '',
                                      text_base_len = 'B1',
-                                     text_designation = 'D1',
+                                     text_designation = '',
                                      roughness_type=self.types[0]-1)
             else:
                 if self.measureDict['roughness_measure_1'].roughness_type != self.types[0]-1:
                     self.measureDict['roughness_measure_1'].roughness_type = self.types[0]-1
                     self.measureDict['roughness_measure_1'].moved_once = False
-                    self.measureDict['roughness_measure_1'].create_surface()
+                    #self.measureDict['roughness_measure_1'].create_surface()
                     if self.types[0] == 1:
                         self.measureDict['roughness_measure_1'].start_angle = 180
                     if self.types[0] == 2:
@@ -848,7 +848,7 @@ class lens:
                     # self.measureDict['roughness_measure_1'].blit_point = (
                     #     self.surface_width / 2 - R1*2 - width/2,
                     #     R1 - self.measureDict['roughness_measure_1'].surface.get_height() / 2)
-
+                print(self.measureDict['roughness_measure_1'].height)
                 self.surface.blit(self.measureDict['roughness_measure_1'].surface,
                                   self.measureDict['roughness_measure_1'].blit_point)
                 #print(self.measureDict['roughness_measure_1'].angle)
