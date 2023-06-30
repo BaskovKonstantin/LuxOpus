@@ -101,7 +101,7 @@ class RoughnessMeasure:
         # surface
         self.surface.fill((0, 0, 0, 0))
 
-        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         if not self.moved_once:
             self.angle = self.start_angle
@@ -159,7 +159,7 @@ class RoughnessMeasure:
                 (dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
                  roughness_surface_rotated.get_height()))
 
-            pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
+            # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
             # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
 
         elif self.roughness_type == 0:
@@ -205,9 +205,9 @@ class RoughnessMeasure:
                 dot_on_surface[0] - x_offset, dot_on_surface[1] - y_offset, roughness_surface_rotated.get_width(),
                 roughness_surface_rotated.get_height()))
 
-            pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
+            # pygame.draw.rect(self.surface, self.colors['test'], self.roughness_rect, 1)
             # pygame.draw.line(self.surface, self.colors['test'], self.surface_center, dot_on_surface)
-        pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
+        # pygame.draw.rect(self.surface, self.colors['test'], self.surface.get_rect(), 1)
         #self.screen.blit(self.surface, self.blit_point)
 
     def create_surface(self):
