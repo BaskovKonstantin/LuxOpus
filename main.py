@@ -4,6 +4,7 @@ from reportlab.pdfgen import canvas
 import math
 import json
 from GUI.inputBox import inputBox
+from figure.figure_new.tasks_may.base_class import Base
 from figure.lens import lens
 from figure.line_measure import line_measure
 from figure.cover_measure import cover_measure
@@ -348,6 +349,8 @@ while running:
                         pass
                     if (isinstance(current_input.selected_measure, RoughnessMeasure)):
                         pass
+                    if (isinstance(current_input.selected_measure, Base)):
+                        pass
 
 
             if (isinstance(current_input, image)) and current_input.resize_mode:
@@ -459,6 +462,8 @@ while running:
                     if (isinstance(current_input.selected_measure, CoversMeasure)):
                         current_input.selected_measure.move_angle((x_diff, y_diff))
                     if (isinstance(current_input.selected_measure, RoughnessMeasure)):
+                        current_input.selected_measure.move_angle((x_diff, y_diff))
+                    if (isinstance(current_input.selected_measure, Base)):
                         current_input.selected_measure.move_angle((x_diff, y_diff))
                 # По этому примеру можно вставлять и другие типы фигур
 

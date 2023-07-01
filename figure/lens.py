@@ -2,6 +2,7 @@ import pygame
 import math
 from figure.facet_measure import facet_measure
 from figure.cover_measure import cover_measure
+from figure.figure_new.tasks_may.base_class import Base
 from figure.roughness_measure import roughness_measure
 from figure.line_measure import line_measure
 from figure.dash_line import dashed_line
@@ -819,12 +820,12 @@ class lens:
                 if self.measureDict['roughness_measure_1'].roughness_type != self.types[0]-1:
                     self.measureDict['roughness_measure_1'].roughness_type = self.types[0]-1
                     self.measureDict['roughness_measure_1'].moved_once = False
-                    #self.measureDict['roughness_measure_1'].create_surface()
+                    # self.measureDict['roughness_measure_1'].create_surface()
                     if self.types[0] == 1:
                         self.measureDict['roughness_measure_1'].start_angle = 180
                     if self.types[0] == 2:
                         self.measureDict['roughness_measure_1'].start_angle = 0
-                self.measureDict['roughness_measure_1'].surface_radius = R1
+                self.measureDict['roughness_measure_1'].surface_radius_origin = R1
                 self.measureDict['roughness_measure_1'].create_surface()
                 self.measureDict['roughness_measure_1'].scale = self.scale
                 self.measureDict['roughness_measure_1'].draw()
@@ -910,12 +911,12 @@ class lens:
                 if self.measureDict['roughness_measure_2'].roughness_type != self.types[1]-1:
                     self.measureDict['roughness_measure_2'].roughness_type = self.types[1]-1
                     self.measureDict['roughness_measure_2'].moved_once = False
-                    self.measureDict['roughness_measure_2'].create_surface()
+                    #self.measureDict['roughness_measure_2'].create_surface()
                     if self.types[1] == 2:
                         self.measureDict['roughness_measure_2'].start_angle = 180
                     if self.types[1] == 1:
                         self.measureDict['roughness_measure_2'].start_angle = 0
-                self.measureDict['roughness_measure_2'].surface_radius = R2
+                self.measureDict['roughness_measure_2'].surface_radius_origin = R2
                 self.measureDict['roughness_measure_2'].create_surface()
                 self.measureDict['roughness_measure_2'].scale = self.scale
                 self.measureDict['roughness_measure_2'].draw()
@@ -1168,6 +1169,125 @@ class lens:
                 # self.surface.blit(self.measureDict['cover_measure_2'].surface,
                 #                   (self.measureDict['cover_measure_2'].blit_point[0] ,
                 #                    self.measureDict['cover_measure_2'].blit_point[1] ))
+        if (self.types[0] !=3):
+
+            if not ('base_left' in self.measureDict.keys()):
+
+                if self.types[0] == 1:
+                    angle = 180
+                    limit = (180-math.degrees(math.asin(diametr/2/R1)), 180+math.degrees(math.asin(diametr/2/R1)))
+                if self.types[0] == 2:
+                    angle = 0
+                    limit = (0 - math.degrees(math.asin(diametr / 2 / R1)), 0 + math.degrees(math.asin(diametr / 2 / R1)))
+
+                self.measureDict['base_left'] = Base(self.surface,
+                                                     (int(self.surface_width/2 -2*width - R1 - 25 +diametr),0-diametr+10),
+                                                     self.colors,
+                                                     surface_radius = R1,
+                                                     square_size=(20, 20),
+                                                     triangle_length=30,
+                                                     triangle_width=30,
+                                                     angle = angle,
+                                                     text = 'A',
+                                                     base_type = self.types[0]-1,
+                                                     limit=limit,
+                                                     font = self.font)
+            else:
+
+                if self.measureDict['base_left'].base_type != self.types[0]-1:
+                    self.measureDict['base_left'].base_type = self.types[0]-1
+                    self.measureDict['base_left'].moved_once = False
+                    self.measureDict['base_left'].create_surface()
+                    if self.types[0] == 1:
+                        self.measureDict['base_left'].start_angle = 180
+                    if self.types[0] == 2:
+                        self.measureDict['base_left'].start_angle = 0
+
+                self.measureDict['base_left'].surface_radius = R1
+                self.measureDict['base_left'].create_surface()
+                self.measureDict['base_left'].scale = self.scale
+                self.measureDict['base_left'].draw()
+                if self.types[0] == 1:
+                    self.measureDict['base_left'].limit = (180 - math.degrees(math.asin(diametr / 2 / R1)),
+                                                           180 + math.degrees(math.asin(diametr / 2 / R1)))
+                    self.measureDict['base_left'].blit_point = (self.point_1[0]-self.measureDict['base_left'].surface.get_height()/2+R1-(R1-math.sqrt(R1**2-(diametr/2)**2)),
+                                                                 self.point_1[1]-(self.measureDict['base_left'].surface.get_height()-diametr)/2)
+                    # self.measureDict['R1_measure'].blit_point = (self.surface_width/2 - R1 - width/2,
+                    #                                              R1 - self.measureDict['R1_measure'].surface.get_height()/2)
+                elif self.types[0] == 2:
+                    self.measureDict['base_left'].limit = (0 - math.degrees(math.asin(diametr / 2 / R1)),
+                                                           0 + math.degrees(math.asin(diametr / 2 / R1)))
+                    self.measureDict['base_left'].blit_point = (self.point_1[0]-R1*2+(R1-math.sqrt(R1**2-(diametr/2)**2)),
+                                                                 self.point_1[1]-(R1*2-diametr)/2)
+                    # self.measureDict['R1_measure'].blit_point = (self.surface_width / 2 - R1*2 - width/2,
+                    #                                              0)
+                #print(self.point_1, self.point_2)
+
+                self.surface.blit(self.measureDict['base_left'].surface,
+                                  self.measureDict['base_left'].blit_point)
+
+        if (self.types[1] !=3):
+            radius_width = 150
+
+            if not ('base_right' in self.measureDict.keys()):
+                #print(self.types[1])
+                if self.types[1] == 2:
+                    angle = 180
+                    limit = (180 - math.degrees(math.asin(diametr / 2 / R2)), 180 + math.degrees(math.asin(diametr / 2 / R2)))
+                if self.types[1] == 1:
+                    angle = 0
+                    limit = (0 - math.degrees(math.asin(diametr / 2 / R2)), 0 + math.degrees(math.asin(diametr / 2 / R2)))
+
+                self.measureDict['base_right'] = Base(self.surface,
+                                                      (int(self.surface_width/2 - R2 - 13 - diametr - 61),
+                                                       0-diametr/2-36),
+                                                      self.colors,
+                                                      surface_radius = R2,
+                                                      square_size= (20, 20),
+                                                      triangle_length= 30,
+                                                      triangle_width=30,
+                                                      angle = angle,
+                                                      text = 'B',
+                                                      base_type = self.types[1]-1,
+                                                      limit=limit,
+                                                      font = self.font)
+
+                # не знаю что это но на всякий случай комментил
+                # self.measureDict['R2_measure'] = arrow((int(self.surface_width / 2 - width / 2 + width - radius_width),
+                #                                         self.axis_center_point), self.surface,
+                #                                        self.colors, size=(radius_width, 10), font=self.font,
+                #                                        text=f'R{R1}', opposite=True, angle_rotate=8)
+
+            else:
+                self.measureDict['base_right'].surface_radius = R2
+                self.measureDict['base_right'].create_surface()
+                if self.measureDict['base_right'].base_type != self.types[1]-1:
+                    self.measureDict['base_right'].base_type = self.types[1]-1
+                    self.measureDict['base_right'].moved_once = False
+                    self.measureDict['base_right'].create_surface()
+                    if self.types[1] == 2:
+                        self.measureDict['base_right'].start_angle = 180
+                    if self.types[1] == 1:
+                        self.measureDict['base_right'].start_angle = 0
+                self.measureDict['base_right'].scale = self.scale
+                self.measureDict['base_right'].draw()
+                if self.types[1] == 2:
+                    self.measureDict['base_right'].limit = (180 - math.degrees(math.asin(diametr / 2 / R2)),
+                                                            180 + math.degrees(math.asin(diametr / 2 / R2)))
+                    self.measureDict['base_right'].blit_point = (self.point_2[0]-(R2-math.sqrt(R2**2-(diametr/2)**2)),
+                                                                 self.point_2[1]-(R2*2-diametr)/2)
+                    # self.measureDict['base_right'].blit_point = (self.surface_width/2 + width/2,
+                    #                                              self.surface.get_height()/2-R2)
+                elif self.types[1] == 1:
+                    self.measureDict['base_right'].limit = (0 - math.degrees(math.asin(diametr / 2 / R2)),
+                                                            0 + math.degrees(math.asin(diametr / 2 / R2)))
+                    self.measureDict['base_right'].blit_point = (self.point_2[0]-R2-self.measureDict['base_right'].surface.get_height()/2+(R2-math.sqrt(R2**2-(diametr/2)**2)),
+                                                                 self.point_2[1]-(self.measureDict['base_right'].surface.get_height()-diametr)/2)
+                    # self.measureDict['base_right'].blit_point = (self.surface.get_width()/2-R2*3+width/2,
+                    #                                              self.surface.get_height()/2 - R2*2)
+
+                self.surface.blit(self.measureDict['base_right'].surface,
+                                  self.measureDict['base_right'].blit_point)
 
     def __init__(self, screen, colors, start_point, width, diametr, R1, R2,
                  border_size, type, font = None, axis_center_point = 400, show_measure = True, show_streak = True,
