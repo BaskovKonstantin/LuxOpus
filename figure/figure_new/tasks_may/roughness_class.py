@@ -24,7 +24,7 @@ class RoughnessMeasure:
                  limit: Tuple[int, int] = None):
 
         self.scale = scale
-        self.previous_scale = scale
+        self.previous_scale = 0.5
         self.line_width_origin = line_width
         self.surface_radius_origin = surface_radius
         self.size_origin = size
@@ -95,9 +95,9 @@ class RoughnessMeasure:
 
             # self.get_roughness_size()
             # self.roughness_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-            self.create_surface()
-            self.previous_scale = self.scale
 
+            self.previous_scale = self.scale
+        self.create_surface()
         # surface
         self.surface.fill((0, 0, 0, 0))
 

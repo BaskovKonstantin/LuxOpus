@@ -42,7 +42,19 @@ class Base:
         self.font_size = font_size * self.scale
         self.font = pygame.font.Font(self.font_name, self.font_size)
         self.square_text = self.font.render(self.text, True, self.colors['text'])
-
+        self.square_text = self.font.render(self.text, True, self.colors['text'])
+        i = 1
+        while self.square_text.get_height() > self.square_size[1] * 4 / 5 or self.square_text.get_width() > \
+                self.square_size[0] * 4 / 5:
+            self.font = pygame.font.Font(self.font_name, int(self.font_size - i * self.scale))
+            self.square_text = self.font.render(self.text, True, self.colors['text'])
+            i += 1
+        i = 1
+        while self.square_text.get_height() < self.square_size[1] * 3 / 5 or self.square_text.get_width() > \
+                self.square_size[0] * 3 / 5:
+            self.font = pygame.font.Font(self.font_name, int(self.font_size + i * self.scale))
+            self.square_text = self.font.render(self.text, True, self.colors['text'])
+            i += 1
         self.create_surface()
 
     def create_surface(self):
@@ -70,7 +82,18 @@ class Base:
             self.triangle_length = int(self.triangle_length_origin * self.scale)
             self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
             self.square_text = self.font.render(self.text, True, self.colors['text'])
-
+            i = 1
+            while self.square_text.get_height() > self.square_size[1] * 4.5 / 5 or self.square_text.get_width() > \
+                    self.square_size[0] * 4.5 / 5:
+                self.font = pygame.font.Font(self.font_name, int(self.font_size - i * self.scale))
+                self.square_text = self.font.render(self.text, True, self.colors['text'])
+                i += 1
+            i = 1
+            while self.square_text.get_height() < self.square_size[1] * 4 / 5 or self.square_text.get_width() > \
+                    self.square_size[0] * 4 / 5:
+                self.font = pygame.font.Font(self.font_name, int(self.font_size + i * self.scale))
+                self.square_text = self.font.render(self.text, True, self.colors['text'])
+                i += 1
             self.create_surface()
 
             self.previous_scale = self.scale
@@ -83,20 +106,20 @@ class Base:
         # kostb1l
         if not self.moved_once:
             self.angle = self.start_angle
-
+        offset = math.degrees(math.atan(self.triangle_width / 2 / self.surface_radius))
         if self.limit is not None:
             if self.formatted_angle(self.limit[0]) > self.formatted_angle(self.limit[1]):
-                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
-                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
-                        self.angle = self.limit[1]
+                if self.formatted_angle(self.limit[1]-offset) < self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]+offset):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1]-offset)) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0]+offset)):
+                        self.angle = self.limit[1]-offset
                     else:
-                        self.angle = self.limit[0]
+                        self.angle = self.limit[0]+offset
             elif self.formatted_angle(self.limit[0]) < self.formatted_angle(self.limit[1]):
-                if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.angle) or self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]):
-                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1])) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0])):
-                        self.angle = self.limit[1]
+                if self.formatted_angle(self.limit[1]-offset) < self.formatted_angle(self.angle) or self.formatted_angle(self.angle) < self.formatted_angle(self.limit[0]+offset):
+                    if abs(self.formatted_angle(self.angle) - self.formatted_angle(self.limit[1]-offset)) < abs(self.formatted_angle(self.angle)-self.formatted_angle(self.limit[0]+offset)):
+                        self.angle = self.limit[1]-offset
                     else:
-                        self.angle = self.limit[0]
+                        self.angle = self.limit[0]+offset
 
         # triangle
         pygame.draw.polygon(self.surface, self.colors['border'], self.triangle_points())
@@ -110,17 +133,6 @@ class Base:
         pygame.draw.rect(self.surface, self.colors['border'], rect, 1)
 
         # text
-        self.square_text = self.font.render(self.text, True, self.colors['text'])
-        i = 1
-        while self.square_text.get_height() > self.square_size[1]*4/5 or self.square_text.get_width() > self.square_size[0]*4/5:
-            self.font = pygame.font.Font(self.font_name, int(self.font_size-i * self.scale))
-            self.square_text = self.font.render(self.text, True, self.colors['text'])
-            i += 1
-        i = 1
-        while self.square_text.get_height() < self.square_size[1]*3/5 or self.square_text.get_width() > self.square_size[0]*3/5:
-            self.font = pygame.font.Font(self.font_name, int(self.font_size+i * self.scale))
-            self.square_text = self.font.render(self.text, True, self.colors['text'])
-            i += 1
         self.surface.blit(self.square_text, (rect[0]+(self.square_size[0]-self.square_text.get_width())/2,
                                              rect[1]+(self.square_size[1]-self.square_text.get_height())/2))
         self.screen.blit(self.surface, self.blit_point)
@@ -176,15 +188,16 @@ class Base:
         y_diff = mouse_pos[1] - self.surface_center[1]
         angle = math.degrees(math.atan2(x_diff, y_diff)) - 90
         if self.limit is not None:
+            offset = math.degrees(math.atan(self.triangle_width/2/self.surface_radius))
             if self.formatted_angle(self.limit[1]) < self.formatted_angle(self.limit[0]):
-                if (0 <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1])) or (self.formatted_angle(self.limit[0]) <= self.formatted_angle(angle) <= 360):
+                if (0 <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1]+offset)) or (self.formatted_angle(self.limit[0]-offset) <= self.formatted_angle(angle) <= 360):
                     self.angle = angle
             else:
-                if self.formatted_angle(angle) < self.formatted_angle(self.limit[0]):
-                    self.angle = self.limit[0]
-                elif self.formatted_angle(angle) > self.formatted_angle(self.limit[1]):
-                    self.angle = self.limit[1]
-                elif self.formatted_angle(self.limit[0]) <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1]):
+                if self.formatted_angle(angle) < self.formatted_angle(self.limit[0]+offset):
+                    self.angle = self.limit[0]+offset
+                elif self.formatted_angle(angle) > self.formatted_angle(self.limit[1]-offset):
+                    self.angle = self.limit[1]-offset
+                elif self.formatted_angle(self.limit[0]+offset) <= self.formatted_angle(angle) <= self.formatted_angle(self.limit[1]-offset):
                     self.angle = angle
         else:
             self.angle = angle
