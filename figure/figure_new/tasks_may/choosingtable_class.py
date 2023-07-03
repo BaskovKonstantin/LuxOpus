@@ -112,7 +112,7 @@ class ChoosingTable:
         self.offset_y = y + height * 2
 
         self.cell_width = self.table_size[0] // len(self.chosen_table[0])
-        self.cell_height = self.font.render(str(self.chosen_table[0][0]), True, self.colors['border']).get_height() * 1.5
+        self.cell_height = (self.table_size[1] - self.offset_y) // len(self.chosen_table)#self.font.render(str(self.chosen_table[0][0]), True, self.colors['border']).get_height() * 1.5
 
         # Отрисовка таблицы и текста
         for row in range(len(self.chosen_table)):

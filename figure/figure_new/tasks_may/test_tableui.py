@@ -137,7 +137,7 @@ tables = {
                           ('Группа 2', np.random.randint(1, 1001), np.random.randint(1, 1001)))
 }
 
-tables = choosingtable_class.ChoosingTable(screen, (0, 0), colors, (400, 400), tables, test_function, font_size=16, scale=2)
+tables = choosingtable_class.ChoosingTable(screen, (0, 0), colors, (400, 400), tables, test_function, font_size=16, scale=1)
 
 running = True
 while running:
@@ -149,6 +149,7 @@ while running:
 
     screen.fill(colors['background'])
     tables.draw()
+    pygame.draw.line(screen, colors['test'], (0, 400), (400,400), 1)
     pygame.display.flip()
 
 pygame.quit()
