@@ -29,19 +29,19 @@ class Chamfers:
         self.chamfer_type = chamfer_type
         self.first_point = first_point
         self.angle = angle
-        if second_point is not None: self.second_point = second_point
+        self.second_point = second_point
         self.scale = scale
         self.font_name = font
         self.font_size = font_size
         self.font = pygame.font.Font(self.font_name, self.font_size * self.scale)
-        self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+        # self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+        #
+        # self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
+        # self.polygon_dots = self.get_polygon_dots()
+        #
+        # self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
 
-        self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
-        self.polygon_dots = self.get_polygon_dots()
-
-        self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
-
-        self.surface = self.create_surface()
+        self.create_surface()
 
     def check_click(self, mouse_pos) -> bool:
 
@@ -64,27 +64,23 @@ class Chamfers:
 
         # rescaling
 
-        if self.previous_scale != self.scale:
-            self.line_length = int(self.line_length_origin * self.scale)
-            self.pointer_length = int(self.pointer_length_origin * self.scale)
-            self.line_width = int(self.line_width_origin * self.scale)
-            self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
-            self.rendered_text = self.font.render(self.text, True, self.colors['border'])
-            self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
-            self.polygon_dots = self.get_polygon_dots()
-            self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
-            self.surface = self.create_surface()
+        # if self.previous_scale != self.scale:
+        self.line_length = int(self.line_length_origin * self.scale)
+        self.pointer_length = int(self.pointer_length_origin * self.scale)
+        self.line_width = int(self.line_width_origin * self.scale)
+        self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
+        # self.create_surface()
 
-            self.previous_scale = self.scale
+        self.previous_scale = self.scale
 
-        self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+        # self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+        #
+        # self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
+        # self.polygon_dots = self.get_polygon_dots()
+        #
+        # self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
 
-        self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
-        self.polygon_dots = self.get_polygon_dots()
-
-        self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
-
-        self.surface = self.create_surface()
+        self.create_surface()
 
         # pygame.draw.rect(self.screen, self.colors['test'], [self.first_point[0]-self.offset[0], self.first_point[1] - self.offset[1], self.surface.get_width(), self.surface.get_height()], 1)
         self.surface.blit(self.rendered_text, (self.text_dot[0] + self.offset[0], self.text_dot[1] + self.offset[1]))
@@ -108,6 +104,8 @@ class Chamfers:
                              (self.first_dot[0] + self.offset[0], self.first_dot[1] + self.offset[1]), self.line_width)
 
             mid_dot = (self.first_dot[0] * self.triangle_part - (self.second_point[0] - self.first_point[0])*(1-self.triangle_part), self.first_dot[1]*self.triangle_part)
+            # for dvlp
+            pygame.draw.circle(self.surface, self.colors['test'], (self.offset[0] - (self.second_point[0] - self.first_point[0]), self.offset[1]), 5)
             left_dot = (mid_dot[0] - self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
                         mid_dot[1] - self.pointer_length // 4 * self.triangle_part * sin(radians(self.angle)))
             right_dot = (mid_dot[0] + self.pointer_length // 4 * self.triangle_part * cos(radians(self.angle)),
@@ -162,14 +160,34 @@ class Chamfers:
 
     def create_surface(self):
 
+        self.rendered_text = self.font.render(self.text, True, self.colors['border'])
+
+        self.first_dot, self.line_dot, self.text_dot = self.get_main_dots()
+        self.polygon_dots = self.get_polygon_dots()
+        if self.second_point is not None:
+            if (self.second_point[0] - self.first_point[0]) > abs(self.text_dot[0]):
+                self.offset = (self.second_point[0] - self.first_point[0], abs(self.text_dot[1]))
+            else:
+                self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
+        else:
+            self.offset = (abs(self.text_dot[0]), abs(self.text_dot[1]))
+
         if self.chamfer_type == 2 or self.chamfer_type == 3:
-            surface = pygame.Surface((abs(self.text_dot[0]), abs(self.text_dot[1])))
+            #print(abs(self.text_dot[0]))
+            #print((self.second_point[0] - self.first_point[0]))
+            if self.second_point is not None:
+                if (self.second_point[0] - self.first_point[0]) > abs(self.text_dot[0]):
+                    self.surface = pygame.Surface((self.second_point[0] - self.first_point[0], abs(self.text_dot[1])))
+                else:
+                    self.surface = pygame.Surface((abs(self.text_dot[0]), abs(self.text_dot[1])))
+            else:
+                self.surface = pygame.Surface((abs(self.text_dot[0]), abs(self.text_dot[1])))
 
         elif self.chamfer_type == 1:
-            surface = pygame.Surface((abs(self.text_dot[0]) + self.first_dot[0], abs(self.text_dot[1])))
+            self.surface = pygame.Surface((abs(self.text_dot[0]) + self.first_dot[0], abs(self.text_dot[1])))
             # print(surface.get_rect())
 
-        return surface
+        #return surface
 
     def get_polygon_dots(self):
 

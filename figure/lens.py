@@ -535,9 +535,9 @@ class lens:
                         first_point= self.point_2)
             else:
                 #self.measureDict['facet_right_measure'].first_point = self.facet_point_2
-                self.measureDict['facet_right_measure'].line_length = 40
+                self.measureDict['facet_right_measure'].line_length_origin = 40
                 self.measureDict['facet_right_measure'].triangle_part = 0.5
-                self.measureDict['facet_right_measure'].pointer_length = 40
+                self.measureDict['facet_right_measure'].pointer_length_origin = 40
                 self.measureDict['facet_right_measure'].first_point = self.point_2
                 self.measureDict['facet_right_measure'].second_point = None
                 self.measureDict['facet_right_measure'].text = '45'
@@ -545,7 +545,7 @@ class lens:
                 self.measureDict['facet_right_measure'].scale = self.scale
                 self.measureDict['facet_right_measure'].draw()
                 self.surface.blit(self.measureDict['facet_right_measure'].surface,
-                                      self.measureDict['facet_right_measure'].blit_point)
+                                  self.measureDict['facet_right_measure'].blit_point)
         # и справа
         size = (60,80)
         if (self.right_facet_type != 2 and self.left_facet_type == 2):
@@ -571,9 +571,9 @@ class lens:
 
             else:
                 try:
-                    self.measureDict['facet_left_measure'].line_length = 40
+                    self.measureDict['facet_left_measure'].line_length_origin = 40
                     self.measureDict['facet_left_measure'].triangle_part = 0.5
-                    self.measureDict['facet_left_measure'].pointer_length = 40
+                    self.measureDict['facet_left_measure'].pointer_length_origin = 40
                     self.measureDict['facet_left_measure'].first_point = self.point_1
                     self.measureDict['facet_left_measure'].second_point = None
                     self.measureDict['facet_left_measure'].text = 'UP'
@@ -602,17 +602,18 @@ class lens:
                         second_point=self.point_2)
             else:
                 #self.measureDict['facet_right_measure'].first_point = self.facet_point_24
-                self.measureDict['facet_left_measure'].line_length = 100
+                self.measureDict['facet_left_measure'].line_length_origin = 40
                 self.measureDict['facet_left_measure'].triangle_part = 0.3
-                self.measureDict['facet_left_measure'].pointer_length = 100
+                self.measureDict['facet_left_measure'].pointer_length_origin = 100
                 self.measureDict['facet_left_measure'].first_point = self.point_1
                 self.measureDict['facet_left_measure'].second_point = self.point_2
                 self.measureDict['facet_left_measure'].text = '45'
                 self.measureDict['facet_left_measure'].chamfer_type = 2
                 self.measureDict['facet_left_measure'].scale = self.scale
+                # self.measureDict['facet_left_measure'].create_surface()
                 self.measureDict['facet_left_measure'].draw()
                 self.surface.blit(self.measureDict['facet_left_measure'].surface,
-                                      self.measureDict['facet_left_measure'].blit_point)
+                                  self.measureDict['facet_left_measure'].blit_point)
 
     def draw_base_measure(self):
         R1 = int(self.R1*self.scale)
