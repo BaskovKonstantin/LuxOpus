@@ -826,7 +826,7 @@ class lens:
                         self.measureDict['roughness_measure_1'].start_angle = 180
                     if self.types[0] == 2:
                         self.measureDict['roughness_measure_1'].start_angle = 0
-                self.measureDict['roughness_measure_1'].surface_radius = R1
+                self.measureDict['roughness_measure_1'].surface_radius_origin = R1/self.scale
                 self.measureDict['roughness_measure_1'].scale = self.scale
                 self.measureDict['roughness_measure_1'].draw()
 
@@ -916,7 +916,7 @@ class lens:
                         self.measureDict['roughness_measure_2'].start_angle = 180
                     if self.types[1] == 1:
                         self.measureDict['roughness_measure_2'].start_angle = 0
-                self.measureDict['roughness_measure_2'].surface_radius = R2
+                self.measureDict['roughness_measure_2'].surface_radius_origin = R2/self.scale
                 # self.measureDict['roughness_measure_2'].create_surface()
                 self.measureDict['roughness_measure_2'].scale = self.scale
                 self.measureDict['roughness_measure_2'].draw()

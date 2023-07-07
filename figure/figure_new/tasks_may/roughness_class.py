@@ -101,7 +101,7 @@ class RoughnessMeasure:
         # surface
         self.surface.fill((0, 0, 0, 0))
 
-        # pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         if not self.moved_once:
             self.angle = self.start_angle
