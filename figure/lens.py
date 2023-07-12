@@ -693,7 +693,7 @@ class lens:
 
                 self.measureDict['R1_measure'].surface_radius = R1
                 self.measureDict['R1_measure'].radius_length = R1/2
-                self.measureDict['R1_measure'].line_length = int(R1 * 0.95)
+                self.measureDict['R1_measure'].line_length = int(R1 - self.measureDict['R2_measure'].triangle_length/2)
                 self.measureDict['R1_measure'].create_surface()
                 self.measureDict['R1_measure'].scale = self.scale
                 self.measureDict['R1_measure'].draw()
@@ -752,7 +752,7 @@ class lens:
             else:
                 self.measureDict['R2_measure'].surface_radius = R2
                 self.measureDict['R2_measure'].radius_length = R2 / 2
-                self.measureDict['R2_measure'].line_length = int(R2 * 0.95)
+                self.measureDict['R2_measure'].line_length = int(R2 - self.measureDict['R2_measure'].triangle_length/2)
                 self.measureDict['R2_measure'].create_surface()
                 if self.measureDict['R2_measure'].radius_type != self.types[1]-1:
                     self.measureDict['R2_measure'].radius_type = self.types[1]-1

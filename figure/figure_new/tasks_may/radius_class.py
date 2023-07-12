@@ -46,7 +46,7 @@ class Radius:
         # self.triangle_length = self.radius_length * 1 / 4
         self.triangle_width = triangle_width * self.scale
         self.triangle_length = triangle_length * self.scale
-        self.line_length = self.surface_radius * 0.95
+        self.line_length = self.surface_radius - self.triangle_length/2
         self.font_size = font_size * self.scale
         self.font_name = font
         self.font = pygame.font.Font(self.font_name, self.font_size)
@@ -126,7 +126,7 @@ class Radius:
                 self.radius_width = 1
             self.triangle_width = int(self.triangle_width_origin * self.scale)
             self.triangle_length = int(self.triangle_length_origin * self.scale)
-            self.line_length = int(self.surface_radius * 0.95)
+            self.line_length = int(self.surface_radius - self.triangle_length/2)
             self.font = pygame.font.Font(self.font_name, int(self.font_size * self.scale))
             self.radius_text = self.font.render(self.text, True, self.colors['text'])
 
