@@ -14,7 +14,7 @@ colors = {
 pygame.init()
 screen = pygame.display.set_mode((700, 700))
 surface = pygame.Surface((700, 700), pygame.SRCALPHA)
-text = format_text_function.format_text("T_7_3_9, T|7|3|9, T739", colors, 40, 'arial.ttf')
+text = format_text_function.format_text("Test:<10", colors, 40, 'arial.ttf')
 
 running = True
 while running:
