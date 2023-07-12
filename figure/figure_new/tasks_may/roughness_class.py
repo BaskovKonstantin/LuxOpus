@@ -82,6 +82,8 @@ class RoughnessMeasure:
         # rescaling
         if self.previous_scale != self.scale:
             self.line_width = int(self.line_width_origin * self.scale)
+            if self.line_width < 1:
+                self.line_width = 1
             self.surface_radius = int(self.surface_radius_origin * self.scale)
             self.width, self.height = int(self.size_origin[0] * self.scale), int(self.size_origin[1] * self.scale)
 
@@ -101,7 +103,7 @@ class RoughnessMeasure:
         # surface
         self.surface.fill((0, 0, 0, 0))
 
-        pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
+        #pygame.draw.circle(self.surface, self.colors['test'], self.surface_center, self.surface_radius, 1)
 
         if not self.moved_once:
             self.angle = self.start_angle
@@ -213,6 +215,8 @@ class RoughnessMeasure:
     def create_surface(self):
 
         self.line_width = int(self.line_width_origin * self.scale)
+        if self.line_width < 1:
+            self.line_width = 1
         self.surface_radius = int(self.surface_radius_origin * self.scale)
         self.width, self.height = int(self.size_origin[0] * self.scale), int(self.size_origin[1] * self.scale)
 

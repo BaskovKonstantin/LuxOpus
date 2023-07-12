@@ -15,7 +15,7 @@ class CoversMeasure:
                  cover_type: int,
                  limit: Tuple[int, int] = None,
                  scale: int = 1,
-                 figure_type: int = 12,
+                 figure_type: int = 6,
                  font: str = None):
 
         self.scale = scale
@@ -65,6 +65,8 @@ class CoversMeasure:
         # rescaling
         if self.scale != self.previous_scale:
             self.line_width = int(self.line_width_origin * self.scale)
+            if self.line_width < 1:
+                self.line_width = 1
             self.width = int(self.cover_size_origin[0] * self.scale)
             self.height = int(self.cover_size_origin[1] * self.scale)
             self.surface_radius = int(self.surface_radius_origin * self.scale)

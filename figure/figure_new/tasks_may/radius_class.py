@@ -122,6 +122,8 @@ class Radius:
             self.surface_radius = int(self.surface_radius_origin * self.scale)
             self.radius_length = int(self.radius_length_origin * self.scale)
             self.radius_width = int(self.radius_width_origin * self.scale)
+            if self.radius_width < 1:
+                self.radius_width = 1
             self.triangle_width = int(self.triangle_width_origin * self.scale)
             self.triangle_length = int(self.triangle_length_origin * self.scale)
             self.line_length = int(self.surface_radius * 0.95)

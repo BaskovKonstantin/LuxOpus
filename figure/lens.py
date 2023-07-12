@@ -997,7 +997,7 @@ class lens:
                         surface_radius=self.R1,
                         cover_size=cover_measure_size,
                         angle=angle,
-                        line_width=1,
+                        line_width=2,
                         limit=limit,
                         cover_type=self.types[0]-1,
                         font=self.font)
